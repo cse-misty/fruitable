@@ -70,33 +70,43 @@
                                 <!-- ACTION -->
                                <td class="text-center">
 
-    <div class="d-flex justify-content-center gap-2 ">
+                                    <div class="d-flex justify-content-center gap-2 ">
 
-        <!-- REPLY BUTTON -->
-        <button type="button"
-                class="btn btn-success btn-sm replyBtn m-2"
-                data-bs-toggle="modal"
-                data-bs-target="#replyModal"
-                data-email="{{ $contact->email }}">
-            <i class="fas fa-reply"></i>
-        </button>
+                                        <!-- REPLY BUTTON -->
+                                        {{-- <button type="button"
+                                                class="btn btn-success btn-sm replyBtn m-2"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#replyModal"
+                                                data-email="{{ $contact->email }}">
+                                            <i class="fas fa-reply"></i>
+                                        </button> --}}
 
-        <!-- DELETE BUTTON -->
-        <form action="{{ route('contact.destroy', $contact->id) }}"
-              method="POST">
-            @csrf
-            @method('DELETE')
+                                        <button type="button"
+                                                class="btn btn-success btn-sm replyBtn m-2"
+                                                data-email="{{ $contact->email }}">
+                                            <i class="fas fa-reply" style="pointer-events: none;"></i>
+                                        </button>
 
-            <button type="submit"
-                    class="btn btn-danger btn-sm m-2"
-                    onclick="return confirm('Delete this contact?')">
-                <i class="fas fa-trash-alt"></i>
-            </button>
-        </form>
 
-    </div>
 
-</td>
+
+
+                                        <!-- DELETE BUTTON -->
+                                        <form action="{{ route('contact.destroy', $contact->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit"
+                                                    class="btn btn-danger btn-sm m-2"
+                                                    onclick="return confirm('Delete this contact?')">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+
+                                    </div>
+
+                                </td>
                             </tr>
 
                         @empty
@@ -130,7 +140,9 @@
 
         <div class="modal-header">
             <h5 class="modal-title">Reply Contact</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <button type="button" class="btn border-0" data-bs-dismiss="modal">
+        <i class="fas fa-times"></i>
+    </button>
         </div>
 
         <div class="modal-body">
@@ -164,17 +176,35 @@
   </div>
 </div>
 
-<!-- ================= JS ================= -->
+
+
 <script>
 document.addEventListener("click", function(e) {
-    if (e.target.closest('.replyBtn')) {
+    let btn = e.target.closest('.replyBtn');
 
-        let btn = e.target.closest('.replyBtn');
+    if (btn) {
+
         let email = btn.getAttribute('data-email');
-
         document.getElementById('modal_email').value = email;
+
+
+        let myModal = new bootstrap.Modal(document.getElementById('replyModal'));
+        myModal.show();
     }
 });
+
+if (e.target.closest('[data-bs-dismiss="modal"]') || e.target.closest('[data-dismiss="modal"]')) {
+        let modalEl = document.getElementById('replyModal');
+        let modalInstance = bootstrap.Modal.getInstance(modalEl);
+        if (modalInstance) {
+            modalInstance.hide();
+        }
+    }
+
+
 </script>
 
+
+
 @endsection
+

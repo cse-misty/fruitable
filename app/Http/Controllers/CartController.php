@@ -7,10 +7,10 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
-
+use Illuminate\Support\Facades\Schema;
 use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
+
 
 class CartController extends Controller
 {
@@ -117,107 +117,230 @@ class CartController extends Controller
 
     }
 
-    public function placeOrder(Request $request)
-    {
+    // public function placeOrder(Request $request)
+    // {
 
-        if (!auth()->check()) {
-            return redirect()->route('login');
-        }
+    //     if (!auth()->check()) {
+    //         return redirect()->route('login');
+    //     }
 
 
-        $request->validate([
-            'shipping_address' => 'required|string',
-            'payment_method'   => 'required|in:COD,Stripe,bKash,Nagad'
+    //     $request->validate([
+    //         'shipping_address' => 'required|string',
+    //         'payment_method'   => 'required|in:COD,Stripe,bKash,Nagad'
+    //     ]);
+
+    //     $cart = session('cart', []);
+
+    //     if (empty($cart)) {
+    //         return back()->with('error', 'Cart is empty');
+    //     }
+
+    //     $subTotal = 0;
+    //     foreach ($cart as $item) {
+    //         $subTotal += $item['price'] * $item['quantity'];
+    //     }
+
+    //     $totalAmount = $subTotal + 60;
+
+    //     \DB::beginTransaction();
+    //     try {
+
+    //         $order = Order::create([
+    //             'user_id'          => auth()->id(),
+    //             'shipping_address' => $request->shipping_address,
+    //             'payment_method'   => $request->payment_method,
+    //             'total_amount'     => $totalAmount,
+    //             'status'           => 'pending'
+    //         ]);
+
+
+    //         foreach ($cart as $key => $item) {
+    //             $productId = $item['product_id'] ?? $item['id'] ?? $key;
+
+    //             OrderItem::create([
+    //                 'order_id'   => $order->id,
+    //                 'product_id' => $productId,
+    //                 'quantity'   => $item['quantity'],
+    //                 'price'      => $item['price']
+    //             ]);
+
+    //             if (\Schema::hasColumn('products', 'stock')) {
+    //                 Product::where('id', $productId)->decrement('stock', $item['quantity']);
+    //             }
+    //         }
+
+    //         \DB::commit();
+
+
+    //         if ($request->payment_method === 'Stripe') {
+
+
+    //             Stripe::setApiKey(env('STRIPE_SECRET'));
+
+
+    //             $checkoutSession = StripeSession::create([
+    //                 'payment_method_types' => ['card'],
+    //                 'line_items' => [[
+    //                     'price_data' => [
+    //                         'currency' => 'bdt',
+    //                         'product_data' => [
+    //                             'name' => 'Order #' . $order->id,
+    //                         ],
+    //                         'unit_amount' => $totalAmount * 100,
+    //                     ],
+    //                     'quantity' => 1,
+    //                 ]],
+    //                 'mode' => 'payment',
+
+    //                 'success_url' => route('payment.success') . '?order_id=' . $order->id,
+    //                 'cancel_url' => route('payment.cancel') . '?order_id=' . $order->id,
+    //             ]);
+
+
+    //             return redirect()->away($checkoutSession->url);
+    //         }
+
+    //         if ($request->payment_method === 'bKash') {
+    //     return redirect()->route('bkash.payment', ['order_id' => $order->id]);
+    //         }
+
+    //         if ($request->payment_method === 'Nagad') {
+    //             return redirect()->route('nagad.payment', ['order_id' => $order->id]);
+    //         }
+
+
+    //         session()->forget('cart');
+    //         return redirect()->route('order.success', $order->id)->with('success', 'Order placed successfully!');
+
+    //     } catch (\Exception $e) {
+    //         \DB::rollBack();
+    //         return back()->with('error', 'Something went wrong! ' . $e->getMessage());
+    //     }
+    // }
+
+
+
+
+
+
+public function placeOrder(Request $request)
+{
+
+    if (!auth()->check()) {
+        return redirect()->route('login');
+    }
+
+    $request->validate([
+        'shipping_address' => 'required|string',
+        'payment_method'   => 'required|in:COD,Stripe,bKash,Nagad'
+    ]);
+
+
+    $cart = session('cart', []);
+
+
+    if (empty($cart)) {
+        return back()->with('error', 'Cart is empty');
+    }
+
+    $subTotal = 0;
+    foreach ($cart as $item) {
+        $subTotal += $item['price'] * $item['quantity'];
+    }
+
+    $totalAmount = $subTotal + 60;
+
+    DB::beginTransaction();
+    try {
+        $order = Order::create([
+            'user_id'          => auth()->id(),
+            'shipping_address' => $request->shipping_address,
+            'payment_method'   => $request->payment_method,
+            'total_amount'     => $totalAmount,
+            'status'           => 'pending'
         ]);
 
-        $cart = session('cart', []);
 
-        if (empty($cart)) {
-            return back()->with('error', 'Cart is empty');
+        foreach ($cart as $key => $item) {
+            $productId = $item['product_id'] ?? $item['id'] ?? $key;
+
+            OrderItem::create([
+                'order_id'   => $order->id,
+                'product_id' => $productId,
+                'quantity'   => $item['quantity'],
+                'price'      => $item['price']
+            ]);
+
+            if (\Schema::hasColumn('products', 'stock')) {
+                Product::where('id', $productId)->decrement('stock', $item['quantity']);
+            }
         }
 
-        $subTotal = 0;
-        foreach ($cart as $item) {
-            $subTotal += $item['price'] * $item['quantity'];
-        }
+        DB::commit();
 
-        $totalAmount = $subTotal + 60;
 
-        \DB::beginTransaction();
-        try {
+        if ($request->payment_method === 'Stripe') {
 
-            $order = Order::create([
-                'user_id'          => auth()->id(),
-                'shipping_address' => $request->shipping_address,
-                'payment_method'   => $request->payment_method,
-                'total_amount'     => $totalAmount,
-                'status'           => 'pending'
+
+            $stripe = \App\Models\Stripe::first();
+
+
+            if (!$stripe || empty($stripe->secret_key)) {
+                return back()->with('error', 'Stripe payment is not configured in admin panel!');
+            }
+
+
+            config(['services.stripe.key' => $stripe->published_key]);
+            config(['services.stripe.secret' => $stripe->secret_key]);
+
+
+            Stripe::setApiKey($stripe->secret_key);
+
+
+            $checkoutSession = \Stripe\Checkout\Session::create([
+                'payment_method_types' => ['card'],
+                'line_items' => [[
+                    'price_data' => [
+                        'currency' => 'bdt',
+                        'product_data' => [
+                            'name' => 'Order #' . $order->id,
+                        ],
+                        'unit_amount' => $totalAmount * 100,
+                    ],
+                    'quantity' => 1,
+                ]],
+                'mode' => 'payment',
+                'success_url' => route('payment.success') . '?order_id=' . $order->id,
+                'cancel_url' => route('payment.cancel') . '?order_id=' . $order->id,
             ]);
 
 
-            foreach ($cart as $key => $item) {
-                $productId = $item['product_id'] ?? $item['id'] ?? $key;
-
-                OrderItem::create([
-                    'order_id'   => $order->id,
-                    'product_id' => $productId,
-                    'quantity'   => $item['quantity'],
-                    'price'      => $item['price']
-                ]);
-
-                if (\Schema::hasColumn('products', 'stock')) {
-                    Product::where('id', $productId)->decrement('stock', $item['quantity']);
-                }
-            }
-
-            \DB::commit();
-
-
-            if ($request->payment_method === 'Stripe') {
-
-
-                Stripe::setApiKey(env('STRIPE_SECRET'));
-
-
-                $checkoutSession = StripeSession::create([
-                    'payment_method_types' => ['card'],
-                    'line_items' => [[
-                        'price_data' => [
-                            'currency' => 'bdt',
-                            'product_data' => [
-                                'name' => 'Order #' . $order->id,
-                            ],
-                            'unit_amount' => $totalAmount * 100,
-                        ],
-                        'quantity' => 1,
-                    ]],
-                    'mode' => 'payment',
-
-                    'success_url' => route('payment.success') . '?order_id=' . $order->id,
-                    'cancel_url' => route('payment.cancel') . '?order_id=' . $order->id,
-                ]);
-
-
-                return redirect()->away($checkoutSession->url);
-            }
-
-            if ($request->payment_method === 'bKash') {
-        return redirect()->route('bkash.payment', ['order_id' => $order->id]);
-            }
-
-            if ($request->payment_method === 'Nagad') {
-                return redirect()->route('nagad.payment', ['order_id' => $order->id]);
-            }
 
 
             session()->forget('cart');
-            return redirect()->route('order.success', $order->id)->with('success', 'Order placed successfully!');
 
-        } catch (\Exception $e) {
-            \DB::rollBack();
-            return back()->with('error', 'Something went wrong! ' . $e->getMessage());
+            return redirect()->away($checkoutSession->url);
         }
+
+        if ($request->payment_method === 'bKash') {
+            return redirect()->route('bkash.payment', ['order_id' => $order->id]);
+        }
+
+        if ($request->payment_method === 'Nagad') {
+            return redirect()->route('nagad.payment', ['order_id' => $order->id]);
+        }
+
+       
+        session()->forget('cart');
+        return redirect()->route('order.success', $order->id)->with('success', 'Order placed successfully!');
+
+    } catch (\Exception $e) {
+
+        DB::rollBack();
+        return back()->with('error', 'Something went wrong! ' . $e->getMessage());
     }
+}
 
 
 

@@ -7,13 +7,15 @@ use App\Models\Faq;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\FaqCatagory;
+use App\Models\HeroSlider;
+use App\Models\Services;
 use App\Models\WebSetting;
 
 class PublicController extends Controller
 {
     public function index(Request $request){
 
-     $categories = Category::select('id','title','image','description','slug','thumbnail','priority','status',)
+     $categories = Category::select('id','title','image','description','slug','thumbnail','priority','status')
             ->where('status', 1)
             ->orderBy('priority')
             ->limit(4)
@@ -25,7 +27,28 @@ class PublicController extends Controller
             ->orderBy('priority')
             ->limit(4)
              ->get();
-        return view('frontend.pages.app', compact('categories', 'products'));
+
+
+        $heroSliders = HeroSlider::select('id', 'sub_title', 'main_title', 'badge_text', 'text_one', 'text_two', 'image')
+            ->latest();
+
+
+            $services = Services::select(
+                'id', 'service_title', 'status',
+                // Fresh Apple
+                'fresh_title', 'fresh_offer_text', 'fresh_image', 'fresh_link',
+                'fresh_bg_color', 'fresh_content_bg_color', 'fresh_title_color', 'fresh_offer_color',
+                // Tasty Fruits
+                'tasty_title', 'tasty_offer_text', 'tasty_image', 'tasty_link',
+                'tasty_bg_color', 'tasty_content_bg_color', 'tasty_title_color', 'tasty_offer_color',
+                // Exotic Fruits
+                'exotic_title', 'exotic_offer_text', 'exotic_image', 'exotic_link',
+                'exotic_bg_color', 'exotic_content_bg_color', 'exotic_title_color', 'exotic_offer_color'
+            )
+            ->first();
+
+
+        return view('frontend.pages.app', compact('categories', 'products','heroSliders','services'));
     }
     public function master(){
         $categoriesCount = Category::count();
@@ -56,7 +79,7 @@ class PublicController extends Controller
     }
 
       public function contact(){
-         $setting = WebSetting::first();
-        return view('frontend.pages.contact');
+         $settings = WebSetting::first();
+        return view('frontend.pages.contact',compact('settings'));
     }
 }

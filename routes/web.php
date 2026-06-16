@@ -14,7 +14,11 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\FaqCatagoryController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\WebSettingController;
+use App\Http\Controllers\HeroSliderController;
+use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\Admin\OrderController;
 
 
 Route::get('/', [PublicController::class, 'index'])->name('index');
@@ -141,10 +145,56 @@ Route::controller(ContactController::class)->group(function(){
     Route::post('/contact-submit', 'store')->name('contact.store');
     Route::get('/admin/contact', 'index')->name('contact.index');
     Route::delete('/admin/contact/{id}', 'destroy')->name('contact.destroy');
-     Route::delete('/contact/reply', 'sendReply')->name('contact.reply');
-
-   
+    Route::post('/contact/reply', 'sendReply')->name('contact.reply');
 
 });
+Route::controller(StripeController::class)->group(function (){
+    Route::get('/payment-method', 'index')->name('payment.method');
+    Route::get('/payment-method/edit/{id}', 'edit')->name('payment.method.edit');
+     Route::put('/payment-method/update/{id}', 'update')->name('payment.method.update');
+
+
+});
+
+
+
+Route::controller(HeroSliderController::class)->group(function () {
+
+    Route::get('/admin/hero/slider', 'index')->name('hero.slider.index');
+    Route::get('/admin/hero/slider/edit/{heroSlider}', 'edit')->name('hero.slider.edit');
+    Route::put('/admin/hero/slider/update/{heroSlider}', 'update')->name('hero.slider.update');
+});
+
+
+Route::controller(ServicesController::class)->group(function () {
+    Route::get('/services', 'index')->name('services.index');
+    // Route::get('/services-create', 'create')->name('services.create');
+    // Route::post('/servics-store', 'store')->name('services.store');
+
+      Route::get('/services/{id}/edit', 'edit')->name('services.edit');
+        Route::put('/services', 'update')->name('services.update');
+
+       Route::patch('/services/toggle-status', 'toggleStatus')->name('services.toggle-status');
+
+});
+
+
+Route::controller(OrderController::class)->group(function () {
+    Route::get('/admin/orders', 'index')->name('admin.orders.index');
+    Route::get('/admin/orders/{id}', 'show')->name('admin.orders.show');
+    Route::put('/admin/orders/{id}/status', 'updateStatus')->name('admin.orders.update-status');
+
+
+    Route::delete('/admin/orders/{id}', 'destroy')->name('admin.orders.destroy');
+
+    Route::get('/admin/orders/{id}/print',  'printInvoice')->name('admin.orders.print');
+
+});
+
+
+
+
+
+
 
 });

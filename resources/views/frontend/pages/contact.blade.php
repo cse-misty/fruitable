@@ -96,8 +96,8 @@
             </div>
         </div>
         <!-- Contact End -->
-@endsection
-<script>
+
+        <script>
 document.getElementById("contactForm").addEventListener("submit", function(e) {
     e.preventDefault();
 
@@ -124,3 +124,6 @@ document.getElementById("contactForm").addEventListener("submit", function(e) {
     });
 });
 </script>
+
+@endsection
+

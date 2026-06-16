@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Contact;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Events\ContactSubmittedEvent;
 
 class ContactController extends Controller
 {
@@ -23,6 +24,7 @@ class ContactController extends Controller
 
         // 2. Database-e Data Save kora
         Contact::create($validated);
+        event(new ContactSubmittedEvent($request->name, $request->email));
 
         // 3. Success Message shoho redirect kora
         return redirect()->back()->with('success', 'Thank you! Your message has been sent successfully.');
@@ -49,9 +51,16 @@ public function sendReply(Request $request)
     $toEmail = $request->email;
     $replyMessage = $request->message;
 
-    
 
-    return redirect()->back()->with('success', 'Reply email has been sent successfully!');
+    \Illuminate\Support\Facades\Mail::raw($replyMessage, function ($message) use ($toEmail) {
+        $message->to($toEmail)
+                ->subject('Reply to your contact message');
+    });
+
+//    Alert::success('Success', 'Reply email has been sent successfully!')->toast();
+
+ return back()->with('success', 'Reply email has been sent successfully!');
 }
+
 
 }

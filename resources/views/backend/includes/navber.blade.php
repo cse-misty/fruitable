@@ -19,8 +19,9 @@
             </li>
           </ul>
         </div>
+
         <ul class="navbar-nav navbar-right">
-          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
+          {{-- <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
               class="nav-link nav-link-lg message-toggle"><i data-feather="mail"></i>
               <span class="badge headerBadge1">
                 6 </span> </a>
@@ -77,11 +78,14 @@
                 </a>
               </div>
               <div class="dropdown-footer text-center">
-                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+                <a href="#">View All  <i class="fas fa-chevron-right"></i></a>
               </div>
             </div>
-          </li>
-          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
+          </li> --}}
+
+
+
+          {{-- <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
               class="nav-link notification-toggle nav-link-lg"><i data-feather="bell" class="bell"></i>
             </a>
             <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
@@ -129,7 +133,58 @@
                 <a href="#">View All <i class="fas fa-chevron-right"></i></a>
               </div>
             </div>
-          </li>
+
+          </li> --}}
+
+<li class="dropdown dropdown-list-toggle">
+    <a href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle">
+        <i data-feather="mail"></i>
+
+
+        <span class="badge headerBadge1" id="message-badge-count">
+             {{ isset($contacts) ? $contacts->count() : 0 }}
+        </span>
+    </a>
+
+    <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
+        <div class="dropdown-header">
+            Messages
+            <div class="float-right">
+                <a href="#">Mark All As Read</a>
+            </div>
+        </div>
+
+
+        <div class="dropdown-list-content dropdown-list-message" id="live-message-dropdown">
+
+
+            @isset($contacts)
+                @foreach($contacts->take(5) as $contact)
+                <a href="{{ route('contact.index') }}" class="dropdown-item">
+                    {{-- <span class="dropdown-item-avatar text-white">
+                        <img alt="image" src="{{ asset('backend/assets/img/users/user-1.png') }}" class="rounded-circle">
+                    </span> --}}
+                    <span class="dropdown-item-desc">
+                        <span class="message-user">{{ $contact->name }}</span>
+                        <span class="time messege-text text-truncate" style="max-width: 220px;">
+                            {{ $contact->message }}
+                        </span>
+                        <span class="time">{{ $contact->created_at->diffForHumans() }}</span>
+                    </span>
+                </a>
+                @endforeach
+            @endisset
+
+        </div>
+
+        <div class="dropdown-footer text-center">
+            <a href="{{ route('contact.index') }}">View All <i class="fas fa-chevron-right"></i></a>
+        </div>
+    </div>
+</li>
+
+
+
           <li class="dropdown"><a href="#" data-toggle="dropdown"
               class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="{{asset('backend/assets/img/user.png')}}"
                 class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
@@ -158,3 +213,85 @@
           </li>
         </ul>
       </nav>
+
+
+
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    // 🟢 Pusher setup
+    var pusher = new Pusher('c5b10a2ccd3d71f9dd5d', {
+        cluster: 'mt1',
+        forceTLS: true
+    });
+
+    // 🟢 Channel subscribe
+    var channel = pusher.subscribe('admin-notification-channel');
+
+    // 🟢 Listen event
+    channel.bind('new-contact-submit', function (data) {
+
+        // 🔴 1. Badge counter increase
+        let badgeEl = document.getElementById('message-badge-count');
+        if (badgeEl) {
+            // যদি আগে থেকে কাউন্টারটি লুকানো (display: none) থাকে, তবে তা আবার দেখাবে
+            badgeEl.style.display = 'inline-block';
+
+            let currentCount = parseInt(badgeEl.innerText) || 0;
+            badgeEl.innerText = currentCount + 1;
+        }
+
+        // 🟡 2. Dropdown update
+        let dropdownContainer = document.getElementById('live-message-dropdown');
+        if (dropdownContainer) {
+            let defaultUserImage = "{{ asset('backend/assets/img/users/user-1.png') }}";
+
+            let newMessageHTML = `
+                <a href="{{ route('contact.index') }}" class="dropdown-item bg-light">
+                    <span class="dropdown-item-avatar">
+                        <img src="${defaultUserImage}" class="rounded-circle" width="35" height="35">
+                    </span>
+                    <span class="dropdown-item-desc" style="padding-left: 10px;">
+                        <b style="color:#6777ef">${data.name}</b>
+                        <div class="time messege-text text-truncate" style="max-width: 220px;">New Contact Message!</div>
+                        <div class="time" style="color: #6777ef;">Just now</div>
+                    </span>
+                </a>
+            `;
+            dropdownContainer.insertAdjacentHTML('afterbegin', newMessageHTML);
+        }
+
+        // 🟢 3. Toast notification
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'info',
+                title: `${data.name} sent a message`,
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true
+            });
+        }
+    });
+
+    // 🔵 4. অ্যাডমিন মেসেজ আইকনে ক্লিক করলে কাউন্ট জিরো (0) বা হাইড করার লজিক
+    document.addEventListener("DOMContentLoaded", function() {
+        // Otika/Stisla টেমপ্লেটের মেসেজ টগল বাটনটি খুঁজে বের করা
+        let messageToggleBtn = document.querySelector('.message-toggle');
+
+        if (messageToggleBtn) {
+            messageToggleBtn.addEventListener('click', function() {
+                let badgeEl = document.getElementById('message-badge-count');
+                if (badgeEl) {
+                    badgeEl.innerText = '0'; // কাউন্ট ০ করে দেবে
+                    badgeEl.style.display = 'none'; // অথবা লাল গোল ব্যাজটি সাময়িকভাবে লুকিয়ে ফেলবে
+                }
+            });
+        }
+    });
+</script>
+
+
+

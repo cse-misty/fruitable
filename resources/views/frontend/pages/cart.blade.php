@@ -61,13 +61,13 @@
 
                                     <div class="input-group quantity mt-4" style="width: 130px;">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-minus rounded-circle bg-light border change-quantity" data-action="minus">
+                                            <button class="btn btn-sm btn-minus rounded-circle bg-light border change-quantity m-1" data-action="minus">
                                                 <i class="fa fa-minus"></i>
                                             </button>
                                         </div>
                                         <input type="text" class="form-control form-control-sm text-center border-0 qty-input" value="{{ $item['quantity'] }}" readonly>
                                         <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-plus rounded-circle bg-light border change-quantity" data-action="plus">
+                                            <button class="btn btn-sm btn-plus rounded-circle bg-light border change-quantity m-1" data-action="plus">
                                                 <i class="fa fa-plus"></i>
                                             </button>
                                         </div>
@@ -95,7 +95,7 @@
                             <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
                             <div class="d-flex justify-content-between mb-4">
                                 <h5 class="mb-0 me-4">Subtotal:</h5>
-                                <p class="mb-0" id="cart-subtotal">{{ format_price($subTotal, 2) }}</p>
+                                <p class="mb-0" id="cart-subtotal">{{ format_price($subTotal, 2) }}</p> 
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h5 class="mb-0 me-4">Shipping</h5>
@@ -111,7 +111,7 @@
                         </div>
                         <a href="{{ route('checkout.index') }}" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4 w-75 text-center">Proceed Checkout</a>
                     </div>
-                </div>v
+                </div>
             </div>
         @else
             <div class="text-center py-5">
@@ -124,107 +124,7 @@
 </div>
 <!-- Cart Page End -->
 
-
 <script src="https://jquery.com"></script>
-{{-- <script>
-$(document).ready(function() {
-    $('.change-quantity').click(function(e) {
-        e.preventDefault();
-
-        let btn = $()
-        let row = $(this).closest('tr');
-        let id = row.data('id');
-        let input = row.find('.qty-input');
-        let currentQty = parseInt(input.val());
-        let action = $(this).data('action');
-        let newQty = currentQty;
-
-        if (action === 'plus') {
-            newQty++;
-        } else if (action === 'minus' && currentQty > 1) {
-            newQty--;
-        }
-
-        if (newQty !== currentQty) {
-            input.val(newQty);
-
-
-            $.ajax({
-                url: "{{ url('/cart/update') }}/" + id,
-                method: "POST",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    quantity: newQty
-                },
-                success: function(response) {
-
-                    window.location.reload();
-                },
-                error: function(xhr) {
-                    alert('Stock error or something went wrong!');
-                    window.location.reload();
-                }
-            });
-        }
-    });
-});
-</script> --}}
-
-
-{{-- <script>
-document.addEventListener('DOMContentLoaded', function () {
-
-    function updateCartTotal() {
-        let subtotal = 0;
-
-        document.querySelectorAll('tr[data-id]').forEach(function (row) {
-            let priceText = row.querySelector('td:nth-child(3) p').innerText.replace(/[^0-9.]/g, '');
-            let qty = parseInt(row.querySelector('.qty-input').value);
-
-            let price = parseFloat(priceText);
-            let total = price * qty;
-
-            // update item total
-            row.querySelector('.item-total').innerText = total.toFixed(2);
-
-            subtotal += total;
-        });
-
-        // update subtotal
-        document.getElementById('cart-subtotal').innerText = subtotal.toFixed(2);
-
-        // shipping fixed
-        let shipping = 60;
-
-        // update grand total
-        document.getElementById('cart-grandtotal').innerText = (subtotal + shipping).toFixed(2);
-    }
-
-    // plus / minus button click
-    document.querySelectorAll('.change-quantity').forEach(function (btn) {
-        btn.addEventListener('click', function () {
-
-            let row = this.closest('tr');
-            let input = row.querySelector('.qty-input');
-            let currentQty = parseInt(input.value);
-
-            if (this.dataset.action === 'plus') {
-                input.value = currentQty + 1;
-            }
-
-            if (this.dataset.action === 'minus') {
-                if (currentQty > 1) {
-                    input.value = currentQty - 1;
-                }
-            }
-
-            updateCartTotal();
-        });
-    });
-
-});
-</script> --}}
-
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -233,13 +133,11 @@ document.addEventListener('DOMContentLoaded', function () {
         let subtotal = 0;
 
         document.querySelectorAll('tr[data-id]').forEach(function (row) {
-
             // price extract (safe method)
             let priceText = row.querySelector('td:nth-child(3) p').innerText;
             let price = parseFloat(priceText.replace(/[^0-9.]/g, ''));
 
             let qty = parseInt(row.querySelector('.qty-input').value);
-
             let total = price * qty;
 
             // update item total
@@ -249,20 +147,21 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // update subtotal
-        document.getElementById('cart-subtotal').innerText =
-            '৳ ' + subtotal.toFixed(2);
+        document.getElementById('cart-subtotal').innerText = '৳ ' + subtotal.toFixed(2);
 
         // shipping fixed
         let shipping = 60;
 
         // update grand total
-        document.getElementById('cart-grandtotal').innerText =
-            '৳ ' + (subtotal + shipping).toFixed(2);
+        document.getElementById('cart-grandtotal').innerText = '৳ ' + (subtotal + shipping).toFixed(2);
     }
 
     // plus / minus button click
     document.querySelectorAll('.change-quantity').forEach(function (btn) {
-        btn.addEventListener('click', function () {
+        btn.addEventListener('click', function (e) {
+            // 💡 ডাবল ট্রিগার হওয়া বন্ধ করবে এবং কোয়ান্টিটি নিখুঁতভাবে ১ করে বাড়াবে/কমাবে
+            e.preventDefault();
+            e.stopImmediatePropagation();
 
             let row = this.closest('tr');
             let input = row.querySelector('.qty-input');
@@ -284,4 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 </script>
+
+
+
 @endsection

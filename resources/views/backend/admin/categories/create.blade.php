@@ -5,7 +5,9 @@
     <h4 class="mb-0 text-dark font-weight-bold">{{ __('Create Category') }}</h4>
 </div>
 
-<div class="container">
+
+<div class="container-fluid">
+
 
     <div class="card shadow-sm border-0">
 
@@ -13,7 +15,7 @@
 
             <!-- Header -->
             <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
-               <h4 class="mb-0 text-dark font-weight-bold">Create Add Category</h4>
+               <h4 class="mb-0 text-dark font-weight-bold"> Add Category</h4>
                 <!-- Back Button -->
               <a href="{{ route('categories.index') }}" class="btn btn-primary rounded-pill px-4 py-2 shadow-sm">
                 <i class="fas fa-arrow-left me-2"></i> Back

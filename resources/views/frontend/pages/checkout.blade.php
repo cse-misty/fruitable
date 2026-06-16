@@ -24,43 +24,43 @@
                             <div class="row">
                                 <div class="col-md-12 col-lg-6">
                                     <div class="form-item w-100">
-                                        <label class="form-label my-3">First Name<sup>*</sup></label>
+                                        <label class="form-label my-3">First Name<span class="text-danger">*</span></label>
                                         <input type="text" name="first_name" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-lg-6">
                                     <div class="form-item w-100">
-                                        <label class="form-label my-3">Last Name<sup>*</sup></label>
+                                        <label class="form-label my-3">Last Name<span class="text-danger">*</span></label>
                                         <input type="text" name="last_name" class="form-control">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-item">
-                                <label class="form-label my-3">Company Name<sup>*</sup></label>
+                                <label class="form-label my-3">Company Name<span class="text-danger">*</span></label>
                                 <input type="text" name="company_name" class="form-control">
                             </div>
                             <div class="form-item">
-                                <label class="form-label my-3">Address <sup>*</sup></label>
+                                <label class="form-label my-3">Address <span class="text-danger">*</span></label>
                                 <input type="text" name="shipping_address" class="form-control" placeholder="House Number Street Name">
                             </div>
                             <div class="form-item">
-                                <label class="form-label my-3">Town/City<sup>*</sup></label>
+                                <label class="form-label my-3">Town/City<span class="text-danger">*</span></label>
                                 <input type="text" name="city" class="form-control">
                             </div>
                             <div class="form-item">
-                                <label class="form-label my-3">Country<sup>*</sup></label>
+                                <label class="form-label my-3">Country<span class="text-danger">*</span></label>
                                 <input type="text" name="country" class="form-control">
                             </div>
                             <div class="form-item">
-                                <label class="form-label my-3">Postcode/Zip<sup>*</sup></label>
+                                <label class="form-label my-3">Postcode/Zip<span class="text-danger">*</span></label>
                                 <input type="text" name="postcode" class="form-control">
                             </div>
                             <div class="form-item">
-                                <label class="form-label my-3">Mobile<sup>*</sup></label>
+                                <label class="form-label my-3">Mobile<span class="text-danger">*</span></label>
                                 <input type="tel" name="mobile" class="form-control">
                             </div>
                             <div class="form-item">
-                                <label class="form-label my-3">Email Address<sup>*</sup></label>
+                                <label class="form-label my-3">Email Address<span class="text-danger">*</span></label>
                                 <input type="email" name="email" class="form-control">
                             </div>
                             <div class="form-check my-3">
@@ -258,7 +258,7 @@
                                     value="COD"
                                     checked>
                                 <label class="form-check-label" for="payment_cod">
-                                    Cash on Delivery 
+                                    Cash on Delivery
                                 </label>
                             </div>
 

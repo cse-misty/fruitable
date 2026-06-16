@@ -1,32 +1,15 @@
 @extends('frontend.layouts')
 @section('content')
-     {{-- <!-- Modal Search Start -->
-        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-fullscreen">
-                <div class="modal-content rounded-0">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body d-flex align-items-center">
-                        <div class="input-group w-75 mx-auto d-flex">
-                            <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal Search End --> --}}
+
 
 
         <!-- Hero Start -->
-        <div class="container-fluid py-5 mb-5 hero-header">
+        {{-- <div class="container-fluid py-5 mb-5 hero-header">
             <div class="container py-5">
                 <div class="row g-5 align-items-center">
                     <div class="col-md-12 col-lg-7">
                         <h4 class="mb-3 text-secondary">100% Organic Foods</h4>
-                        <h1 class="mb-5 display-3 text-primary">Organic Veggies & Fruits Foods</h1>
+                        <h1 class="mb-5 display-3 text-primary">	Organic Veggies & Fruits Foods</h1>
                         <div class="position-relative mx-auto">
                             <input class="form-control border-2 border-secondary w-75 py-3 px-4 rounded-pill" type="number" placeholder="Search">
                             <button type="submit" class="btn btn-primary border-2 border-secondary py-3 px-4 position-absolute rounded-pill text-white h-100" style="top: 0; right: 25%;">Submit Now</button>
@@ -37,11 +20,11 @@
                             <div class="carousel-inner" role="listbox">
                                 <div class="carousel-item active rounded">
                                     <img src="{{asset('frontend/assets/img/hero-img-1.png')}}" class="img-fluid w-100 h-100 bg-secondary rounded" alt="First slide">
-                                    <a href="#" class="btn px-4 py-2 text-white rounded">Fruites</a>
+                                    <a href="#" class="btn px-4 py-2 text-white rounded">Fuitable</a>
                                 </div>
                                 <div class="carousel-item rounded">
                                     <img src="{{asset('frontend/assets/img/hero-img-2.jpg')}}" class="img-fluid w-100 h-100 rounded" alt="Second slide">
-                                    <a href="#" class="btn px-4 py-2 text-white rounded">Vesitables</a>
+                                    <a href="#" class="btn px-4 py-2 text-white rounded">Vesitable</a>
                                 </div>
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
@@ -56,9 +39,136 @@
                     </div>
                 </div>
             </div>
+        </div> --}}
+
+        <div class="container-fluid py-5 mb-5 hero-header">
+            <div class="container py-5">
+                <div class="row g-5 align-items-center">
+
+                    @php
+                        $sliderSingle = method_exists($heroSliders, 'first')
+                            ? $heroSliders->first()
+                            : $heroSliders;
+                    @endphp
+
+                    @if($sliderSingle)
+
+                        <div class="col-md-12 col-lg-7">
+                            <h4 class="mb-3 text-secondary">
+                                {{ $sliderSingle->sub_title ?? '100% Organic Foods' }}
+                            </h4>
+
+                            <h1 class="mb-5 display-3 text-primary">
+                                {{ $sliderSingle->main_title ?? 'Organic Veggies & Fruits Foods' }}
+                            </h1>
+
+                            <h5 class="p-2 text-black">
+                                {{ $sliderSingle->badge_text }}
+                            </h5>
+
+                            <div class="position-relative mx-auto">
+                                <input
+                                    class="form-control border-2 border-secondary w-75 py-3 px-4 rounded-pill"
+                                    type="text"
+                                    placeholder="Search">
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary border-2 border-secondary py-3 px-4 position-absolute rounded-pill text-white h-100"
+                                    style="top:0; right:25%;">
+                                    Submit Now
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-lg-5">
+
+                            <div id="carouselHero"
+                                class="carousel slide position-relative"
+                                data-bs-ride="carousel"
+                                data-bs-interval="3000">
+
+                                <div class="carousel-inner">
+
+                                    @php
+                                        $imagesArray = is_array($sliderSingle->image)
+                                            ? $sliderSingle->image
+                                            : [];
+
+                                        $buttonTexts = [
+                                            0 => $sliderSingle->text_one ?? 'Fruites',
+                                            1 => $sliderSingle->text_two ?? 'Vegetables',
+                                        ];
+                                    @endphp
+
+                                    @forelse($imagesArray as $imgIndex => $imagePath)
+
+                                        <div class="carousel-item {{ $imgIndex == 0 ? 'active' : '' }}">
+
+                                            <img
+                                                src="{{ asset('storage/' . $imagePath) }}"
+                                                class="img-fluid w-100 rounded"
+                                                alt="Slide {{ $imgIndex + 1 }}"
+                                                onerror="this.onerror=null;this.src='{{ asset('frontend/assets/img/hero-img-1.png') }}';">
+
+                                            <a href="#" class="btn px-4 py-2 text-white rounded">
+                                                {{ $buttonTexts[$imgIndex] ?? ($sliderSingle->badge_text ?? 'View') }}
+                                            </a>
+
+                                        </div>
+
+                                    @empty
+
+                                        <div class="carousel-item active">
+                                            <img
+                                                src="{{ asset('frontend/assets/img/hero-img-1.png') }}"
+                                                class="img-fluid w-100 rounded"
+                                                alt="First Slide">
+
+                                            <a href="#" class="btn px-4 py-2 text-white rounded">
+                                                Fruites
+                                            </a>
+                                        </div>
+
+                                        <div class="carousel-item">
+                                            <img
+                                                src="{{ asset('frontend/assets/img/hero-img-2.jpg') }}"
+                                                class="img-fluid w-100 rounded"
+                                                alt="Second Slide">
+
+                                            <a href="#" class="btn px-4 py-2 text-white rounded">
+                                                Vegetables
+                                            </a>
+                                        </div>
+
+                                    @endforelse
+
+                                </div>
+
+                                <button class="carousel-control-prev"
+                                        type="button"
+                                        data-bs-target="#carouselHero"
+                                        data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon"></span>
+                                </button>
+
+                                <button class="carousel-control-next"
+                                        type="button"
+                                        data-bs-target="#carouselHero"
+                                        data-bs-slide="next">
+                                    <span class="carousel-control-next-icon"></span>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    @endif
+
+                </div>
+            </div>
         </div>
         <!-- Hero End -->
-
 
        <!--  / Category Section Start -->
 
@@ -114,182 +224,190 @@
 
 
         <!-- Fruits Shop Start-->
-    <div class="container-fluid fruite py-5">
-    <div class="container py-5">
+        <div class="container-fluid fruite py-5">
+            <div class="container py-5">
 
-        <div class="tab-class text-center">
+                <div class="tab-class text-center">
 
-            <div class="row g-4">
-
-                <div class="col-lg-4 text-start">
-                    <h1>Our Organic Products</h1>
-                </div>
-
-                <!-- CATEGORY TABS -->
-                <div class="col-lg-8 text-end">
-
-                    <ul class="nav nav-pills d-inline-flex text-center mb-5">
-
-                        <!-- ALL PRODUCTS -->
-                        <li class="nav-item">
-                            <a class="d-flex m-2 py-2 bg-light rounded-pill active"
-                               data-bs-toggle="pill"
-                               href="#tab-all">
-                                <span class="text-dark" style="width: 130px;">
-                                    All Products
-                                </span>
-                            </a>
-                        </li>
-
-                        <!-- DYNAMIC CATEGORIES -->
-                        @foreach($categories as $category)
-                            <li class="nav-item">
-                                <a class="d-flex m-2 py-2 bg-light rounded-pill"
-                                   data-bs-toggle="pill"
-                                   href="#tab-{{ $category->id }}">
-                                    <span class="text-dark" style="width: 130px;">
-                                        {{ $category->title }}
-                                    </span>
-                                </a>
-                            </li>
-                        @endforeach
-
-                    </ul>
-
-                </div>
-            </div>
-
-            <!-- TAB CONTENT -->
-            <div class="tab-content">
-
-                <!-- ALL PRODUCTS -->
-                <div id="tab-all" class="tab-pane fade show p-0 active">
                     <div class="row g-4">
 
-                        @foreach($categories as $category)
-                            @foreach($category->products as $product)
+                        <div class="col-lg-4 text-start">
+                            <h1>Our Organic Products</h1>
+                        </div>
 
-                                <div class="col-md-6 col-lg-4 col-xl-3">
+                        <!-- CATEGORY TABS -->
+                        <div class="col-lg-8 text-end">
 
-                                    <div class="rounded position-relative fruite-item">
+                            <ul class="nav nav-pills d-inline-flex text-center mb-5">
 
-                                        <div class="fruite-img">
-                                            <img src="{{ asset('storage/'.$product->image) }}"
-                                                 class="img-fluid w-100 rounded-top">
-                                        </div>
+                                <!-- ALL PRODUCTS -->
+                                <li class="nav-item">
+                                    <a class="d-flex m-2 py-2 bg-light rounded-pill active"
+                                    data-bs-toggle="pill"
+                                    href="#tab-all">
+                                        <span class="text-dark" style="width: 130px;">
+                                            All Products
+                                        </span>
+                                    </a>
+                                </li>
 
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                             style="top:10px; left:10px;">
-                                            {{ $category->title }}
-                                        </div>
+                                <!-- DYNAMIC CATEGORIES -->
+                                @foreach($categories as $category)
+                                    <li class="nav-item">
+                                        <a class="d-flex m-2 py-2 bg-light rounded-pill"
+                                        data-bs-toggle="pill"
+                                        href="#tab-{{ $category->id }}">
+                                            <span class="text-dark" style="width: 130px;">
+                                                {{ $category->title }}
+                                            </span>
+                                        </a>
+                                    </li>
+                                @endforeach
 
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                            </ul>
 
-                                            <h4>{{ $product->name }}</h4>
+                        </div>
+                    </div>
 
-                                            <p>{{ $product->description }}</p>
+                    <!-- TAB CONTENT -->
+                    <div class="tab-content">
 
-                                            <div class="d-flex justify-content-between flex-lg-wrap">
+                        <!-- ALL PRODUCTS -->
+                        <div id="tab-all" class="tab-pane fade show p-0 active">
+                            <div class="row g-4">
 
-                                                <p class="text-dark fs-5 fw-bold mb-0">
-                                                    {{ format_price($product->price, 2) }}
-                                                </p>
+                                @foreach($categories as $category)
+                                    @foreach($category->products as $product)
 
-                                                <a href="{{ route('web.shop-details', $product->id) }}"
-                                                   class="btn border border-secondary rounded-pill px-3 text-primary">
-                                                    <i class="fa fa-shopping-bag me-2 text-primary"></i>
-                                                    Add to cart
-                                                </a>
+                                        <div class="col-md-6 col-lg-4 col-xl-3">
+
+                                            <div class="rounded position-relative fruite-item">
+
+                                                <div class="fruite-img">
+                                                    <img src="{{ asset('storage/'.$product->image) }}"
+                                                        class="img-fluid w-100 rounded-top">
+                                                </div>
+
+                                                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                                                    style="top:10px; left:10px;">
+                                                    {{ $category->title }}
+                                                </div>
+
+                                                <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+
+                                                    <h4>{{ $product->name }}</h4>
+
+                                                    <p>{{ $product->description }}</p>
+
+                                                    <div class="d-flex justify-content-between flex-lg-wrap">
+
+                                                        <p class="text-dark fs-5 fw-bold mb-0">
+                                                            {{ format_price($product->price, 2) }}
+                                                        </p>
+
+                                                        <a href="{{ route('web.shop-details', $product->id) }}"
+                                                        class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                            <i class="fa fa-shopping-bag me-2 text-primary"></i>
+                                                            Add to cart
+                                                        </a>
+
+                                                    </div>
+
+                                                </div>
 
                                             </div>
 
                                         </div>
 
-                                    </div>
+                                    @endforeach
+                                @endforeach
+
+                            </div>
+                        </div>
+
+                        <!-- CATEGORY WISE TAB -->
+                        @foreach($categories as $category)
+
+                            <div id="tab-{{ $category->id }}" class="tab-pane fade p-0">
+
+                                <div class="row g-4">
+
+                                    @forelse($category->products as $product)
+
+                                        <div class="col-md-6 col-lg-4 col-xl-3">
+
+                                            <div class="rounded position-relative fruite-item">
+
+                                                <div class="fruite-img">
+                                                    <img src="{{ asset('storage/'.$product->image) }}"
+                                                        class="img-fluid w-100 rounded-top">
+                                                </div>
+
+                                                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                                                    style="top:10px; left:10px;">
+                                                    {{ $category->title }}
+                                                </div>
+
+                                                <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+
+                                                    <h4>{{ $product->name }}</h4>
+
+                                                    <p>{{ $product->description }}</p>
+
+                                                    <div class="d-flex justify-content-between flex-lg-wrap">
+
+                                                        <p class="text-dark fs-5 fw-bold mb-0">
+                                                            {{ format_price($product->price, 2) }}
+                                                        </p>
+
+                                                        <a href="{{ route('web.shop-details', $product->id) }}"
+                                                        class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                            <i class="fa fa-shopping-bag me-2 text-primary"></i>
+                                                            Add to cart
+                                                        </a>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    @empty
+                                        <div class="col-12">
+                                            <p>No products found in {{ $category->title }}</p>
+                                        </div>
+                                    @endforelse
 
                                 </div>
 
-                            @endforeach
+                            </div>
+
                         @endforeach
 
                     </div>
+
                 </div>
 
-                <!-- CATEGORY WISE TAB -->
-                @foreach($categories as $category)
-
-                    <div id="tab-{{ $category->id }}" class="tab-pane fade p-0">
-
-                        <div class="row g-4">
-
-                            @forelse($category->products as $product)
-
-                                <div class="col-md-6 col-lg-4 col-xl-3">
-
-                                    <div class="rounded position-relative fruite-item">
-
-                                        <div class="fruite-img">
-                                            <img src="{{ asset('storage/'.$product->image) }}"
-                                                 class="img-fluid w-100 rounded-top">
-                                        </div>
-
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                             style="top:10px; left:10px;">
-                                            {{ $category->title }}
-                                        </div>
-
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-
-                                            <h4>{{ $product->name }}</h4>
-
-                                            <p>{{ $product->description }}</p>
-
-                                            <div class="d-flex justify-content-between flex-lg-wrap">
-
-                                                <p class="text-dark fs-5 fw-bold mb-0">
-                                                     {{ format_price($product->price, 2) }}
-                                                </p>
-
-                                                <a href="{{ route('web.shop-details', $product->id) }}"
-                                                   class="btn border border-secondary rounded-pill px-3 text-primary">
-                                                    <i class="fa fa-shopping-bag me-2 text-primary"></i>
-                                                    Add to cart
-                                                </a>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            @empty
-                                <div class="col-12">
-                                    <p>No products found in {{ $category->title }}</p>
-                                </div>
-                            @endforelse
-
-                        </div>
-
-                    </div>
-
-                @endforeach
-
             </div>
-
         </div>
-
-    </div>
-</div>
         <!-- Fruits Shop End-->
 
 
-        <!-- Featurs Start -->
+        <!-- Product Services -->
         <div class="container-fluid service py-5">
             <div class="container py-5">
+                   <div class="d-flex justify-content-between align-items-center mb-4">
+
+                    <h3 class="section-title mb-0">{{ $services->service_title }}</h3>
+
+                    <a href="{{ route('web.shopping') }}" class="view-all-btn">View All</a>
+
+                </div>
+
                 <div class="row g-4 justify-content-center">
-                    <div class="col-md-6 col-lg-4">
+                    {{-- <div class="col-md-6 col-lg-4">
                         <a href="#">
                             <div class="service-item bg-secondary rounded border border-secondary">
                                 <img src="{{asset('frontend/assets/img/featur-1.jpg')}}" class="img-fluid rounded-top w-100" alt="">
@@ -301,37 +419,125 @@
                                 </div>
                             </div>
                         </a>
-                    </div>
+                    </div> --}}
+
+                    <!-- Fresh Apple--->
+
+                    @if(($services->fresh_status ?? 1) == 1)
+                        <div class="col-md-6 col-lg-4">
+                            <a href="{{ $services->fresh_link ?? '#' }}">
+                                <!-- আগের সব বুটস্ট্র্যাপ ক্লাস (bg-secondary rounded border border-secondary) ঠিক রাখা হলো -->
+                                <div class="service-item bg-secondary rounded border border-secondary"
+                                    style="background-color: {{ $services->fresh_bg_color }} !important; border-color: {{ $services->fresh_bg_color }} !important;">
+
+                                    <!-- ইমেজের অরিজিনাল ক্লাস ঠিক রেখে শুধু ডাইনামিক সোর্স দেওয়া হলো (কোনো ফিক্সড হাইট ছাড়া) -->
+                                    @if(!empty($services->fresh_image))
+                                        <img src="{{ asset('uploads/services/' . $services->fresh_image) }}" class="img-fluid rounded-top w-100" alt="Fresh Image">
+                                    @else
+                                        <img src="{{ asset('frontend/assets/img/featur-1.jpg') }}" class="img-fluid rounded-top w-100" alt="Default Image">
+                                    @endif
+
+                                    <div class="px-4 rounded-bottom">
+                                        <!-- আগের সব ক্লাস (service-content bg-primary text-center p-4 rounded) ঠিক রেখে ব্যাকগ্রাউন্ড কালার ডাইনামিক করা হলো -->
+                                        <div class="service-content bg-primary text-center p-4 rounded"
+                                            style="background-color: {{ $services->fresh_content_bg_color }} !important;">
+
+                                            <!-- Title এবং এর কালার ডাইনামিক -->
+                                            <h5 class="text-white" style="color: {{ $services->fresh_title_color }} !important;">
+                                                {{ $services->fresh_title ?? 'Fresh Apples' }}
+                                            </h5>
+
+                                            <!-- Offer এবং এর কালার ডাইনামিক -->
+                                            <h3 class="mb-0" style="color: {{ $services->fresh_offer_color }} !important;">
+                                                {{ $services->fresh_offer_text ?? '20% OFF' }}
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    @endif
+
+                    <!-- Testy Furites--->
+
+               @if(($services->tasty_status ?? 1) == 1)
                     <div class="col-md-6 col-lg-4">
-                        <a href="#">
-                            <div class="service-item bg-dark rounded border border-dark">
-                                <img src="{{asset('frontend/assets/img/featur-2.jpg')}}" class="img-fluid rounded-top w-100" alt="">
+
+                        <a href="{{ $services->tasty_link ?? '#' }}">
+
+                            <div class="service-item bg-dark rounded border border-dark"
+                                style="background-color: {{ $services->tasty_bg_color }} !important; border-color: {{ $services->tasty_bg_color }} !important;">
+
+
+                                @if(!empty($services->tasty_image))
+                                    <img src="{{ asset('uploads/services/' . $services->tasty_image) }}" class="img-fluid rounded-top w-100" alt="Tasty Image">
+                                @else
+                                    <img src="{{ asset('frontend/assets/img/featur-2.jpg') }}" class="img-fluid rounded-top w-100" alt="Default Tasty Image">
+                                @endif
+
                                 <div class="px-4 rounded-bottom">
-                                    <div class="service-content bg-light text-center p-4 rounded">
-                                        <h5 class="text-primary">Tasty Fruits</h5>
-                                        <h3 class="mb-0">Free delivery</h3>
+
+                                    <div class="service-content bg-light text-center p-4 rounded"
+                                        style="background-color: {{ $services->tasty_content_bg_color }} !important;">
+
+
+                                        <h5 class="text-primary" style="color: {{ $services->tasty_title_color }} !important;">
+                                            {{ $services->tasty_title ?? 'Tasty Fruits' }}
+                                        </h5>
+
+
+                                        <h3 class="mb-0" style="color: {{ $services->tasty_offer_color }} !important;">
+                                            {{ $services->tasty_offer_text ?? 'Free delivery' }}
+                                        </h3>
                                     </div>
                                 </div>
                             </div>
                         </a>
                     </div>
-                    <div class="col-md-6 col-lg-4">
-                        <a href="#">
-                            <div class="service-item bg-primary rounded border border-primary">
-                                <img src="{{asset('frontend/assets/img/featur-3.jpg')}}" class="img-fluid rounded-top w-100" alt="">
-                                <div class="px-4 rounded-bottom">
-                                    <div class="service-content bg-secondary text-center p-4 rounded">
-                                        <h5 class="text-white">Exotic Vegitable</h5>
-                                        <h3 class="mb-0">Discount 30$</h3>
+                @endif
+
+            <!-- Exotic Vegitable--->
+
+                    @if(($services->exotic_status ?? 1) == 1)
+                        <div class="col-md-6 col-lg-4">
+
+                            <a href="{{ $services->exotic_link ?? '#' }}">
+
+                                <div class="service-item bg-primary rounded border border-primary"
+                                    style="background-color: {{ $services->exotic_bg_color }} !important; border-color: {{ $services->exotic_bg_color }} !important;">
+
+
+                                    @if(!empty($services->exotic_image))
+                                        <img src="{{ asset('uploads/services/' . $services->exotic_image) }}" class="img-fluid rounded-top w-100" alt="Exotic Image">
+                                    @else
+                                        <img src="{{ asset('frontend/assets/img/featur-3.jpg') }}" class="img-fluid rounded-top w-100" alt="Default Exotic Image">
+                                    @endif
+
+                                    <div class="px-4 rounded-bottom">
+
+                                        <div class="service-content bg-secondary text-center p-4 rounded"
+                                            style="background-color: {{ $services->exotic_content_bg_color }} !important;">
+
+
+                                            <h5 class="text-white" style="color: {{ $services->exotic_title_color }} !important;">
+                                                {{ $services->exotic_title ?? 'Exotic Vegitable' }}
+                                            </h5>
+
+
+                                            <h3 class="mb-0" style="color: {{ $services->exotic_offer_color }} !important;">
+                                                {{ $services->exotic_offer_text ?? 'Discount 30$' }}
+                                            </h3>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
+                            </a>
+                        </div>
+                    @endif
+
                 </div>
             </div>
         </div>
-        <!-- Featurs End -->
+        <!-- Product Services -->
 
 
         <!-- Vesitable Shop Start-->

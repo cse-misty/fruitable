@@ -446,88 +446,48 @@
     </div>
 </div>
 
-
 <!-- ================= JS ================= -->
+
+<script src="https://jquery.com"></script>
+
 <script>
     let loginModal = null;
 
     document.addEventListener('DOMContentLoaded', function () {
-        loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-    });
 
-    function openLoginModal() {
-        loginModal.show();
-    }
-
-    function closeLoginModal() {
-        loginModal.hide();
-    }
-</script>
-<script>
-
-let loginModal = null;
-
-document.addEventListener('DOMContentLoaded', function () {
-
-    loginModal = new bootstrap.Modal(
-        document.getElementById('loginModal')
-    );
-
-    // auto open if session exists
-    @if(session('admin_password_reset_email') || session('admin_password_reset_verified'))
-        loginModal.show();
-    @endif
-
-});
-
-// open modal
-function openLoginModal() {
-    loginModal.show();
-}
-
-// close modal
-function closeLoginModal() {
-    loginModal.hide();
-}
-
-// show forgot password
-function showForgotStep() {
-
-    document.getElementById('step-login').style.display = 'none';
-    document.getElementById('step-email').style.display = 'block';
-}
-
-// back to login
-function backToLogin() {
-
-    document.getElementById('step-email').style.display = 'none';
-    document.getElementById('step-login').style.display = 'block';
-}
-
-</script>
+        loginModal = new bootstrap.Modal(document.getElementById('loginModal'), {
+            keyboard: false
+        });
 
 
-<script src="https://jquery.com"></script>
-<script>
-    $(document).ready(function() {
-
-        @if(session('open_login'))
-            var myModal = new bootstrap.Modal(document.getElementById('loginModal'), {
-                keyboard: false
-            });
-            myModal.show();
+        @if(session('admin_password_reset_email') || session('admin_password_reset_verified') || session('open_login'))
+            loginModal.show();
         @endif
     });
 
 
     function openLoginModal() {
-        var myModal = new bootstrap.Modal(document.getElementById('loginModal'));
-        myModal.show();
+        if (loginModal) {
+            loginModal.show();
+        }
     }
 
+    function closeLoginModal() {
+        if (loginModal) {
+            loginModal.hide();
+        }
+    }
 
+  
+    function showForgotStep() {
+        document.getElementById('step-login').style.display = 'none';
+        document.getElementById('step-email').style.display = 'block';
+    }
 
-
+    function backToLogin() {
+        document.getElementById('step-email').style.display = 'none';
+        document.getElementById('step-login').style.display = 'block';
+    }
 </script>
 
 

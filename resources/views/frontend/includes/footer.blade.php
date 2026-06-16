@@ -61,7 +61,7 @@
                             <p>Email: {{ $setting->email_primary ?? '' }}</p>
                             <p>Phone: {{ $setting->phone_1 ?? '' }}</p>
                             <p>Payment Accepted</p>
-                            <img src="img/payment.png" class="img-fluid" alt="">
+                           
                         </div>
                     </div>
                 </div>
