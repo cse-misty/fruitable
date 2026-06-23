@@ -1,23 +1,17 @@
 @extends('backend.dashboard')
 @section('content')
 
-    <div class="d-flex align-items-center justify-content-between px-3 mb-3">
-        <h4 class="mb-0">{{ __('product List') }}</h4>
-    </div>
+
 
     <div class="container-fluid">
-
-
         <div class="card">
-
             <div class="card-body">
-
                 <!-- Header -->
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
 
                     <!-- LEFT SIDE -->
                     <h5 class="card-title mb-0">
-                        {{ __('Products') }}
+                        {{ __('Products List') }}
                     </h5>
 
                     <!-- RIGHT SIDE -->
@@ -26,7 +20,7 @@
                         <a href="{{ route('products.create') }}" class="btn btn-success btn-sm p-2 d-flex align-items-center mb-3">
                             <i class="fas fa-plus me-1"></i> Add Product
                         </a>
-                        <form action="{{ route('products.index') }}" method="GET" class="d-flex mb-0">
+                        {{-- <form action="{{ route('products.index') }}" method="GET" class="d-flex mb-0">
                             <div class="input-group input-group-sm" style="width: 250px;">
                                 <input type="text"
                                     name="search"
@@ -37,7 +31,7 @@
                                     Search
                                 </button>
                             </div>
-                        </form>
+                        </form> --}}
                     </div>
 
 
@@ -46,7 +40,7 @@
                 <!-- Table -->
                 <div class="table-responsive">
 
-                    <table class="table table-hover table-bordered align-middle">
+                    <table class="table table-hover table-bordered align-middle" id="orderMenage" class="display">
 
                         <thead class="table-light">
                             <tr>
@@ -54,6 +48,7 @@
                                 <th>Image</th>
                                 <th>Name</th>
                                 <th>Category Name</th>
+                                 <th>Sub Category </th>
                                 <th>Priority</th>
                                 <th class="text-center" style="width: 100px;">Status</th>
                                 <th class="text-center" style="width: 150px;">Action</th>
@@ -96,6 +91,16 @@
                                         @if($product->category)
                                             <span class="badge bg-secondary">
                                                 {{ $product->category->title }}
+                                            </span>
+                                        @else
+                                            <span class="text-muted">N/A</span>
+                                        @endif
+                                    </td>
+
+                                      <td>
+                                        @if($product->subcategory)
+                                            <span class="badge bg-secondary">
+                                                {{ $product->subcategory->title }}
                                             </span>
                                         @else
                                             <span class="text-muted">N/A</span>
@@ -170,6 +175,10 @@
                         </tbody>
 
                     </table>
+                        <!-- Pagination -->
+        <div class="mt-3">
+            {{ $products->withQueryString()->links() }}
+        </div>
 
                 </div>
 
@@ -177,10 +186,7 @@
 
         </div>
 
-        <!-- Pagination -->
-        <div class="mt-3">
-            {{ $products->withQueryString()->links() }}
-        </div>
+
 
     </div>
 

@@ -95,7 +95,7 @@
                             <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
                             <div class="d-flex justify-content-between mb-4">
                                 <h5 class="mb-0 me-4">Subtotal:</h5>
-                                <p class="mb-0" id="cart-subtotal">{{ format_price($subTotal, 2) }}</p> 
+                                <p class="mb-0" id="cart-subtotal">{{ format_price($subTotal, 2) }}</p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h5 class="mb-0 me-4">Shipping</h5>
@@ -124,7 +124,7 @@
 </div>
 <!-- Cart Page End -->
 
-<script src="https://jquery.com"></script>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {

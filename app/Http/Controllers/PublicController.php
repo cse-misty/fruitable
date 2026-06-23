@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AboutUs;
 use App\Models\Category;
 use App\Models\Faq;
 use App\Models\Product;
@@ -22,11 +23,13 @@ class PublicController extends Controller
              ->get();
 
 
-        $products = Product::select('id','name','category_id','price','priority','status','image','description')
+       $products = Product::select('id', 'name', 'category_id', 'sub_category_id', 'price', 'priority', 'status', 'image', 'description')
+            ->with(['category:id,title', 'subCategory:id,title']) 
             ->where('status', 1)
-            ->orderBy('priority')
+            ->orderBy('priority', 'asc')
             ->limit(4)
-             ->get();
+            ->get();
+
 
 
         $heroSliders = HeroSlider::select('id', 'sub_title', 'main_title', 'badge_text', 'text_one', 'text_two', 'image')
@@ -48,7 +51,9 @@ class PublicController extends Controller
             ->first();
 
 
-        return view('frontend.pages.app', compact('categories', 'products','heroSliders','services'));
+
+
+        return view('frontend.pages.app', compact('categories', 'products','heroSliders','services',));
     }
     public function master(){
         $categoriesCount = Category::count();
@@ -81,5 +86,14 @@ class PublicController extends Controller
       public function contact(){
          $settings = WebSetting::first();
         return view('frontend.pages.contact',compact('settings'));
+    }
+
+    public function about(){
+        $about = AboutUs::first();
+        return view('frontend.pages.about', compact('about'));
+    }
+
+    public function privacyPolicy(){
+        return view('frontend.pages.privacyPolicy');
     }
 }

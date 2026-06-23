@@ -14,7 +14,7 @@
 
             <!-- Table -->
             <div class="table-responsive">
-                <table class="table table-hover table-bordered align-middle">
+                <table class="table table-hover table-bordered align-middle" id="orderMenage" class="display">
                     <thead class="table-light">
                         <tr>
                             <th class="text-center" style="width: 70px;">SL</th>

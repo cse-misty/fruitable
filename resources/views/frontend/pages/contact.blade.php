@@ -31,13 +31,7 @@
                             </div>
                         </div>
                         <div class="col-lg-7">
-                            <!-- Success Message Section -->
-                            @if(session('success'))
-                                <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm mb-4" role="alert">
-                                    <strong>Success!</strong> {{ session('success') }}
-                                    <button type="submit" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                            @endif
+
 
 
                             <form id="contactForm" action="{{ route('contact.store') }}" method="POST" class="needs-validation"  >
@@ -97,33 +91,13 @@
         </div>
         <!-- Contact End -->
 
-        <script>
-document.getElementById("contactForm").addEventListener("submit", function(e) {
-    e.preventDefault();
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 
-    let form = e.target;
-    let formData = new FormData(form);
 
-    fetch("{{ route('contact.store') }}", {
-        method: "POST",
-        body: formData,
-        headers: {
-            "X-Requested-With": "XMLHttpRequest"
-        }
-    })
-    .then(res => res.json())
-    .then(data => {
-        if(data.status === "success") {
-            alert(data.message); // popup
-
-            form.reset(); // clear form
-        }
-    })
-    .catch(error => {
-        alert("Something went wrong!");
-    });
-});
-</script>
 
 @endsection
 

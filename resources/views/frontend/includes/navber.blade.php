@@ -40,23 +40,23 @@
 
                     <a href="{{ route('index') }}"
                        class="nav-item nav-link {{ request()->routeIs('index') ? 'active' : '' }}">
-                        Home
+                         {{ __('Home') }}
                     </a>
 
                     <a href="{{ route('web.shopping') }}"
                        class="nav-item nav-link {{ request()->routeIs('web.shopping') ? 'active' : '' }}">
-                        Shop
+                        {{ __('Shop') }}
                     </a>
 
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle {{ request()->routeIs('cart.index') || request()->routeIs('checkout.index') ? 'active' : '' }}" data-bs-toggle="dropdown">
-                            Pages
+                            {{ __('Pages') }}
                         </a>
 
                         <div class="dropdown-menu m-0 bg-secondary rounded-0">
 
                             <a href="{{ route('cart.index') }}" class="dropdown-item {{ request()->routeIs('cart.index') ? 'active' : '' }}">
-                                Cart
+                                {{ __('Cart') }}
                                 @if(session()->has('cart') && count(session('cart')) > 0)
                                     <span class="badge bg-danger ms-1">{{ count(session('cart')) }}</span>
                                 @endif
@@ -64,7 +64,7 @@
 
 
                             <a href="{{ route('checkout.index') }}" class="dropdown-item {{ request()->routeIs('checkout.index') ? 'active' : '' }}">
-                                Checkout
+                                {{ __('Checkout') }}
                             </a>
 
                             <a href="#" class="dropdown-item">Testimonial</a>
@@ -75,16 +75,33 @@
 
                         <a href="{{ route('web.faq') }}"
                        class="nav-item nav-link {{ request()->routeIs('web.faq') ? 'active' : '' }}">
-                        FAQ
+                        {{ __('FAQ') }}
                     </a>
                         <a href="{{ route('web.contact') }}"
                        class="nav-item nav-link {{ request()->routeIs('web.contact') ? 'active' : '' }}">
-                        Contact
+                        {{ __('Contact') }}
                     </a>
+
+
 
 
 
                 </div>
+                <div class="language-switcher me-3">
+                    @if(App::isLocale('bn'))
+
+                        <a href="{{ route('lang.switch', 'en') }}" class="btn btn-sm btn-outline-dark fw-bold"> বাংলা</a>
+                    @else
+
+                        <a href="{{ route('lang.switch', 'bn') }}" class="btn btn-sm btn-outline-success fw-bold">English</a>
+                    @endif
+                </div>
+
+
+
+
+
+
 
                 <!-- RIGHT SIDE ICONS -->
                 <div class="d-flex m-3 me-0">
@@ -124,14 +141,13 @@
                     @auth
                     <div class="dropdown">
 
-                    <button class="btn d-flex align-items-center justify-content-center p-0 border-0 shadow-none"
-                            data-bs-toggle="dropdown"
-                            style="width:40px;height:40px; outline: none; box-shadow: none;">
+                        <button class="btn d-flex align-items-center justify-content-center p-0 border-0 shadow-none"
+                                data-bs-toggle="dropdown"
+                                style="width:40px;height:40px; outline: none; box-shadow: none;">
 
-                        <i class="fas fa-user-circle text-primary" style="font-size: 40px;"></i>
+                            <i class="fas fa-user-circle text-primary" style="font-size: 40px;"></i>
 
-                    </button>
-
+                        </button>
 
 
                         <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3">
@@ -213,194 +229,110 @@
 
             </div>
 
-            <!-- BODY -->
-            {{-- <div class="modal-body p-4">
 
-                <form method="POST" action="{{ route('login') }}">
-                    @csrf
 
-                    <!-- Email -->
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Email Address</label>
-                        <input type="email"
-                               name="email"
-                               class="form-control form-control-lg rounded-3"
-                               placeholder="Enter your email"
-                               required>
-                    </div>
-
-                    <!-- Password -->
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Password</label>
-                        <input type="password"
-                               name="password"
-                               class="form-control form-control-lg rounded-3"
-                               placeholder="Enter your password"
-                               required>
-                    </div>
-
-                    <!-- Remember + Forgot -->
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="remember" id="remember">
-                            <label class="form-check-label small" for="remember">
-                                Remember me
-                            </label>
-                        </div>
-
-                        <a href="{{ route('password.request') }}"
-                           class="text-primary small text-decoration-none">
-                            Forgot Password?
-                        </a>
-
-                    </div>
-
-                    <!-- Login Button -->
-                    <button type="submit"
-                            class="btn btn-primary w-100 py-2 rounded-3 fw-semibold">
-                        Login
-                    </button>
-
-                </form>
-
-                <!-- Footer -->
-                <div class="text-center mt-3">
-                    <small class="text-muted">
-                        Don’t have an account?
-                        <a href="{{ route('register') }}"
-                           class="text-primary fw-semibold text-decoration-none">
-                            Sign up
-                        </a>
-                    </small>
-                </div>
-
-            </div> --}}
-
-            <div class="modal-body p-4">
+      <div class="modal-body p-4">
 
     {{-- ================= LOGIN STEP ================= --}}
-    <div id="step-login"
-         @if(session('admin_password_reset_email')) style="display:none" @endif>
+    <div id="step-login" @if(session('admin_password_reset_email')) style="display:none" @endif>
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
             <div class="mb-3">
                 <label class="form-label fw-semibold">Email Address</label>
-                <input type="email" name="email"
+                <!--id="modal_email"  -->
+                <input type="email" name="email" id="modal_email"
                        class="form-control form-control-lg rounded-3"
                        required>
             </div>
 
             <div class="mb-3">
                 <label class="form-label fw-semibold">Password</label>
-                <input type="password" name="password"
+                <!--  id="modal_password"  -->
+                <input type="password" name="password" id="modal_password"
                        class="form-control form-control-lg rounded-3"
                        required>
             </div>
 
             <div class="d-flex justify-content-between mb-3">
-
                 <div class="form-check">
                     <input type="checkbox" name="remember" class="form-check-input">
                     <label class="form-check-label small">Remember me</label>
                 </div>
-
                 <a href="javascript:void(0)"
                    onclick="showForgotStep()"
                    class="text-primary small text-decoration-none">
                     Forgot Password?
                 </a>
-
             </div>
 
             <button class="btn btn-primary w-100">Login</button>
+
+            <!-- demo credential section -->
+            <div class="mt-4 border-top pt-3 text-center bg-light p-3 rounded-3">
+                <small class="text-muted d-block mb-2 fw-bold">Don’t have an account? Sign Up</small>
+
+                <div class="d-flex justify-content-between align-items-center bg-white p-3 rounded border mx-auto" style="max-width: 350px;">
+                    <div class="text-start small text-dark lh-sm">
+                        <p class="text-primary">Demo User Credentials</p>
+                        <div><strong>Email:</strong> <span id="demoEmailText">{{ env('DEMO_USER_EMAIL', 'user@example.com') }}</span></div>
+                        <div><strong>Pass:</strong> <span id="demoPasswordText">{{ env('DEMO_USER_PASSWORD', 'password123') }}</span></div>
+                    </div>
+
+                    <button type="button" class="btn btn-outline-primary px-3 py-2 fw-bold" id="copyAllDemoBtn" title="Copy & Fill Credentials">
+                        <i class="fas fa-copy me-1"></i>
+                    </button>
+                </div>
+            </div>
         </form>
-
     </div>
-
 
     {{-- ================= EMAIL STEP ================= --}}
-    <div id="step-email"
-         @if(!session('admin_password_reset_email')) style="display:none" @endif>
-
+    <div id="step-email" @if(!session('admin_password_reset_email')) style="display:none" @endif>
         <form method="POST" action="{{ route('otp.send') }}">
             @csrf
-
             <div class="mb-3">
                 <label class="form-label fw-semibold">Enter Email</label>
-                <input type="email" name="email"
-                       class="form-control form-control-lg rounded-3"
-                       required>
+                <input type="email" name="email" class="form-control form-control-lg rounded-3" required>
             </div>
-
             <button class="btn btn-primary w-100">Send OTP</button>
         </form>
-
         <div class="text-center mt-2">
-            <a href="javascript:void(0)" onclick="backToLogin()">
-                Back to Login
-            </a>
+            <a href="javascript:void(0)" onclick="backToLogin()">Back to Login</a>
         </div>
-
     </div>
-
 
     {{-- ================= OTP STEP ================= --}}
-    <div id="step-otp"
-         @if(!session('admin_password_reset_email') || session('admin_password_reset_verified'))
-             style="display:none"
-         @endif>
-
+    <div id="step-otp" @if(!session('admin_password_reset_email') || session('admin_password_reset_verified')) style="display:none" @endif>
         <form method="POST" action="{{ route('otp.verify') }}">
             @csrf
-
-            <input type="hidden" name="email"
-                   value="{{ session('admin_password_reset_email') }}">
-
+            <input type="hidden" name="email" value="{{ session('admin_password_reset_email') }}">
             <div class="mb-3">
                 <label class="form-label fw-semibold">Enter OTP</label>
-                <input type="text" name="otp"
-                       class="form-control form-control-lg rounded-3"
-                       required>
+                <input type="text" name="otp" class="form-control form-control-lg rounded-3" required>
             </div>
-
             <button class="btn btn-primary w-100">Verify OTP</button>
         </form>
-
     </div>
 
-
     {{-- ================= RESET STEP ================= --}}
-            <div id="step-reset"
-                @if(!session('admin_password_reset_verified'))
-                    style="display:none"
-                @endif>
-
-                <form method="POST" action="{{ route('password.reset.submit') }}">
-                    @csrf
-
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">New Password</label>
-                        <input type="password" name="password"
-                            class="form-control form-control-lg rounded-3"
-                            required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Confirm Password</label>
-                        <input type="password" name="password_confirmation"
-                            class="form-control form-control-lg rounded-3"
-                            required>
-                    </div>
-
-                    <button class="btn btn-primary w-100">Reset Password</button>
-                </form>
-
+    <div id="step-reset" @if(!session('admin_password_reset_verified')) style="display:none" @endif>
+        <form method="POST" action="{{ route('password.reset.submit') }}">
+            @csrf
+            <div class="mb-3">
+                <label class="form-label fw-semibold">New Password</label>
+                <input type="password" name="password" class="form-control form-control-lg rounded-3" required>
             </div>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Confirm Password</label>
+                <input type="password" name="password_confirmation" class="form-control form-control-lg rounded-3" required>
+            </div>
+            <button class="btn btn-primary w-100">Reset Password</button>
+        </form>
+    </div>
+</div>
 
-        </div>
 
         </div>
     </div>
@@ -408,20 +340,7 @@
 </div>
 
 <!-- ================= SEARCH MODAL ================= -->
-{{-- <div class="modal fade" id="searchModal">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h6>Search</h6>
-                <button class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
 
-            <div class="modal-body">
-                <input type="search" class="form-control" placeholder="Search...">
-            </div>
-        </div>
-    </div>
-</div> --}}
 
 <div class="modal fade" id="searchModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -447,10 +366,102 @@
 </div>
 
 <!-- ================= JS ================= -->
-
-<script src="https://jquery.com"></script>
-
 <script>
+
+    let loginModal = null;
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+
+        const modalElement = document.getElementById('loginModal');
+        if (modalElement) {
+            loginModal = new bootstrap.Modal(modalElement, {
+                keyboard: false
+            });
+        }
+
+
+        @if(session('admin_password_reset_email') || session('admin_password_reset_verified') || session('open_login'))
+            if (loginModal) {
+                loginModal.show();
+            }
+        @endif
+
+           let copyAllBtn = document.getElementById('copyAllDemoBtn');
+        if (copyAllBtn) {
+            copyAllBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+
+
+                let emailText = document.getElementById('demoEmailText').innerText.trim();
+                let passwordText = document.getElementById('demoPasswordText').innerText.trim();
+
+
+                let emailField = document.getElementById('modal_email');
+                let passwordField = document.getElementById('modal_password');
+
+                if (emailField && passwordField) {
+                    emailField.value = emailText;
+                    passwordField.value = passwordText;
+                } else {
+                    console.error("Target input fields not found! Make sure id='modal_email' and id='modal_password' are added to inputs.");
+                }
+
+
+                let combinedText = "Email: " + emailText + "\nPassword: " + passwordText;
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(combinedText);
+                } else {
+                    let textArea = document.createElement("textarea");
+                    textArea.value = combinedText;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                }
+
+
+                let originalIcon = copyAllBtn.innerHTML;
+                copyAllBtn.innerHTML = '<i class="fas fa-check text-white"></i>';
+                copyAllBtn.classList.remove('btn-outline-primary');
+                copyAllBtn.classList.add('btn-success');
+
+                setTimeout(() => {
+                    copyAllBtn.innerHTML = originalIcon;
+                    copyAllBtn.classList.remove('btn-success');
+                    copyAllBtn.classList.add('btn-outline-primary');
+                }, 2000);
+            });
+        }
+    });
+
+
+    function openLoginModal() {
+        if (loginModal) {
+            loginModal.show();
+        }
+    }
+
+    function closeLoginModal() {
+        if (loginModal) {
+            loginModal.hide();
+        }
+    }
+
+
+    function showForgotStep() {
+        document.getElementById('step-login').style.display = 'none';
+        document.getElementById('step-email').style.display = 'block';
+    }
+
+    function backToLogin() {
+        document.getElementById('step-email').style.display = 'none';
+        document.getElementById('step-login').style.display = 'block';
+    }
+</script>
+
+
+{{-- <script>
     let loginModal = null;
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -478,7 +489,7 @@
         }
     }
 
-  
+
     function showForgotStep() {
         document.getElementById('step-login').style.display = 'none';
         document.getElementById('step-email').style.display = 'block';
@@ -488,7 +499,91 @@
         document.getElementById('step-email').style.display = 'none';
         document.getElementById('step-login').style.display = 'block';
     }
+</script> --}}
+
+{{-- @if(session('open_login'))
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        var myModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        myModal.show();
+    });
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+
+    let demoBtn = document.getElementById('useDemoBtn');
+    if (demoBtn) {
+        demoBtn.addEventListener('click', function() {
+
+            document.getElementById('modal_email').value = "user@example.com";
+            document.getElementById('modal_password').value = "password123";
+
+
+        });
+    }
+
+});
+
+
 </script>
+@endif --}}
+
+{{--
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    let copyAllBtn = document.getElementById('copyAllDemoBtn');
+
+    if (copyAllBtn) {
+        copyAllBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+
+
+            let emailText = document.getElementById('demoEmailText').innerText.trim();
+            let passwordText = document.getElementById('demoPasswordText').innerText.trim();
+
+
+            let emailField = document.getElementById('modal_email');
+            let passwordField = document.getElementById('modal_password');
+
+            if (emailField && passwordField) {
+                emailField.value = emailText;
+                passwordField.value = passwordText;
+            }
+
+
+            let combinedText = "Email: " + emailText + "\nPassword: " + passwordText;
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(combinedText);
+            } else {
+                let textArea = document.createElement("textarea");
+                textArea.value = combinedText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            }
+
+
+            let originalIcon = copyAllBtn.innerHTML;
+            copyAllBtn.innerHTML = '<i class="fas fa-check text-white"></i>';
+            copyAllBtn.classList.remove('btn-outline-primary');
+            copyAllBtn.classList.add('btn-success');
+
+            setTimeout(() => {
+                copyAllBtn.innerHTML = originalIcon;
+                copyAllBtn.classList.remove('btn-success');
+                copyAllBtn.classList.add('btn-outline-primary');
+            }, 2000);
+        });
+    }
+
+});
+</script> --}}
+
 
 
 

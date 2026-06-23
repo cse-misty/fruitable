@@ -1,163 +1,182 @@
-     <div class="main-sidebar sidebar-style-2">
-        <aside id="sidebar-wrapper">
-          <div class="sidebar-brand">
-            <a href="{{ route('index') }}"> <img alt="image" src="{{asset('backend/assets/img/logo.png')}}" class="header-logo" /> <span
-                class="logo-name">fruitables</span>
+<div class="main-sidebar sidebar-style-2">
+    <aside id="sidebar-wrapper">
+        <div class="sidebar-brand">
+            <a href="{{ route('index') }}">
+                <img alt="image" src="{{asset('backend/assets/img/logo.png')}}" class="header-logo" />
+                <span class="logo-name">fruitables</span>
             </a>
-          </div>
-          <ul class="sidebar-menu">
+        </div>
+        <ul class="sidebar-menu">
             <li class="menu-header">Main</li>
-            <li class="dropdown active">
-              <a href="{{ route('dashboard') }}" class="nav-link"><i data-feather="monitor"></i><span>Dashboard</span></a>
+
+            <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <a href="{{ route('dashboard') }}" class="nav-link">
+                    <i data-feather="monitor"></i><span>Dashboard</span>
+                </a>
             </li>
 
+            <!-- Orders -->
             <li class="{{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.orders.index') }}">
-                    <i data-feather="shopping-cart" style="stroke: #FF5733; width: 18px; height: 18px;"></i>
-                    <span class="ms-2">Manage Orders</span>
+                    <i data-feather="shopping-cart" style="stroke: #14f654;"></i>
+                    <span class="ms-2">Orders</span>
                 </a>
             </li>
 
+            <!-- Reviews -->
+            <li class="{{ request()->routeIs('reviews.*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('reviews.index') }}">
+                    <i data-feather="star" style="stroke: #4114f6;"></i>
+                    <span class="ms-2">Reviews</span>
+                </a>
+            </li>
 
-            <li class="dropdown {{ request()->routeIs('hero.slider.index.*') ? 'active' : '' }}">
-                <a href="#" class="menu-toggle nav-link has-dropdown">
+            <!-- Hero Slider -->
+            <li class="{{ request()->routeIs('hero.slider.*') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('hero.slider.index') }}">
                     <i data-feather="sliders" style="stroke: #ec6332;"></i>
+                    <span class="ms-2">Hero Slider</span>
+                </a>
+            </li>
 
+            <!-- Category Dropdown -->
+            <li class="dropdown {{ request()->routeIs('categories.*') || request()->routeIs('sub-category.*') ? 'active' : '' }}">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="grid" style="stroke: #7CC404; width: 15px; height: 15px;"></i>
+                    <span>Category</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="{{ request()->routeIs('categories.index') ? 'active' : '' }}">
+                        <a class="nav-link d-flex align-items-center gap-2" href="{{ route('categories.index') }}">
+                            <i data-feather="list" style="stroke: #c43a04; width: 14px; height: 14px;"></i>
+                            <span>Category List</span>
+                        </a>
+                    </li>
+                    <li class="{{ request()->routeIs('sub-category.index') ? 'active' : '' }}">
+                        <a class="nav-link d-flex align-items-center gap-2" href="{{ route('sub-category.index') }}">
+                            <i data-feather="layers" style="stroke: #2104c4; width: 14px; height: 14px;"></i>
+                            <span>Sub Category</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
-                    <span>Hero Slider</span>
+            <!-- Products Dropdown -->
+            <li class="dropdown {{ request()->routeIs('products.*') ? 'active' : '' }}">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="shopping-bag" style="stroke: #FFAA1D;"></i>
+                    <span>Products</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="{{ request()->routeIs('products.index') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('products.index') }}">Product List</a>
+                    </li>
+                    <li class="{{ request()->routeIs('products.create') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('products.create') }}">Add Product</a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Services Dropdown -->
+            <li class="dropdown {{ request()->routeIs('services.*') ? 'active' : '' }}">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="briefcase" style="stroke: #0D6EFD;"></i>
+                    <span>Services</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="{{ request()->routeIs('services.index') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('services.index') }}">Add services</a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- FAQ Categories Dropdown (💡 ফিক্সড করা হলো) -->
+            <li class="dropdown {{ request()->routeIs('faq.*') || request()->routeIs('faq.catagory.*') ? 'active' : '' }}">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="help-circle" style="stroke: #4dc142; width: 15px; height: 15px;"></i>
+                    <span>FAQ Categories</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="{{ request()->routeIs('faq.catagory.index') ? 'active' : '' }}">
+                        <a class="nav-link d-flex align-items-center gap-2" href="{{ route('faq.catagory.index') }}">
+                            <i data-feather="folder" style="stroke: #da6a08; width: 14px; height: 14px;"></i>
+                            <span>FAQ Category</span>
+                        </a>
+                    </li>
+                    <li class="{{ request()->routeIs('faq.index') ? 'active' : '' }}">
+                        <a class="nav-link d-flex align-items-center gap-2" href="{{ route('faq.index') }}">
+                            <i data-feather="file-text" style="stroke: #4d3acb; width: 14px; height: 14px;"></i>
+                            <span>FAQ</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Web Setting Dropdown -->
+            <li class="dropdown {{ request()->routeIs('web_settings.*') || request()->routeIs('contact.index') || request()->routeIs('payment.method') || request()->routeIs('about.us.index') || request()->routeIs('pages.index') ? 'active' : '' }}">
+                <a href="#" class="menu-toggle nav-link has-dropdown">
+                    <i data-feather="settings" style="stroke: #e34031; width: 18px; height: 18px;"></i>
+                    <span>Web Setting</span>
                 </a>
 
-                <ul class="dropdown-menu">
-                    <li class="{{ request()->routeIs('hero.slider.index') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('hero.slider.index') }}">
-                        Add Hero Slider
+                <ul class="dropdown-menu"
+                    style="{{ request()->routeIs('web_settings.*') || request()->routeIs('contact.index') || request()->routeIs('payment.method') || request()->routeIs('about.us.index') || request()->routeIs('pages.index') ? 'display: block;' : 'display: none;' }}">
+
+                    <li class="{{ request()->routeIs('web_settings.index') ? 'active' : '' }}">
+                        <a class="nav-link d-flex align-items-center gap-2" href="{{ route('web_settings.index') }}">
+                            <i data-feather="sliders" style="stroke: #6c757d; width: 15px; height: 15px;"></i>
+                            <span>Setting List</span>
+                        </a>
+                    </li>
+
+                    <li class="{{ request()->routeIs('contact.index') ? 'active' : '' }}">
+                        <a class="nav-link d-flex align-items-center gap-2" href="{{ route('contact.index') }}">
+                            <i data-feather="mail" style="stroke: #0d6efd; width: 15px; height: 15px;"></i>
+                            <span>Contact</span>
+                        </a>
+                    </li>
+
+                    <li class="{{ request()->routeIs('payment.method') ? 'active' : '' }}">
+                        <a class="nav-link d-flex align-items-center gap-2" href="{{ route('payment.method') }}">
+                            <i data-feather="credit-card" style="stroke: #198754; width: 15px; height: 15px;"></i>
+                            <span>Payment Method</span>
+                        </a>
+                    </li>
+
+                    <li class="{{ request()->routeIs('about.us.index') ? 'active' : '' }}">
+                        <a class="nav-link d-flex align-items-center gap-2" href="{{ route('about.us.index') }}">
+                            <i data-feather="info" style="stroke: #281987; width: 15px; height: 15px;"></i>
+                            <span>About Us</span>
+                        </a>
+                    </li>
+
+                    <li class="{{ request()->routeIs('pages.index') ? 'active' : '' }}">
+                        <a class="nav-link d-flex align-items-center gap-2" href="{{ route('pages.index') }}">
+                            <i data-feather="shield" style="stroke: #875719; width: 15px; height: 15px;"></i>
+                            <span>Privacy Policy</span>
                         </a>
                     </li>
                 </ul>
             </li>
 
 
-        <li class="dropdown {{ request()->routeIs('categories.*') ? 'active' : '' }}">
-            <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="grid" style="stroke: #7CC404;"></i><span>Category</span></a>
-            <ul class="dropdown-menu">
-                <li class="{{ request()->routeIs('categories.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('categories.index') }}">Category List</a></li>
-                <li class="{{ request()->routeIs('categories.create') ? 'active' : '' }}"><a class="nav-link" href="{{ route('categories.create') }}">Add Category</a></li>
-            </ul>
-        </li>
+            <li>
 
-       <li class="dropdown {{ request()->routeIs('products.*') ? 'active' : '' }}">
-            <a href="#" class="menu-toggle nav-link has-dropdown">
-                <i data-feather="shopping-bag" style="stroke: #FFAA1D;"></i>
+    <a class="nav-link text-danger fw-bold" href="{{ route('logout') }}"
+       onclick="event.preventDefault(); document.getElementById('sidebar-logout-form').submit();">
 
-                <span>Products</span>
-            </a>
-
-            <ul class="dropdown-menu">
-                <li class="{{ request()->routeIs('products.index') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('products.index') }}">
-                        Product List
-                    </a>
-                </li>
-
-                <li class="{{ request()->routeIs('products.create') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('products.create') }}">
-                        Add Product
-                    </a>
-                </li>
-            </ul>
-        </li>
-
-          <li class="dropdown {{ request()->routeIs('services.index.*') ? 'active' : '' }}">
-            <a href="#" class="menu-toggle nav-link has-dropdown">
-                <i data-feather="briefcase" style="stroke: #0D6EFD;"></i>
-
-                <span>Services</span>
-            </a>
-
-            <ul class="dropdown-menu">
-                <li class="{{ request()->routeIs('services.index') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('services.index') }}">
-                     Add services
-                    </a>
-                </li>
-
-                {{-- <li class="{{ request()->routeIs('services.create') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('services.create') }}">
-                         Create services
-                    </a>
-                </li> --}}
-            </ul>
-        </li>
-
-        <li class="dropdown {{ request()->routeIs('faq.catagory.*') ? 'active' : '' }}">
-            <a href="#" class="menu-toggle nav-link has-dropdown">
-                <i data-feather="help-circle" style="stroke: #6F42C1;"></i>
-
-                <span>FAQ Categories</span>
-            </a>
-
-            <ul class="dropdown-menu">
-                <li class="{{ request()->routeIs('faq.catagory.index') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('faq.catagory.index') }}">
-                        FAQ Category
-                    </a>
-                </li>
-
-                <li class="{{ request()->routeIs('faq.index') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('faq.index') }}">
-                         FAQ
-                    </a>
-                </li>
-            </ul>
-        </li>
-
-      <li class="dropdown {{ request()->routeIs('web_settings.index.*', 'web_settings.index', 'contact.index', 'payment.method') ? 'active' : '' }}">
-    <a href="#" class="menu-toggle nav-link has-dropdown">
-        <i data-feather="settings" style="stroke: #e34031; width: 18px; height: 18px;"></i>
-        <span>Web Setting</span>
+        <i data-feather="log-out" style="stroke: #dc3545;"></i>
+        <span class="ms-2 text-dark">Logout</span>
     </a>
 
-    <ul class="dropdown-menu">
-        <!-- 1. Setting List Item -->
-        <li class="{{ request()->routeIs('web_settings.index') ? 'active' : '' }}">
-            <a class="nav-link d-flex align-items-center gap-2" href="{{ route('web_settings.index') }}">
-                <!-- স্লাইডার বা কনফিগারেশন লিস্ট আইকন -->
-                <i data-feather="sliders" style="stroke: #6c757d; width: 15px; height: 15px;"></i>
-                <span>Setting List</span>
-            </a>
-        </li>
 
-        <!-- 2. Contact Item -->
-        <li class="{{ request()->routeIs('contact.index') ? 'active' : '' }}">
-            <a class="nav-link d-flex align-items-center gap-2" href="{{ route('contact.index') }}">
-                <!-- মেইল বা ফোন বুক আইকন -->
-                <i data-feather="mail" style="stroke: #0d6efd; width: 15px; height: 15px;"></i>
-                <span>Contact</span>
-            </a>
-        </li>
-
-        <!-- 3. Payment Method Item -->
-        <li class="{{ request()->routeIs('payment.method') ? 'active' : '' }}">
-            <a class="nav-link d-flex align-items-center gap-2" href="{{ route('payment.method') }}">
-                <!-- ক্রেডিট কার্ড বা পেমেন্ট আইকন -->
-                <i data-feather="credit-card" style="stroke: #198754; width: 15px; height: 15px;"></i>
-                <span>Payment Method</span>
-            </a>
-        </li>
-    </ul>
+    <form id="sidebar-logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        @csrf
+    </form>
 </li>
 
 
-            <li class="dropdown">
-              <a href="#" class="menu-toggle nav-link has-dropdown"><i data-feather="mail"></i><span>Email</span></a>
-              <ul class="dropdown-menu">
-                <li><a class="nav-link" href="email-inbox.html">Inbox</a></li>
-                <li><a class="nav-link" href="email-compose.html">Compose</a></li>
-                <li><a class="nav-link" href="email-read.html">read</a></li>
-              </ul>
-            </li>
 
-
-          </ul>
-        </aside>
-      </div>
+        </ul>
+    </aside>
+</div>

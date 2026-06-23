@@ -35,11 +35,17 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="d-flex flex-column text-start footer-item">
                             <h4 class="text-light mb-3">Shop Info</h4>
-                            <a class="btn-link" href="#">About Us</a>
+                            <a class="btn-link" href="{{ route('web.about') }}">About Us</a>
                             <a class="btn-link" href="{{ route('web.contact') }}">Contact Us</a>
-                            <a class="btn-link" href="#">Privacy Policy</a>
-                            <a class="btn-link" href="#">Terms & Condition</a>
-                            <a class="btn-link" href="#">Return Policy</a>
+
+                             <a class="btn-link" href="{{ route('page.show', 'privacy-policy') }}">Privacy Policy</a>
+                              <a class="btn-link" href="{{ route('page.show', 'terms-conditions') }}">Terms & Conditions</a>
+                               <a class="btn-link" href="{{ route('page.show', 'return-policy') }}">Return Policy</a>
+
+                           {{-- <a href="{{ route('page.show', 'privacy-policy') }}">Privacy Policy</a>
+                            <a href="{{ route('page.show', 'terms-conditions') }}">Terms & Conditions</a>
+                            <a href="{{ route('page.show', 'return-policy') }}">Return Policy</a> --}}
+
                             <a class="btn-link" href="{{ route('web.contact') }}">FAQs & Help</a>
                         </div>
                     </div>
@@ -61,7 +67,7 @@
                             <p>Email: {{ $setting->email_primary ?? '' }}</p>
                             <p>Phone: {{ $setting->phone_1 ?? '' }}</p>
                             <p>Payment Accepted</p>
-                           
+
                         </div>
                     </div>
                 </div>

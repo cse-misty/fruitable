@@ -368,10 +368,10 @@
         <div class="col-md-6">
 
             <div class="status-badge">
-                {{ ucfirst($order->payment_status ?? 'Paid') }}
+                {{ ucfirst($order->status ?? 'Payment Status') }}
             </div>
 
-        </div>
+        </div> 
 
         <div class="col-md-6">
 

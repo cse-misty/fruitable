@@ -71,6 +71,10 @@
                                 <th class="table-light">Category</th>
                                 <td>{{ $product->category->title ?? 'N/A' }}</td>
                             </tr>
+                                  <tr>
+                                <th class="table-light">Sub Category</th>
+                                <td>{{ $product->subcategory->title ?? 'N/A' }}</td>
+                            </tr>
 
                             <tr>
                                 <th class="table-light">Price</th>

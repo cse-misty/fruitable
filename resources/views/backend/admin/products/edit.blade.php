@@ -67,6 +67,31 @@
                     @enderror
                 </div>
 
+                 <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold text-dark">Sub Category</label>
+
+
+                    <select name="sub_category_id"
+                            class="form-control @error('sub_category_id') is-invalid @enderror">
+
+                        <option value="">Select Sub Category</option>
+
+
+                        @foreach($subCategories as $subcategory)
+                            <option value="{{ $subcategory->id }}"
+                                {{ old('sub_category_id', $product->sub_category_id) == $subcategory->id ? 'selected' : '' }}>
+                                {{ $subcategory->title }}
+                            </option>
+                        @endforeach
+
+                    </select>
+
+                    @error('sub_category_id')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+
                 <!-- Priority -->
                 <div class="col-md-6 mb-3">
                     <label class="form-label fw-bold text-dark">Priority</label>

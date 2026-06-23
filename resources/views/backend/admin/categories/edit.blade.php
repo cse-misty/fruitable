@@ -2,11 +2,11 @@
 
 @section('content')
 
-<div class="d-flex align-items-center justify-content-between px-3 mb-3">
+{{-- <div class="d-flex align-items-center justify-content-between px-3 mb-3">
     <h4 class="mb-0 text-dark font-weight-bold">{{ __('Edit Category') }}</h4>
-</div>
+</div> --}}
 
-<div class="container">
+<div class="container-fluid">
 
     <div class="card shadow-sm border-0">
 
@@ -15,7 +15,7 @@
             <!-- Header -->
             <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
                 <h5 class="card-title mb-0 text-dark font-weight-bold">
-                    <i class="fas fa-edit text-warning me-1"></i> {{ __('Update Category Information') }}
+                     {{ __('Update Category Information') }}
                 </h5>
                 <!-- Back Button -->
                 <a href="{{ route('categories.index') }}" class="btn btn-primary rounded-pill px-4 py-2 shadow-sm font-weight-bold">
@@ -26,12 +26,12 @@
             <!-- FORM -->
             <form action="{{ route('categories.update', $category->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                @method('PUT') 
+                @method('PUT')
 
                 <div class="row">
 
                     <!-- Title -->
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label class="form-label font-weight-bold text-dark">Title <span class="text-danger">*</span></label>
                         <input type="text"
                                name="title"
@@ -45,7 +45,7 @@
                     </div>
 
                     <!-- Priority -->
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label class="form-label font-weight-bold text-dark">Priority</label>
                         <input type="number"
                                name="priority"
@@ -81,26 +81,28 @@
                         </div>
                     </div>
 
-                    <!-- Status -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label font-weight-bold text-dark">Status</label>
-                        <select name="status" class="form-select form-control @error('status') is-invalid @enderror">
-                            <option value="1" {{ old('status', $category->status) == '1' ? 'selected' : '' }}>Active</option>
-                            <option value="0" {{ old('status', $category->status) == '0' ? 'selected' : '' }}>Inactive</option>
-                        </select>
-                        @error('status')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+
 
                     <!-- Description -->
-                    <div class="col-md-12 mb-4">
+                    <div class="col-md-9 mb-4">
                         <label class="form-label font-weight-bold text-dark">Description</label>
                         <textarea name="description"
                                   class="form-control @error('description') is-invalid @enderror"
                                   rows="4"
                                   placeholder="Enter category description">{{ old('description', $category->description) }}</textarea>
                         @error('description')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                       <!-- Status -->
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label font-weight-bold text-dark">Status</label>
+                        <select name="status" class="form-select form-control @error('status') is-invalid @enderror">
+                            <option value="1" {{ old('status', $category->status) == '1' ? 'selected' : '' }}>Active</option>
+                            <option value="0" {{ old('status', $category->status) == '0' ? 'selected' : '' }}>Inactive</option>
+                        </select>
+                        @error('status')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>

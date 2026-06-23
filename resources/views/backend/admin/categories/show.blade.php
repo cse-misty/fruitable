@@ -2,9 +2,7 @@
 
 @section('content')
 
-<div class="d-flex align-items-center justify-content-between px-3 mb-3">
-    <h4 class="mb-0 text-dark font-weight-bold">{{ __('Category Details') }}</h4>
-</div>
+
 
 <div class="container-fluid">
 

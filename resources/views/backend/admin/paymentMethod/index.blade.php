@@ -21,28 +21,35 @@
             </h5>
 
        <div class="row">
-        
+
             <!-- Name -->
-            <div class="col-md-6 mb-3">
+            <div class="col-md-2 mb-3">
                 <label class="form-label fw-bold">Name</label>
                 <input type="text" name="name" class="form-control"
                     value="{{ old('name', $stripe->name ?? '') }}">
             </div>
 
             <!-- Title -->
-            <div class="col-md-6 mb-3">
+            <div class="col-md-2 mb-3">
                 <label class="form-label fw-bold">Title</label>
                 <input type="text" name="title" class="form-control"
                     value="{{ old('title', $stripe->title ?? '') }}">
             </div>
 
             <!-- Mode -->
-            <div class="col-md-6 mb-3">
+            <div class="col-md-2 mb-3">
                 <label class="form-label fw-bold">Mode</label>
                 <select name="mode" class="form-control">
                     <option value="sandbox" {{ ($stripe->mode ?? '') == 'sandbox' ? 'selected' : '' }}>Sandbox</option>
                     <option value="live" {{ ($stripe->mode ?? '') == 'live' ? 'selected' : '' }}>Live</option>
                 </select>
+            </div>
+
+               <!-- Payment Gateway Title -->
+            <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold">Payment Gateway Title</label>
+                <input type="text" name="payment_gateway_title" class="form-control"
+                    value="{{ old('payment_gateway_title', $stripe->payment_gateway_title ?? '') }}">
             </div>
 
             <!-- Secret Key -->
@@ -59,12 +66,7 @@
                     value="{{ old('published_key', $stripe->published_key ?? '') }}">
             </div>
 
-            <!-- Payment Gateway Title -->
-            <div class="col-md-6 mb-3">
-                <label class="form-label fw-bold">Payment Gateway Title</label>
-                <input type="text" name="payment_gateway_title" class="form-control"
-                    value="{{ old('payment_gateway_title', $stripe->payment_gateway_title ?? '') }}">
-            </div>
+
 
        <!-- Image -->
         <div class="col-md-6 mb-3">
@@ -83,15 +85,14 @@
 
         </div>
 
-            <!-- Buttons -->
-            <div class="text-end mt-4">
-                <button type="submit" class="btn btn-primary px-4">
-                    Update Stripe Settings
-                </button>
+                    <!-- Buttons -->
+                <div style="position: sticky; bottom: 20px; text-align: right; margin-top: 20px; z-index: 1050; pointer-events: none;">
+                    <button type="submit" class="btn btn-primary px-4 m-3" style="font-size: 15px; font-weight: 400; box-shadow: 0px 4px 15px rgba(0,0,0,0.2); border-radius: 30px; padding: 10px 25px; pointer-events: auto;">
+                        Update Stripe Settings
+                    </button>
+                </div>
 
-                {{-- <a href="{{ route('payment.method') }}" class="btn btn-secondary px-4">
-                    Cancel
-                </a> --}}
+
             </div>
 
         </div>

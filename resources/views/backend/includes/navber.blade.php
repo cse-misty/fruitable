@@ -216,33 +216,61 @@
 
 
 
-<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+ <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script>
-    // 🟢 Pusher setup
+
+ <script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+        let savedCount = parseInt(localStorage.getItem('unread_message_count')) || 0;
+        let badgeEl = document.getElementById('message-badge-count');
+
+        if (badgeEl && savedCount > 0) {
+            badgeEl.innerText = savedCount;
+            badgeEl.style.display = 'inline-block';
+        } else if (badgeEl) {
+            badgeEl.style.display = 'none';
+        }
+
+        let messageToggleBtn = document.querySelector('.message-toggle');
+        if (messageToggleBtn) {
+            messageToggleBtn.addEventListener('click', function() {
+                if (badgeEl) {
+                    badgeEl.innerText = '0';
+                    badgeEl.style.display = 'none';
+                }
+                localStorage.setItem('unread_message_count', 0);
+            });
+        }
+    });
+
+    // ২. পুশার কনফিগারেশন
     var pusher = new Pusher('c5b10a2ccd3d71f9dd5d', {
         cluster: 'mt1',
         forceTLS: true
     });
 
-    // 🟢 Channel subscribe
     var channel = pusher.subscribe('admin-notification-channel');
 
-    // 🟢 Listen event
+
     channel.bind('new-contact-submit', function (data) {
-
-        // 🔴 1. Badge counter increase
         let badgeEl = document.getElementById('message-badge-count');
-        if (badgeEl) {
-            // যদি আগে থেকে কাউন্টারটি লুকানো (display: none) থাকে, তবে তা আবার দেখাবে
-            badgeEl.style.display = 'inline-block';
 
-            let currentCount = parseInt(badgeEl.innerText) || 0;
-            badgeEl.innerText = currentCount + 1;
+
+        let currentCount = parseInt(localStorage.getItem('unread_message_count')) || 0;
+        let newCount = currentCount + 1;
+
+
+        localStorage.setItem('unread_message_count', newCount);
+
+
+        if (badgeEl) {
+            badgeEl.style.display = 'inline-block';
+            badgeEl.innerText = newCount;
         }
 
-        // 🟡 2. Dropdown update
+
         let dropdownContainer = document.getElementById('live-message-dropdown');
         if (dropdownContainer) {
             let defaultUserImage = "{{ asset('backend/assets/img/users/user-1.png') }}";
@@ -262,7 +290,6 @@
             dropdownContainer.insertAdjacentHTML('afterbegin', newMessageHTML);
         }
 
-        // 🟢 3. Toast notification
         if (typeof Swal !== 'undefined') {
             Swal.fire({
                 toast: true,
@@ -275,23 +302,4 @@
             });
         }
     });
-
-    // 🔵 4. অ্যাডমিন মেসেজ আইকনে ক্লিক করলে কাউন্ট জিরো (0) বা হাইড করার লজিক
-    document.addEventListener("DOMContentLoaded", function() {
-        // Otika/Stisla টেমপ্লেটের মেসেজ টগল বাটনটি খুঁজে বের করা
-        let messageToggleBtn = document.querySelector('.message-toggle');
-
-        if (messageToggleBtn) {
-            messageToggleBtn.addEventListener('click', function() {
-                let badgeEl = document.getElementById('message-badge-count');
-                if (badgeEl) {
-                    badgeEl.innerText = '0'; // কাউন্ট ০ করে দেবে
-                    badgeEl.style.display = 'none'; // অথবা লাল গোল ব্যাজটি সাময়িকভাবে লুকিয়ে ফেলবে
-                }
-            });
-        }
-    });
 </script>
-
-
-

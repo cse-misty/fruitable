@@ -87,7 +87,7 @@ class WebSettingController extends Controller
         'copyright_text'    => 'nullable|string|max:255',
     ]);
 
-  
+
     $setting = WebSetting::first();
 
     if (!$setting) {
@@ -133,6 +133,8 @@ class WebSettingController extends Controller
     Alert::success('Success', 'Website settings updated successfully!');
 
     return redirect()->route('web_settings.index');
+
+
 }
     /**
      * Remove the specified resource from storage.

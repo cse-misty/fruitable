@@ -22,7 +22,7 @@
                         <a href="{{ route('faq.catagory.create') }}" class="btn btn-success btn-sm p-2 d-flex align-items-center mb-3">
                             <i class="fas fa-plus me-1"></i> Add Faq Category
                         </a>
-                        <form action="{{ route('faq.catagory.index') }}" method="GET" class="d-flex mb-0">
+                        {{-- <form action="{{ route('faq.catagory.index') }}" method="GET" class="d-flex mb-0">
                             <div class="input-group input-group-sm" style="width: 250px;">
                                 <input type="text"
                                     name="search"
@@ -33,7 +33,7 @@
                                     Search
                                 </button>
                             </div>
-                        </form>
+                        </form> --}}
                     </div>
 
 
@@ -42,7 +42,7 @@
                 <!-- Table -->
                 <div class="table-responsive">
 
-                    <table class="table table-hover table-bordered align-middle">
+                    <table class="table table-hover table-bordered align-middle" id="orderMenage" class="display">
 
                         <thead class="table-light">
                             <tr>

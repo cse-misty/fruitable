@@ -72,6 +72,7 @@ class CategoryController extends Controller
 {
 
     $request->validate([
+        'image' => 'nullable',
         'title'       => 'nullable|string|max:255',
         'description' => 'nullable|string',
         'status'      => 'nullable|string',
@@ -89,7 +90,7 @@ class CategoryController extends Controller
         ], 404);
     }
 
-
+    $category->image = $request->image;
     $category->title = $request->title;
     $category->description = $request->description;
     $category->status = $request->status;

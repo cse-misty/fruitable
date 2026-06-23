@@ -12,62 +12,16 @@
                 </div>
 
 
-
-
-
-                <h4 class="text-center p-3 text-warning fw-bold">Fresh Apple</h4>
+                <h4 class=" p-3 text-dark fw-bold">Fresh Apple</h4>
 
             <form action="{{ route('services.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
                 <div class="row p-4">
-                   <div class="col-md-12 mb-3">
 
-                        <label class="form-label fw-semibold" style="font-size: 15px; color: #495057;">Product Services Title</label>
-
-
-                        <input type="text" name="service_title" class="form-control"
-                        value="{{ old('service_title', $services->service_title ?? '') }}"
-
-                            placeholder="Enter services main title...">
-                    </div>
-
-
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label" style="font-size: 15px; font-weight: 400;">Fresh Title</label>
-                        <input type="text" name="fresh_title" class="form-control"
-                            value="{{ old('fresh_title', $services->fresh_title ?? '') }}">
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label" style="font-size: 15px; font-weight: 400;">Fresh Offer Text</label>
-                        <input type="text" name="fresh_offer_text" class="form-control"
-                            value="{{ old('fresh_offer_text', $services->fresh_offer_text ?? '') }}">
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label" style="font-size: 15px; font-weight: 400;">Fresh Image</label>
-                        <input type="file" name="fresh_image" class="form-control mb-2">
-
-                        @if(!empty($services->fresh_image))
-                            <div class="mt-2">
-                                <p class="mb-1" style="font-size: 12px; color: #6c757d;">Current Image:</p>
-                                <img src="{{ asset('uploads/services/' . $services->fresh_image) }}"
-                                    alt="Fresh Image"
-                                    style="max-width: 150px; max-height: 150px; object-fit: cover; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
-                            </div>
-                        @endif
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label" style="font-size: 15px; font-weight: 400;">Fresh Link</label>
-                        <input type="text" name="fresh_link" class="form-control"
-                            value="{{ old('fresh_link', $services->fresh_link ?? '') }}">
-                    </div>
-
-                    <!-- Fresh BG Color -->
-                    <div class="col-md-6 mb-3">
+                       <!-- Fresh BG Color -->
+                    <div class="col-md-3 mb-3">
                         <label class="form-label" style="font-size: 15px; font-weight: 400;">Fresh BG Color</label>
                         <div class="d-flex align-items-center gap-3">
                             <div style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #ced4da; box-shadow: 0 2px 5px rgba(0,0,0,0.1); flex-shrink: 0;">
@@ -83,7 +37,7 @@
                     </div>
 
                     <!-- 1. Fresh Content BG Color -->
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label class="form-label" style="font-size: 15px; font-weight: 400;">Fresh Content BG Color</label>
                         <div class="d-flex align-items-center gap-3">
                             <div style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #ced4da; box-shadow: 0 2px 5px rgba(0,0,0,0.1); flex-shrink: 0;">
@@ -99,7 +53,7 @@
                     </div>
 
                     <!-- 2. Fresh Title Color -->
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label class="form-label" style="font-size: 15px; font-weight: 400;">Fresh Title Color</label>
                         <div class="d-flex align-items-center gap-3">
                             <div style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #ced4da; box-shadow: 0 2px 5px rgba(0,0,0,0.1); flex-shrink: 0;">
@@ -115,7 +69,7 @@
                     </div>
 
                     <!-- 3. Fresh Offer Color -->
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label class="form-label" style="font-size: 15px; font-weight: 400;">Fresh Offer Color</label>
                         <div class="d-flex align-items-center gap-3">
                             <div style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #ced4da; box-shadow: 0 2px 5px rgba(0,0,0,0.1); flex-shrink: 0;">
@@ -130,48 +84,60 @@
                         </div>
                     </div>
 
+                   <div class="col-md-2 mb-3">
+                        <label class="form-label fw-semibold" style="font-size: 15px; color: #495057;">Product Services Title</label>
+
+                        <input type="text" name="service_title" class="form-control"
+                        value="{{ old('service_title', $services->service_title ?? '') }}"
+
+                            placeholder="Enter services main title...">
+                    </div>
+
+
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label" style="font-size: 15px; font-weight: 400;">Fresh Title</label>
+                        <input type="text" name="fresh_title" class="form-control"
+                            value="{{ old('fresh_title', $services->fresh_title ?? '') }}">
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label" style="font-size: 15px; font-weight: 400;">Fresh Offer Text</label>
+                        <input type="text" name="fresh_offer_text" class="form-control"
+                            value="{{ old('fresh_offer_text', $services->fresh_offer_text ?? '') }}">
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label" style="font-size: 15px; font-weight: 400;">Fresh Image</label>
+                        <input type="file" name="fresh_image" class="form-control mb-2">
+
+                        @if(!empty($services->fresh_image))
+                            <div class="mt-2">
+                                <p class="mb-1" style="font-size: 12px; color: #6c757d;">Current Image:</p>
+                                <img src="{{ asset('uploads/services/' . $services->fresh_image) }}"
+                                    alt="Fresh Image"
+                                    style="max-width: 150px; max-height: 150px; object-fit: cover; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label" style="font-size: 15px; font-weight: 400;">Fresh Link</label>
+                        <input type="text" name="fresh_link" class="form-control"
+                            value="{{ old('fresh_link', $services->fresh_link ?? '') }}">
+                    </div>
+
+
+
                 </div>
 
                    </hr>
 
-                <h4 class="text-center p-3 text-warning fw-bold">Testy Fruits</h4>
+                <h4 class=" p-3 text-dark fw-bold">Testy Fruits</h4>
 
                    <div class="row p-4">
 
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label" style="font-size: 15px; font-weight: 400;">Testy Title</label>
-                            <input type="text" name="tasty_title" class="form-control"
-                                value="{{ old('tasty_title', $services->tasty_title ?? '') }}">
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label" style="font-size: 15px; font-weight: 400;">Testy Offer Text</label>
-                            <input type="text" name="tasty_offer_text" class="form-control"
-                                value="{{ old('tasty_offer_text', $services->tasty_offer_text ?? '') }}">
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label" style="font-size: 15px; font-weight: 400;">Testy Image</label>
-                            <input type="file" name="tasty_image" class="form-control mb-2">
-
-                            @if(!empty($services->tasty_image))
-                                <div class="mt-2">
-                                    <p class="mb-1" style="font-size: 12px; color: #6c757d;">Testy Current Image:</p>
-                                    <img src="{{ asset('uploads/services/' . $services->tasty_image) }}"
-                                        alt="tasty Image"
-                                        style="max-width: 150px; max-height: 150px; object-fit: cover; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
-                                </div>
-                            @endif
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label" style="font-size: 15px; font-weight: 400;">Testy Link</label>
-                            <input type="text" name="tasty_link" class="form-control"
-                                value="{{ old('tasty_link', $services->tasty_link ?? '') }}">
-                        </div>
-
-                   <!-- 1. Testy BG Color -->
-                    <div class="col-md-6 mb-3">
+                    <!-- 1. Testy BG Color -->
+                    <div class="col-md-3 mb-3">
                         <label class="form-label" style="font-size: 15px; font-weight: 400;">Testy BG Color</label>
                         <div class="d-flex align-items-center gap-3">
                             <div style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #ced4da; box-shadow: 0 2px 5px rgba(0,0,0,0.1); flex-shrink: 0;">
@@ -189,7 +155,7 @@
                     </div>
 
                     <!-- 2. Testy Content BG Color -->
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label class="form-label" style="font-size: 15px; font-weight: 400;">Testy Content BG Color</label>
                         <div class="d-flex align-items-center gap-3">
                             <div style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #ced4da; box-shadow: 0 2px 5px rgba(0,0,0,0.1); flex-shrink: 0;">
@@ -205,7 +171,7 @@
                     </div>
 
                     <!-- 3. Testy Title Color -->
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label class="form-label" style="font-size: 15px; font-weight: 400;">Testy Title Color</label>
                         <div class="d-flex align-items-center gap-3">
                             <div style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #ced4da; box-shadow: 0 2px 5px rgba(0,0,0,0.1); flex-shrink: 0;">
@@ -221,7 +187,7 @@
                     </div>
 
                     <!-- 4. Testy Offer Color -->
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label class="form-label" style="font-size: 15px; font-weight: 400;">Testy Offer Color</label>
                         <div class="d-flex align-items-center gap-3">
                             <div style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #ced4da; box-shadow: 0 2px 5px rgba(0,0,0,0.1); flex-shrink: 0;">
@@ -236,49 +202,50 @@
                         </div>
                     </div>
 
+                        <div class="col-md-2 mb-3">
+                            <label class="form-label" style="font-size: 15px; font-weight: 400;">Testy Title</label>
+                            <input type="text" name="tasty_title" class="form-control"
+                                value="{{ old('tasty_title', $services->tasty_title ?? '') }}">
+                        </div>
+
+                        <div class="col-md-2 mb-3">
+                            <label class="form-label" style="font-size: 15px; font-weight: 400;">Testy Offer Text</label>
+                            <input type="text" name="tasty_offer_text" class="form-control"
+                                value="{{ old('tasty_offer_text', $services->tasty_offer_text ?? '') }}">
+                        </div>
+
+                        <div class="col-md-2 mb-3">
+                            <label class="form-label" style="font-size: 15px; font-weight: 400;">Testy Image</label>
+                            <input type="file" name="tasty_image" class="form-control mb-2">
+
+                            @if(!empty($services->tasty_image))
+                                <div class="mt-2">
+                                    <p class="mb-1" style="font-size: 12px; color: #6c757d;">Testy Current Image:</p>
+                                    <img src="{{ asset('uploads/services/' . $services->tasty_image) }}"
+                                        alt="tasty Image"
+                                        style="max-width: 150px; max-height: 150px; object-fit: cover; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="col-md-2 mb-3">
+                            <label class="form-label" style="font-size: 15px; font-weight: 400;">Testy Link</label>
+                            <input type="text" name="tasty_link" class="form-control"
+                                value="{{ old('tasty_link', $services->tasty_link ?? '') }}">
+                        </div>
+
+
+
 
                     </div>
 
                     </hr>
 
-               <h4 class="text-center p-3 text-warning fw-bold">Exotic Fruits</h4>
+               <h4 class=" p-3 text-dark fw-bold">Exotic Fruits</h4>
 
              <div class="row p-4">
-
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label" style="font-size: 15px; font-weight: 400;">Exotic Title</label>
-                        <input type="text" name="exotic_title" class="form-control"
-                            value="{{ old('exotic_title', $services->exotic_title ?? '') }}">
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label" style="font-size: 15px; font-weight: 400;">Exotic Offer Text</label>
-                        <input type="text" name="exotic_offer_text" class="form-control"
-                            value="{{ old('exotic_offer_text', $services->exotic_offer_text ?? '') }}">
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label" style="font-size: 15px; font-weight: 400;">Exotic Image</label>
-                        <input type="file" name="exotic_image" class="form-control mb-2">
-
-                        @if(!empty($services->exotic_image))
-                            <div class="mt-2">
-                                <p class="mb-1" style="font-size: 12px; color: #6c757d;">Exotic Current Image:</p>
-                                <img src="{{ asset('uploads/services/' . $services->exotic_image) }}"
-                                    alt="Exotic Image"
-                                    style="max-width: 150px; max-height: 150px; object-fit: cover; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
-                            </div>
-                        @endif
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label" style="font-size: 15px; font-weight: 400;">Exotic Link</label>
-                        <input type="text" name="exotic_link" class="form-control"
-                            value="{{ old('exotic_link', $services->exotic_link ?? '') }}">
-                    </div>
-
-                  <!-- 1. Exotic BG Color -->
-                    <div class="col-md-6 mb-3">
+                   <!-- 1. Exotic BG Color -->
+                    <div class="col-md-3 mb-3">
                         <label class="form-label" style="font-size: 15px; font-weight: 400;">Exotic BG Color</label>
                         <div class="d-flex align-items-center gap-3">
                             <div style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #ced4da; box-shadow: 0 2px 5px rgba(0,0,0,0.1); flex-shrink: 0;">
@@ -296,7 +263,7 @@
                     </div>
 
                     <!-- 2. Exotic Content BG Color -->
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label class="form-label" style="font-size: 15px; font-weight: 400;">Exotic Content BG Color</label>
                         <div class="d-flex align-items-center gap-3">
                             <div style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #ced4da; box-shadow: 0 2px 5px rgba(0,0,0,0.1); flex-shrink: 0;">
@@ -312,7 +279,7 @@
                     </div>
 
                     <!-- 3. Exotic Title Color -->
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label class="form-label" style="font-size: 15px; font-weight: 400;">Exotic Title Color</label>
                         <div class="d-flex align-items-center gap-3">
                             <div style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #ced4da; box-shadow: 0 2px 5px rgba(0,0,0,0.1); flex-shrink: 0;">
@@ -328,7 +295,7 @@
                     </div>
 
                     <!-- 4. Exotic Offer Color -->
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label class="form-label" style="font-size: 15px; font-weight: 400;">Exotic Offer Color</label>
                         <div class="d-flex align-items-center gap-3">
                             <div style="width: 60px; height: 60px; border-radius: 50%; overflow: hidden; border: 2px solid #ced4da; box-shadow: 0 2px 5px rgba(0,0,0,0.1); flex-shrink: 0;">
@@ -344,20 +311,52 @@
                     </div>
 
 
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label" style="font-size: 15px; font-weight: 400;">Exotic Title</label>
+                        <input type="text" name="exotic_title" class="form-control"
+                            value="{{ old('exotic_title', $services->exotic_title ?? '') }}">
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label" style="font-size: 15px; font-weight: 400;">Exotic Offer Text</label>
+                        <input type="text" name="exotic_offer_text" class="form-control"
+                            value="{{ old('exotic_offer_text', $services->exotic_offer_text ?? '') }}">
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label" style="font-size: 15px; font-weight: 400;">Exotic Image</label>
+                        <input type="file" name="exotic_image" class="form-control mb-2">
+
+                        @if(!empty($services->exotic_image))
+                            <div class="mt-2">
+                                <p class="mb-1" style="font-size: 12px; color: #6c757d;">Exotic Current Image:</p>
+                                <img src="{{ asset('uploads/services/' . $services->exotic_image) }}"
+                                    alt="Exotic Image"
+                                    style="max-width: 150px; max-height: 150px; object-fit: cover; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="col-md-2 mb-3">
+                        <label class="form-label" style="font-size: 15px; font-weight: 400;">Exotic Link</label>
+                        <input type="text" name="exotic_link" class="form-control"
+                            value="{{ old('exotic_link', $services->exotic_link ?? '') }}">
+                    </div>
+
+
+
+
                 </div>
 
-                 <div class="text-right p-1 m-3">
-                    <button type="submit" class="btn btn-primary px-4" style="font-size: 15px; font-weight: 400;">
+
+                <div style="position: sticky; bottom: 20px; text-align: right; margin-top: 20px; z-index: 1050; pointer-events: none;">
+                    <button type="submit" class="btn btn-primary px-4 m-3" style="font-size: 15px; font-weight: 400; box-shadow: 0px 4px 15px rgba(0,0,0,0.2); border-radius: 30px; padding: 10px 25px; pointer-events: auto;">
                         Update Services
                     </button>
                 </div>
 
 
             </form>
-
-
-
-
             </div>
         </div>
 
@@ -365,7 +364,7 @@
 </div>
 </div>
 
-    <script>
+<script>
     document.addEventListener("DOMContentLoaded", function () {
 
 
@@ -374,25 +373,23 @@
                 var targetTextId = this.id.replace('_picker', '');
                 var textField = document.getElementById(targetTextId);
                 if (textField) {
-                    textField.value = this.value.toUpperCase(); // হেক্স কোড ক্যাপিটাল লেটার করবে
+                    textField.value = this.value.toUpperCase();
                 }
             });
         });
 
-        // ২. টেক্সট বক্সে কোড লিখলে পাশের কালার পিকারের রঙ সাথে সাথে বদলে যাবে
         document.querySelectorAll('.color-text').forEach(function (textInput) {
             textInput.addEventListener('input', function () {
                 var targetPickerId = this.id + '_picker';
                 var pickerField = document.getElementById(targetPickerId);
 
                 var value = this.value;
-                // যদি ইউজার শুরুতে # দিতে ভুলে যায়, অটোমেটিক # যোগ করে নেবে
+
                 if (value && !value.startsWith('#')) {
                     value = '#' + value;
                     this.value = value;
                 }
 
-                // ভ্যালিড হেক্স কোড প্যাটার্ন (#ffffff বা #fff) ভেরিফিকেশন
                 var hexPattern = /^#([0-9a-fA-F]{3}){1,2}$/;
                 if (pickerField && hexPattern.test(value)) {
                     pickerField.value = value;
@@ -401,10 +398,7 @@
         });
 
     });
+
 </script>
-
-
-
-
 
 @endsection

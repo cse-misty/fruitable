@@ -23,7 +23,7 @@
 
                 <!-- Product Name -->
                 <div class="col-md-6 mb-3 px-5">
-                    <label class="form-label font-weight-bold">Product Name *</label>
+                    <label class="form-label font-weight-bold">Product Name  <span class="text-danger">*</span></label>
                     <input type="text"
                            name="name"
                            value="{{ old('name') }}"
@@ -37,7 +37,7 @@
 
                 <!-- Category -->
                 <div class="col-md-6 mb-3 px-5">
-                    <label class="form-label font-weight-bold">Category *</label>
+                    <label class="form-label font-weight-bold">Category  <span class="text-danger">*</span></label>
                     <select name="category_id"
                             class="form-control @error('category_id') is-invalid @enderror"
                             required>
@@ -56,6 +56,29 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+
+                   <!-- Category -->
+                <<div class="col-md-6 mb-3 px-5">
+    <label class="form-label font-weight-bold">Sub Category <span class="text-danger">*</span></label>
+    <select name="sub_category_id"
+            class="form-control @error('sub_category_id') is-invalid @enderror"
+            required>
+        <option value="">Select Sub Category</option>
+
+        @foreach($subCategories as $subCategorie)
+            <option value="{{ $subCategorie->id }}"
+                {{ old('sub_category_id') == $subCategorie->id ? 'selected' : '' }}>
+                {{ $subCategorie->title }}
+            </option>
+        @endforeach
+
+    </select>
+
+    @error('sub_category_id')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
+</div>
+
 
                 <!-- Priority -->
                 <div class="col-md-6 mb-3 px-5">
@@ -79,7 +102,7 @@
 
                 <!-- Image -->
                 <div class="col-md-6 mb-3 px-5">
-                    <label class="form-label font-weight-bold">Product Image *</label>
+                    <label class="form-label font-weight-bold">Product Image  <span class="text-danger">*</span></label>
                     <input type="file"
                            name="image"
                            id="productImage"
@@ -96,8 +119,8 @@
                 <div class="col-md-6 mb-3 px-5">
                     <label class="form-label font-weight-bold">Status</label>
                     <select name="status" class="form-control">
-                        <option value="1" {{ old('status',1)==1?'selected':'' }}>Active</option>
-                        <option value="0" {{ old('status')==0?'selected':'' }}>Inactive</option>
+                        <option value="1" {{ old('status',1)==0?'selected':'' }}>Active</option>
+                        <option value="0" {{ old('status')==1?'selected':'' }}>Inactive</option>
                     </select>
                 </div>
 

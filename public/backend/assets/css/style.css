@@ -64,3 +64,14 @@
             border-radius: 50%;
         }
 
+
+       .dataTables_filter {
+    float: right !important;
+    text-align: right !important;
+}
+
+
+
+
+
+

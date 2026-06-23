@@ -12,25 +12,40 @@ use App\Models\User;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class LoginController extends Controller
 {
-    public function login(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
+  public function showLoginForm()
+{
 
-        if (Auth::attempt($credentials)) {
+    return redirect()->route('index')->with('open_login', true);
+}
+public function login(Request $request)
+{
+    $credentials = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
 
-            $request->session()->regenerate();
+    if (Auth::attempt($credentials, $request->has('remember'))) {
+        $request->session()->regenerate();
 
-            // SAME PAGE এ থাকবে
-            return redirect()->route('index');
-        }
+       
+        Alert::success('Success', 'Login successfully!')
+            ->toast()
+            ->position('top-end');
 
-        return back()->withErrors([
-            'email' => 'Invalid credentials',
-        ]);
+        return redirect()->intended(route('index'));
     }
+
+
+    return back()->withErrors([
+        'email' => 'Invalid credentials',
+    ])->withInput($request->only('email'));
+}
+
+
 
     public function showCart()
     {

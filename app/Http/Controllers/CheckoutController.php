@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -23,6 +24,9 @@ class CheckoutController extends Controller
             ->orderBy('priority')
             ->limit(4)
             ->get();
+
+
+
         return view('frontend.pages.shopping', compact('categories', 'products'));
     }
 
@@ -38,6 +42,13 @@ class CheckoutController extends Controller
         $products = Product::select('id','name','category_id','price','priority','status','image','description')
             ->where('status', 1)
             ->orderBy('priority')
+            ->limit(4)
+            ->get();
+
+
+        $reviews = Review::with(['user', 'product']) 
+            ->where('status', 1)
+            ->latest()
             ->limit(4)
             ->get();
 
