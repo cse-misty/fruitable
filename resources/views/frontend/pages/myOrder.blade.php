@@ -1,8 +1,16 @@
 @extends('frontend.layouts')
 
 @section('content')
+  <div class="container-fluid page-header py-5">
+        <h1 class="text-center text-white display-6">My Order </h1>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Pages</a></li>
+            <li class="breadcrumb-item active text-white">My Order </li>
+        </ol>
+    </div>
 
-<div class="container" style="padding-top: 200px;">
+<div class="container" style="padding-top: 50px;">
     <div class="row">
 
         <div class="col-md-12">
@@ -17,7 +25,7 @@
 
                     <thead>
                         <tr>
-                            <th>Order ID</th>
+                            <th>#Order ID</th>
                             <th>Total</th>
                             <th>Status</th>
                             <th>Date</th>
@@ -28,9 +36,9 @@
                     <tbody>
                         @foreach($orders as $order)
                         <tr>
-                            <td>#{{ $order->id }}</td>
+                            <td>{{ $order->id }}</td>
 
-                            <td>৳ {{ $order->total_price }}</td>
+                            <td>{{ format_price($order->total_amount, 2) }}</td>
 
                             <td>
                                 <span class="badge
@@ -45,7 +53,7 @@
                             <td>{{ $order->created_at->format('d M Y') }}</td>
 
                             <td>
-                                <a href="#" class="btn btn-sm btn-primary">
+                                <a href="" class="btn btn-sm btn-primary">
                                     View
                                 </a>
                             </td>
@@ -62,6 +70,15 @@
             </div>
 
         </div>
+       @if ($orders->hasPages())
+    <div class="d-flex justify-content-end mt-5">
+        <nav>
+      
+            {{ $orders->links() }}
+        </nav>
+    </div>
+@endif
+
 
     </div>
 </div>

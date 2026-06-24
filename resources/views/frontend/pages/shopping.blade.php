@@ -41,6 +41,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row g-4">
                             <div class="col-lg-3">
                                 <div class="row g-4">
@@ -70,94 +71,115 @@
                                             <output id="amount" name="amount" min-velue="0" max-value="500" for="rangeInput">0</output>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
+                               <div class="col-lg-12">
+
+                                    <form action="{{ url()->current() }}" method="GET" id="additional-filter-form">
                                         <div class="mb-3">
-                                            <h4>Additional</h4>
+                                            <h4>Additional Filter</h4>
+
+                                            <!-- ১. Organic Filter -->
                                             <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-1" name="Categories-1" value="Beverages">
-                                                <label for="Categories-1"> Organic</label>
+                                                <input type="radio" class="me-2 filter-radio" id="filter-organic" name="type" value="organic"
+                                                    {{ request('type') == 'organic' ? 'checked' : '' }} onchange="this.form.submit()">
+                                                <label for="filter-organic" style="cursor: pointer;">Organic</label>
                                             </div>
+
+                                            <!-- ২. Fresh Filter -->
                                             <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-2" name="Categories-1" value="Beverages">
-                                                <label for="Categories-2"> Fresh</label>
+                                                <input type="radio" class="me-2 filter-radio" id="filter-fresh" name="type" value="fresh"
+                                                    {{ request('type') == 'fresh' ? 'checked' : '' }} onchange="this.form.submit()">
+                                                <label for="filter-fresh" style="cursor: pointer;">Fresh</label>
                                             </div>
+
+                                            <!-- ৩. Sales Filter -->
                                             <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-3" name="Categories-1" value="Beverages">
-                                                <label for="Categories-3"> Sales</label>
+                                                <input type="radio" class="me-2 filter-radio" id="filter-sales" name="type" value="sales"
+                                                    {{ request('type') == 'sales' ? 'checked' : '' }} onchange="this.form.submit()">
+                                                <label for="filter-sales" style="cursor: pointer;">Sales / Hot Items</label>
                                             </div>
+
+                                            <!-- ৪. Discount Filter -->
                                             <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-4" name="Categories-1" value="Beverages">
-                                                <label for="Categories-4"> Discount</label>
+                                                <input type="radio" class="me-2 filter-radio" id="filter-discount" name="type" value="discount"
+                                                    {{ request('type') == 'discount' ? 'checked' : '' }} onchange="this.form.submit()">
+                                                <label for="filter-discount" style="cursor: pointer;">Discounted</label>
                                             </div>
-                                            <div class="mb-2">
-                                                <input type="radio" class="me-2" id="Categories-5" name="Categories-1" value="Beverages">
-                                                <label for="Categories-5"> Expired</label>
+
+                                            <!-- ৫. Clear Filter Button  -->
+                                            @if(request('type'))
+                                                <div class="mt-3">
+                                                    <a href="{{ url()->current() }}" class="btn btn-sm btn-danger rounded-pill px-3">Clear Filter</a>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <h4 class="mb-3">Featured products</h4>
+
+                                    @forelse($featuredProducts as $product)
+
+                                        <div class="d-flex align-items-center justify-content-start mb-3 p-2 rounded"
+                                            onclick="window.location='{{ route('web.shop-details', $product->id) }}'"
+                                            style="cursor: pointer; transition: 0.3s; background: #fff; border: 1px solid #f3f3f3;">
+
+
+                                            <div class="rounded me-4 overflow-hidden" style="width: 80px; height: 80px; flex-shrink: 0;">
+                                                <img src="{{ asset('storage/' . $product->image) }}" class="img-fluid w-100 h-100 rounded" alt="{{ $product->name }}" style="object-fit: cover;">
+                                            </div>
+
+                                            <div class="overflow-hidden">
+
+                                                <h6 class="mb-2 text-dark text-truncate">{{ $product->name }}</h6>
+
+
+                                                <div class="d-flex mb-2 text-secondary font-12">
+                                                    @php $rating = round($product->rating ?? 5); @endphp
+                                                    @for($i = 1; $i <= 5; $i++)
+                                                        @if($i <= $rating)
+                                                            <i class="fa fa-star text-secondary"></i> <!-- গোল্ডেন স্টার -->
+                                                        @else
+                                                            <i class="fa fa-star text-muted" style="color: #e4e5e9 !important;"></i> <!-- খালি স্টার -->
+                                                        @endif
+                                                    @endfor
+                                                </div>
+
+
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <h5 class="fw-bold me-2 mb-0" style="font-size: 1rem;">
+                                                        {{ format_price($product->price ?? 0, 2) }}
+                                                    </h5>
+
+
+                                                    @if(isset($product->old_price) || isset($product->discount_price))
+                                                        <h5 class="text-danger text-decoration-line-through mb-0" style="font-size: 0.9rem;">
+                                                            {{ format_price($product->old_price ?? ($product->price * 1.2), 2) }}
+                                                        </h5>
+                                                    @else
+
+                                                        <h5 class="text-danger text-decoration-line-through mb-0" style="font-size: 0.85rem; opacity: 0.7;">
+                                                            {{ format_price(($product->price * 1.25), 2) }}
+                                                        </h5>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
+                                    @empty
+                                        <div class="text-center py-3 text-muted" style="font-size: 0.9rem;">
+                                            No featured products listed.
+                                        </div>
+                                    @endforelse
+
+                                    <div class="d-flex justify-content-center my-4">
+                                        <a href="{{ route('web.organic-product') }}" class="btn border border-secondary px-4 py-2 rounded-pill text-primary w-100 font-weight-bold">
+                                            View More
+                                        </a>
                                     </div>
-                                    <div class="col-lg-12">
-                                        <h4 class="mb-3">Featured products</h4>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                                <img src="{{asset('frontend/assets/img/featur-1.jpg')}}" class="img-fluid rounded" alt="">
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-2">Big Banana</h6>
-                                                <div class="d-flex mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                                <img src="{{asset('frontend/assets/img/featur-2.jpg')}}" class="img-fluid rounded" alt="">
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-2">Big Banana</h6>
-                                                <div class="d-flex mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-start">
-                                            <div class="rounded me-4" style="width: 100px; height: 100px;">
-                                                <img src="{{asset('frontend/assets/img/featur-3.jpg')}}" class="img-fluid rounded" alt="">
-                                            </div>
-                                            <div>
-                                                <h6 class="mb-2">Big Banana</h6>
-                                                <div class="d-flex mb-2">
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star text-secondary"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <div class="d-flex mb-2">
-                                                    <h5 class="fw-bold me-2">2.99 $</h5>
-                                                    <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-center my-4">
-                                            <a href="#" class="btn border border-secondary px-4 py-3 rounded-pill text-primary w-100">Vew More</a>
-                                        </div>
-                                    </div>
+                                </div>
+
+
+
                                     <div class="col-lg-12">
                                         <div class="position-relative">
                                             <img src="{{asset('frontend/assets/img/banner-fruits.jpg')}}" class="img-fluid w-100 rounded" alt="">
@@ -168,77 +190,92 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-9">
-                                <div class="row g-4 justify-content-center">
+                         <div class="col-lg-9">
+                            <div class="row g-4 justify-content-center">
 
-                                  @foreach($products as $product)
+                                @foreach($products as $index => $product)
+                                    <div class="col-md-6 col-lg-6 col-xl-4 mb-4">
 
-                                    <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
 
-                                        <div class="rounded position-relative fruite-item shadow-sm h-100 d-flex flex-column">
+                                        <div class="rounded position-relative fruite-item border border-secondary h-100 d-flex flex-column"
+                                            onclick="window.location='{{ route('web.shop-details', $product->id) }}'"
+                                            style="cursor: pointer; transition: 0.3s; background: #fff;">
 
                                             <!-- IMAGE BOX -->
                                             <div class="fruite-img" style="height: 200px; overflow: hidden;">
-
                                                 <img src="{{ asset('storage/'.$product->image) }}"
                                                     class="img-fluid w-100 h-100"
                                                     style="object-fit: cover;"
                                                     alt="{{ $product->name }}">
-
                                             </div>
 
                                             <!-- CATEGORY TAG -->
                                             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                style="top: 10px; left: 10px; font-size: 12px;">
-                                                {{ $product->category->title ?? '' }}
+                                                style="top: 10px; left: 10px; font-size: 12px; z-index: 10;">
+                                                {{ $product->category->title ?? 'Organic' }}
                                             </div>
 
+
+                                            <form action="{{ route('wishlist.add', $product->id) }}" method="POST" class="position-absolute" style="top: 10px; right: 10px; z-index: 12;" onclick="event.stopPropagation();">
+                                                @csrf
+                                                <button type="submit" class="btn btn-white shadow rounded-circle d-flex align-items-center justify-content-center border " style="width: 35px; height: 35px; padding: 0; background: white;">
+                                                    <i class="bi bi-heart text-danger fs-5"></i>
+                                                </button>
+                                            </form>
+
                                             <!-- CONTENT -->
-                                            <div class="p-3 border border-secondary border-top-0 rounded-bottom d-flex flex-column flex-grow-1">
+                                            <div class="p-3 border-top-0 rounded-bottom d-flex flex-column flex-grow-1">
 
-                                                <h5 class="mb-2">{{ $product->name }}</h5>
 
-                                                <p class="small text-muted flex-grow-1">
+                                                <div class="d-flex justify-content-between align-items-center mb-2 gap-2">
+                                                    <h5 class="mb-0 text-dark text-truncate" style="max-width: 65%;">{{ $product->name }}</h5>
+
+
+                                                    <div class="d-flex text-primary font-12 flex-shrink-0">
+                                                        @php $rating = round($product->rating ?? 5); @endphp
+                                                        @for($i = 1; $i <= 5; $i++)
+                                                            @if($i <= $rating)
+                                                                <i class="fas fa-star"></i>
+                                                            @else
+                                                                <i class="fas fa-star text-muted" style="color: #e4e5e9 !important;"></i>
+                                                            @endif
+                                                        @endfor
+                                                    </div>
+                                                </div>
+
+
+                                                <p class="small text-muted flex-grow-1" style="height: 45px; overflow: hidden;">
                                                     {{ Str::limit($product->description, 70) }}
                                                 </p>
 
-                                                <div class="d-flex justify-content-between align-items-center mt-auto">
 
-                                                   <p class="text-dark fw-bold mb-0">
+                                                <div class="d-flex justify-content-between align-items-center mt-auto pt-2" onclick="event.stopPropagation();">
+                                                    <p class="text-dark fw-bold mb-0">
                                                         {{ format_price($product->price) }}
                                                     </p>
 
                                                     <a href="{{ route('web.shop-details', $product->id) }}"
-                                                    class="btn btn-sm border border-secondary rounded-pill px-3 text-primary">
-                                                        Add to cart
+                                                    class="btn btn-sm border border-secondary rounded-pill px-3 text-primary bg-white">
+                                                        <i class="fa fa-shopping-bag me-1 text-primary"></i> Add to cart
                                                     </a>
-
-
-
                                                 </div>
 
                                             </div>
 
                                         </div>
-
                                     </div>
+                                @endforeach
 
-                                    @endforeach
 
-                                    {{-- <div class="col-12">
-                                        <div class="pagination d-flex justify-content-center mt-5">
-                                            <a href="#" class="rounded">&laquo;</a>
-                                            <a href="#" class="active rounded">1</a>
-                                            <a href="#" class="rounded">2</a>
-                                            <a href="#" class="rounded">3</a>
-                                            <a href="#" class="rounded">4</a>
-                                            <a href="#" class="rounded">5</a>
-                                            <a href="#" class="rounded">6</a>
-                                            <a href="#" class="rounded">&raquo;</a>
-                                        </div>
-                                    </div> --}}
+                                <div class="col-12 mt-4">
+                                    <div class="d-flex justify-content-center">
+                                        {{ $products->links() }}
+                                    </div>
                                 </div>
+
                             </div>
+                        </div>
+
                         </div>
                     </div>
                 </div>

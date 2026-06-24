@@ -1,9 +1,7 @@
 @extends('backend.dashboard')
 
 @section('content')
-
 <div class="card shadow-sm border-0">
-
     <div class="card-body p-4">
 
         <!-- Header -->
@@ -90,6 +88,19 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+
+                <div class="col-md-6 mb-3 px-5">
+                    <label class="form-label font-weight-bold">Rating (0 - 5)</label>
+                    <input type="number"
+                        name="rating"
+                        value="{{ old('rating', isset($product) ? $product->rating : 5) }}"
+                        class="form-control"
+                        step="0.1"
+                        min="0"
+                        max="5"
+                        placeholder="Enter rating e.g. 4.5">
+                </div>
+
 
 
                 <!-- Priority -->

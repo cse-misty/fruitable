@@ -129,8 +129,9 @@ class WebSettingController extends Controller
     // SAVE DATA
     $setting->fill($data)->save();
 
-    // SUCCESS MESSAGE (FIXED TEXT)
-    Alert::success('Success', 'Website settings updated successfully!');
+      Alert::success('Success', 'Sub Category created successfully!')
+        ->toast()
+        ->position('top-end');
 
     return redirect()->route('web_settings.index');
 

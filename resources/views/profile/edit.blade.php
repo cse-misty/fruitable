@@ -50,15 +50,21 @@
                         <i class="bi bi-geo-alt me-2"></i> Addresses
                     </a>
 
-                    <a href="#"
-                    class="d-block p-2 text-decoration-none {{ request()->routeIs('favorites.*') ? 'text-primary fw-bold' : 'text-dark' }}">
-                        <i class="bi bi-heart me-2"></i> Favorites
+                    <a href="{{ route('wishlist.index') }}"
+                    class="d-block p-2 text-decoration-none {{ request()->routeIs('Wishlist.*') ? 'text-primary fw-bold' : 'text-dark' }}">
+                        <i class="bi bi-heart me-2"></i> Wishlist
                     </a>
 
-                    <a href="{{ route('logout') }}"
-                    class="d-block p-2 text-decoration-none text-danger">
-                        <i class="bi bi-box-arrow-right me-2"></i> Logout
-                    </a>
+
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+
+                        <button class="dropdown-item text-danger py-2">
+                             <i class="fas fa-sign-out-alt me-2"></i>
+                            Logout
+                        </button>
+                    </form>
+
             </div>
 
         </div>

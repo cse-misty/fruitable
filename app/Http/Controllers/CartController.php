@@ -17,18 +17,30 @@ use RealRashid\SweetAlert\Facades\Alert;
 class CartController extends Controller
 {
 
-    public function showShop(Request $request)
-    {
-        $categories = Category::with('products')->get();
-        $products = Product::query();
+public function showShop(Request $request)
+{
+    $categories = Category::with('products')->get();
 
-        if ($request->has('category_id')) {
-            $products->where('category_id', $request->category_id);
-        }
-        $products = $products->get();
 
-        return view('frontend.pages.shopping', compact('categories', 'products'));
+    $products = Product::where('status', 1);
+
+
+    if ($request->has('category_id') && $request->category_id != '') {
+        $products->where('category_id', $request->category_id);
     }
+
+
+    $products = $products->latest()->paginate(9);
+
+   
+    $featuredProducts = Product::where('status', 1)
+        ->orderBy('priority', 'desc')
+        ->take(3)
+        ->get();
+
+    return view('frontend.pages.shopping', compact('categories', 'products', 'featuredProducts'));
+}
+
 
 
     public function showCart()
@@ -292,11 +304,13 @@ public function paymentCancel(Request $request)
 
 public function orderHistory()
 {
+
     $orders = Order::with(['items.product', 'user'])
         ->where('user_id', auth()->id())
         ->orderBy('created_at', 'desc')
-        ->get();
+        ->paginate(10);
 
     return view('frontend.pages.myOrder', compact('orders'));
 }
+
 }

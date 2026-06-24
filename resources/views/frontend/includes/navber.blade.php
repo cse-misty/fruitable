@@ -123,6 +123,31 @@
                         </span>
                     </a>
 
+                    @auth
+                        @php
+
+                            $wishlistCount = \App\Models\Wishlist::where('user_id', auth()->id())->count();
+                        @endphp
+
+                        <a href="{{ route('wishlist.index') }}" class="position-relative me-4 my-auto">
+
+                            <i class="bi bi-heart fs-4 text-primary"></i>
+
+
+                            @if($wishlistCount > 0)
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.7rem;">
+                                    {{ $wishlistCount }}
+                                </span>
+                            @endif
+                        </a>
+                    @else
+                   
+                        <a href="{{ route('login') }}" class="position-relative me-4 my-auto">
+                            <i class="bi bi-heart fs-4 text-primary"></i>
+                        </a>
+                    @endauth
+
+
 
 
 
@@ -187,7 +212,7 @@
                                     @csrf
 
                                     <button class="dropdown-item text-danger py-2">
-                                        <i class="fas fa-right-from-bracket me-2"></i>
+                                       <i class="fas fa-sign-out-alt me-2"></i>
                                         Logout
                                     </button>
                                 </form>

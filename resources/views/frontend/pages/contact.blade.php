@@ -30,29 +30,39 @@
                                 loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                             </div>
                         </div>
-                        <div class="col-lg-7">
+                   <div class="col-lg-7">
 
+                    <form id="contactForm" action="{{ route('contact.store') }}" method="POST" class="needs-validation">
+                        @csrf
 
-
-                            <form id="contactForm" action="{{ route('contact.store') }}" method="POST" class="needs-validation"  >
-                                @csrf
-
-
-                                <input type="text" name="name" value="{{ old('name') }}" class="w-100 form-control border-0 py-3 mb-4" placeholder="Your Name" required>
-                                @error('name') <small class="text-danger d-block mb-3">{{ $message }}</small> @enderror
-
-
-                                <input type="email" name="email" value="{{ old('email') }}" class="w-100 form-control border-0 py-3 mb-4" placeholder="Enter Your Email" required>
-                                @error('email') <small class="text-danger d-block mb-3">{{ $message }}</small> @enderror
-
-
-                                <textarea name="message" class="w-100 form-control border-0 mb-4" rows="5" cols="10" placeholder="Your Message" required>{{ old('message') }}</textarea>
-                                @error('message') <small class="text-danger d-block mb-3">{{ $message }}</small> @enderror
-
-
-                                <button type="submit" class="w-100 btn form-control border-secondary py-3 bg-white text-primary">Submit</button>
-                            </form>
+                        <div class="mb-4">
+                            <input type="text" name="name" value="{{ old('name') }}"
+                                class="w-100 form-control border border-secondary py-3 shadow-none"
+                                placeholder="Your Name" required>
+                            @error('name') <small class="text-danger d-block mt-1">{{ $message }}</small> @enderror
                         </div>
+
+                        <!-- Enter Your Email Input -->
+                        <div class="mb-4">
+                            <input type="email" name="email" value="{{ old('email') }}"
+                                class="w-100 form-control border border-secondary py-3 shadow-none"
+                                placeholder="Enter Your Email" required>
+                            @error('email') <small class="text-danger d-block mt-1">{{ $message }}</small> @enderror
+                        </div>
+
+                        <!-- Your Message Textarea -->
+                        <div class="mb-4">
+                            <textarea name="message" class="w-100 form-control border border-secondary shadow-none"
+                                    rows="5" cols="10" placeholder="Your Message" required>{{ old('message') }}</textarea>
+                            @error('message') <small class="text-danger d-block mt-1">{{ $message }}</small> @enderror
+                        </div>
+
+                        <!-- Submit Button  -->
+                        <button type="submit" class="w-100 btn form-control border border-secondary py-3 bg-white text-primary hover-btn">
+                            Submit
+                        </button>
+                    </form>
+                </div>
 
 
 

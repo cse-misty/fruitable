@@ -124,7 +124,7 @@
 
                     <li class="{{ request()->routeIs('web_settings.index') ? 'active' : '' }}">
                         <a class="nav-link d-flex align-items-center gap-2" href="{{ route('web_settings.index') }}">
-                            <i data-feather="sliders" style="stroke: #6c757d; width: 15px; height: 15px;"></i>
+                            <i data-feather="sliders" style="stroke: #14f227; width: 15px; height: 15px;"></i>
                             <span>Setting List</span>
                         </a>
                     </li>

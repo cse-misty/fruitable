@@ -108,6 +108,44 @@
                 });
             });
         }
+ <!-- Fact Start Counter -->
+
+
+        // document.addEventListener("DOMContentLoaded", () => {
+        //     const counters = document.querySelectorAll('.count-number');
+        //     const speed = 40;
+
+        //     const startCounting = (counter) => {
+        //         const target = +counter.getAttribute('data-target');
+        //         const suffix = counter.getAttribute('data-suffix') || '';
+        //         const count = +counter.innerText.replace(suffix, '');
+
+
+        //         const inc = Math.ceil(target / speed);
+
+        //         if (count < target) {
+
+        //             counter.innerText = (count + inc > target ? target : count + inc) + suffix;
+        //             setTimeout(() => startCounting(counter), 30);
+        //         } else {
+        //             counter.innerText = target + suffix;
+        //         }
+        //     };
+
+
+        //     const observer = new IntersectionObserver((entries) => {
+        //         entries.forEach(entry => {
+        //             if (entry.isIntersecting) {
+        //                 startCounting(entry.target);
+        //                 observer.unobserve(entry.target);
+        //             }
+        //         });
+        //     }, { threshold: 0.5 });
+
+        //     counters.forEach(counter => observer.observe(counter));
+        // });
+
+
     </script>
 
 
@@ -122,6 +160,51 @@
             }
         }
     </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const counters = document.querySelectorAll('.count-item');
+        const duration = 2000; // অ্যানিমেশনটি মোট কত মিলি-সেকেন্ড ধরে চলবে (২ সেকেন্ড)
+
+        const animateCounter = (counter) => {
+            const target = +counter.getAttribute('data-target');
+            const suffix = counter.getAttribute('data-suffix') || '';
+            const startTime = performance.now();
+
+            const updateNumber = (currentTime) => {
+                const elapsedTime = currentTime - startTime;
+
+                // অ্যানিমেশন কতদূর সম্পন্ন হয়েছে তার অনুপাত (Progress ratio)
+                const progress = Math.min(elapsedTime / duration, 1);
+
+                // বর্তমান ফ্রেমের সংখ্যা গণনা
+                const currentValue = Math.floor(progress * target);
+
+                counter.innerText = currentValue + suffix;
+
+                if (progress < 1) {
+                    requestAnimationFrame(updateNumber);
+                } else {
+                    counter.innerText = target + suffix;
+                }
+            };
+
+            requestAnimationFrame(updateNumber);
+        };
+
+        // স্ক্রিনে যখন এই সেকশনটি আসবে তখনই কাউন্ট অ্যানিমেশন শুরু হবে
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    observer.unobserve(entry.target); // একবার অ্যানিমেশন হয়ে গেলে ট্র্যাকিং বন্ধ করবে
+                }
+            });
+        }, { threshold: 0.2 }); // সেকশনটি ২০% স্ক্রিনে আসলেই কাউন্ট শুরু হবে
+
+        counters.forEach(counter => observer.observe(counter));
+    });
+</script>
 
 </body>
 </html>

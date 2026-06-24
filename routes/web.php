@@ -4,7 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\format_priceController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\ProductController;
@@ -23,20 +23,25 @@ use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WishlistController;
 
 
 
+Route::controller(PublicController::class)->group(function (){
+    Route::get('/', 'index')->name('index');
+    Route::get('/contact', 'contact')->name('web.contact');
+    Route::get('/category','category')->name('web.category');
+    Route::get('/faq',  'faq')->name('web.faq');
+    Route::get('/about', 'about')->name('web.about');
+    Route::get('/privacy-policy',  'privacyPolicy')->name('web.privacy-policy');
+    Route::get('/organic/product', 'organicProduct')->name('web.organic-product');
 
-
-Route::get('/', [PublicController::class, 'index'])->name('index');
-Route::get('/shop', [CartController::class, 'showShop'])->name('web.shopping');
-Route::get('/contact', [PublicController::class, 'contact'])->name('web.contact');
-Route::get('/category', [PublicController::class, 'category'])->name('web.category');
+});
+ Route::get('/shop', [CartController::class, 'showShop'])->name('web.shopping');
 Route::get('/shop-details/{id}', [CheckoutController::class, 'shopDetails'])->name('web.shop-details');
 Route::get('/search', [SearchController::class, 'index'])->name('search');
-Route::get('/faq', [PublicController::class, 'faq'])->name('web.faq');
-Route::get('/about', [PublicController::class, 'about'])->name('web.about');
-Route::get('/privacy-policy', [PublicController::class, 'privacyPolicy'])->name('web.privacy-policy');
+
 
 Route::post('/review/store/{product_id}', [ReviewController::class, 'store'])
      ->name('review.store')
@@ -274,6 +279,18 @@ Route::controller(ReviewController::class)->group(function () {
 
     Route::post('/reviews/reply', 'reviewsendReply')->name('reviews.reply');
 });
+
+
+
+
+
+Route::controller(WishlistController::class)->group(function (){
+    Route::get('/wishlist',  'index')->name('wishlist.index');
+    Route::post('/wishlist/add/{product}', 'store')->name('wishlist.add');
+    Route::delete('/wishlist/remove/{wishlist}', 'destroy')->name('wishlist.destroy');
+});
+
+
 
 
 });

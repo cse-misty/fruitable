@@ -74,31 +74,31 @@
                                             </td>
 
                                             <td class="text-start fw-semibold">{{ $item->product->name ?? 'Product Deleted' }}</td>
-                                            <td>$ {{ number_format($item->price, 2) }}</td>
+                                            <td> {{ format_price($item->price, 2) }}</td>
                                             <td>{{ $item->quantity }} Pieces</td>
-                                            <td>$ {{ number_format($item->price * $item->quantity, 2) }}</td>
+                                            <td> {{ format_price($item->price * $item->quantity, 2) }}</td>
                                         </tr>
                                     @endforeach
 
                                     <tr class="fw-bold bg-light">
                                         <td colspan="4" class="text-end">Subtotal:</td>
-                                        <td>$ {{ number_format($order->subtotal ?? $order->total_amount, 2) }}</td>
+                                        <td> {{ format_price($order->subtotal ?? $order->total_amount, 2) }}</td>
                                     </tr>
                                     @if(isset($order->delivery_charge) || isset($order->shipping_charge))
                                     <tr>
                                         <td colspan="4" class="text-end fw-bold">Delivery Charge:</td>
-                                        <td class="fw-bold">$ {{ number_format($order->delivery_charge ?? $order->shipping_charge ?? 0, 2) }}</td>
+                                        <td class="fw-bold"> {{ format_price($order->delivery_charge ?? $order->shipping_charge ?? 0, 2) }}</td>
                                     </tr>
                                     @endif
                                     @if(isset($order->discount) && $order->discount > 0)
                                     <tr>
                                         <td colspan="4" class="text-end fw-bold text-danger">Discount:</td>
-                                        <td class="fw-bold text-danger">-$ {{ number_format($order->discount, 2) }}</td>
+                                        <td class="fw-bold text-danger">-{{ format_price($order->discount, 2) }}</td>
                                     </tr>
                                     @endif
                                     <tr class="table-primary fw-bold">
                                         <td colspan="4" class="text-end fs-5">Grand Total:</td>
-                                        <td class="fs-5">$ {{ number_format($order->total_amount, 2) }}</td>
+                                        <td class="fs-5"> {{ format_price($order->total_amount, 2) }}</td>
                                     </tr>
                                 </tbody>
                             </table>

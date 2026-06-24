@@ -58,26 +58,40 @@
                 </div>
 
                    <!-- Category -->
-                <<div class="col-md-6 mb-3 px-5">
-    <label class="form-label font-weight-bold">Sub Category <span class="text-danger">*</span></label>
-    <select name="sub_category_id"
-            class="form-control @error('sub_category_id') is-invalid @enderror"
-            required>
-        <option value="">Select Sub Category</option>
+                <div class="col-md-6 mb-3 px-5">
+                    <label class="form-label font-weight-bold">Sub Category <span class="text-danger">*</span></label>
+                    <select name="sub_category_id"
+                            class="form-control @error('sub_category_id') is-invalid @enderror"
+                            required>
+                        <option value="">Select Sub Category</option>
 
-        @foreach($subCategories as $subCategorie)
-            <option value="{{ $subCategorie->id }}"
-                {{ old('sub_category_id') == $subCategorie->id ? 'selected' : '' }}>
-                {{ $subCategorie->title }}
-            </option>
-        @endforeach
+                        @foreach($subCategories as $subCategorie)
+                            <option value="{{ $subCategorie->id }}"
+                                {{ old('sub_category_id') == $subCategorie->id ? 'selected' : '' }}>
+                                {{ $subCategorie->title }}
+                            </option>
+                        @endforeach
 
-    </select>
+                    </select>
 
-    @error('sub_category_id')
-        <div class="invalid-feedback">{{ $message }}</div>
-    @enderror
-</div>
+                    @error('sub_category_id')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <!-- rating -->
+               <div class="col-md-6 mb-3 px-5">
+                    <label class="form-label font-weight-bold">Rating (0 - 5)</label>
+                    <input type="number"
+                        name="rating" {{-- priority পরিবর্তন করে rating করা হলো --}}
+                        value="{{ old('rating', $product->rating ?? 5) }}" {{-- ডিফল্ট ভ্যালু ৫ বা ডাটাবেজের মান দেখাবে --}}
+                        class="form-control"
+                        step="0.1" {{-- ৪.৫ বা ৪.২ এর মতো দশমিক ইনপুট দেওয়ার জন্য --}}
+                        min="0"
+                        max="5" {{-- ৫ এর বেশি রেটিং দেওয়া যাবে না --}}
+                        placeholder="Enter rating e.g. 4.5">
+                </div>
+
 
 
                 <!-- Priority -->

@@ -30,7 +30,8 @@ class ProductController extends Controller
         $products = $query->latest()->paginate(10);
 
 
-        return view('backend.admin.products.index', compact('products'));
+
+        return view('backend.admin.products.index', compact('products',));
     }
 
     public function create()
@@ -86,7 +87,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name'            => 'nullable|string|max:255',
             'category_id'     => 'nullable|exists:categories,id',
-            'sub_category_id' => 'nullable|exists:sub_categories,id', 
+            'sub_category_id' => 'nullable|exists:sub_categories,id',
             'price'           => 'nullable|numeric',
             'priority'        => 'nullable|integer',
             'status'          => 'nullable|boolean',
