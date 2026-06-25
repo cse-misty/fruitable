@@ -46,13 +46,20 @@ class CheckoutController extends Controller
             ->get();
 
 
-        $reviews = Review::with(['user', 'product']) 
+        $reviews = Review::with(['user', 'product'])
             ->where('status', 1)
             ->latest()
             ->limit(4)
             ->get();
 
-        return view('frontend.pages.shopDetails', compact('categories', 'products', 'product'));
+             $relatedProducts = Product::where('category_id', $product->category_id)
+                              ->where('id', '!=', $product->id)
+                              ->latest()
+                              ->take(6)
+                              ->get();
+
+
+        return view('frontend.pages.shopDetails', compact('categories', 'products', 'product','relatedProducts'));
     }
 
     public function cart(){

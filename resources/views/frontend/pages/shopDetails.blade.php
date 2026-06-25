@@ -493,123 +493,83 @@
                     </div>
                 </div>
 
-                 <h1 class="fw-bold mb-0">Related products</h1>
-                <div class="vesitable">
-                    <div class="owl-carousel vegetable-carousel justify-content-center">
-                        <div class="border border-primary rounded position-relative vesitable-item">
-                            <div class="vesitable-img">
-                                <img src="img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
-                            </div>
-                            <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                            <div class="p-4 pb-0 rounded-bottom">
-                                <h4>Parsely</h4>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                    <p class="text-dark fs-5 fw-bold">$4.99 / kg</p>
-                                    <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="border border-primary rounded position-relative vesitable-item">
-                            <div class="vesitable-img">
-                                <img src="img/vegetable-item-1.jpg" class="img-fluid w-100 rounded-top" alt="">
-                            </div>
-                            <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                            <div class="p-4 pb-0 rounded-bottom">
-                                <h4>Parsely</h4>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                    <p class="text-dark fs-5 fw-bold">$4.99 / kg</p>
-                                    <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="border border-primary rounded position-relative vesitable-item">
-                            <div class="vesitable-img">
-                                <img src="img/vegetable-item-3.png" class="img-fluid w-100 rounded-top bg-light" alt="">
-                            </div>
-                            <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                            <div class="p-4 pb-0 rounded-bottom">
-                                <h4>Banana</h4>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                    <p class="text-dark fs-5 fw-bold">$7.99 / kg</p>
-                                    <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="border border-primary rounded position-relative vesitable-item">
-                            <div class="vesitable-img">
-                                <img src="img/vegetable-item-4.jpg" class="img-fluid w-100 rounded-top" alt="">
-                            </div>
-                            <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                            <div class="p-4 pb-0 rounded-bottom">
-                                <h4>Bell Papper</h4>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                    <p class="text-dark fs-5 fw-bold">$7.99 / kg</p>
-                                    <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="border border-primary rounded position-relative vesitable-item">
-                            <div class="vesitable-img">
-                                <img src="img/vegetable-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
-                            </div>
-                            <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                            <div class="p-4 pb-0 rounded-bottom">
-                                <h4>Potatoes</h4>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                    <p class="text-dark fs-5 fw-bold">$7.99 / kg</p>
-                                    <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="border border-primary rounded position-relative vesitable-item">
-                            <div class="vesitable-img">
-                                <img src="img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
-                            </div>
-                            <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                            <div class="p-4 pb-0 rounded-bottom">
-                                <h4>Parsely</h4>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                    <p class="text-dark fs-5 fw-bold">$7.99 / kg</p>
-                                    <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="border border-primary rounded position-relative vesitable-item">
-                            <div class="vesitable-img">
-                                <img src="img/vegetable-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
-                            </div>
-                            <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                            <div class="p-4 pb-0 rounded-bottom">
-                                <h4>Potatoes</h4>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                    <p class="text-dark fs-5 fw-bold">$7.99 / kg</p>
-                                    <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="border border-primary rounded position-relative vesitable-item">
-                            <div class="vesitable-img">
-                                <img src="img/vegetable-item-6.jpg" class="img-fluid w-100 rounded-top" alt="">
-                            </div>
-                            <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Vegetable</div>
-                            <div class="p-4 pb-0 rounded-bottom">
-                                <h4>Parsely</h4>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod te incididunt</p>
-                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                    <p class="text-dark fs-5 fw-bold">$7.99 / kg</p>
-                                    <a href="#" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                </div>
-                            </div>
+               <h1 class="fw-bold mb-0">{{ __('Related products') }}</h1>
+<div class="vesitable">
+    <div class="owl-carousel vegetable-carousel justify-content-center">
+
+        @forelse($relatedProducts as $relatedProduct)
+            <!-- ১. কার্ডের কার্সার পয়েন্টার করা হলো এবং জাভাস্ক্রিপ্ট দিয়ে ক্লিকেবল করা হলো -->
+            <div class="border border-primary rounded position-relative vesitable-item"
+                 style="cursor: pointer;"
+                 onclick="window.location='{{ route('web.shop-details', $relatedProduct->id) }}'">
+
+                <!-- Product Image -->
+                <div class="vesitable-img">
+                    <img src="{{ \Illuminate\Support\Str::startsWith($relatedProduct->image, 'http') ? $relatedProduct->image : asset('storage/' . $relatedProduct->image) }}"
+                         class="img-fluid w-100 rounded-top"
+                         style="height: 220px; object-fit: cover;"
+                         alt="{{ $relatedProduct->name }}">
+                </div>
+
+                <!-- Category Badge (ফিক্সড: $product থেকে বদলে $relatedProduct করা হয়েছে) -->
+                <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px; z-index: 10;">
+                    {{ $relatedProduct->category->title ?? 'Vegetable' }}
+                </div>
+
+                <!-- Wishlist Form (ফিক্সড: $product থেকে বদলে $relatedProduct করা হয়েছে এবং ক্লিক ইভেন্ট স্টপ করা হয়েছে) -->
+                <form action="{{ route('wishlist.add', $relatedProduct->id) }}" method="POST" class="position-absolute" style="top: 10px; right: 10px; z-index: 12;" onclick="event.stopPropagation();">
+                    @csrf
+                    <button type="submit" class="btn btn-white shadow-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 35px; height: 35px; padding: 0; background: white;">
+                        <i class="bi bi-heart text-black fs-5"></i>
+                    </button>
+                </form>
+
+                <!-- Product Details -->
+                <div class="p-4 pb-0 rounded-bottom">
+                    <div class="d-flex justify-content-between align-items-center mb-2 gap-2">
+                        <!-- প্রোডাক্ট নাম (ফিক্সড: $product থেকে বদলে $relatedProduct করা হয়েছে) -->
+                        <h4 class="text-dark mb-0 text-truncate" style="max-width: 70%;">{{ $relatedProduct->name }}</h4>
+
+                        <!-- রেটিং সেকশন (ফিক্সড: $product থেকে বদলে $relatedProduct করা হয়েছে) -->
+                        <div class="d-flex text-warning font-12 flex-shrink-0">
+                            @php $rating = round($relatedProduct->rating ?? 5); @endphp
+                            @for($i = 1; $i <= 5; $i++)
+                                @if($i <= $rating)
+                                    <i class="fas fa-star"></i>
+                                @else
+                                    <i class="fas fa-star text-muted" style="color: #e4e5e9 !important;"></i>
+                                @endif
+                            @endfor
                         </div>
                     </div>
+
+                    <!-- Description Limit -->
+                    <p>{!! \Illuminate\Support\Str::limit(strip_tags($relatedProduct->description), 80, '...') !!}</p>
+
+                    <div class="d-flex justify-content-between flex-lg-wrap">
+                        <!-- Price -->
+                        <p class="text-dark fs-5 fw-bold">{{ format_price($relatedProduct->price, 2) }}</p>
+
+                        <!-- Add to Cart Form (এখানেও event.stopPropagation() দেওয়া হয়েছে যেন বাটনে চাপ দিলে ডিটেইলসে না গিয়ে কার্টেই যোগ হয়) -->
+                        <form action="{{ route('cart.add', $relatedProduct->id) }}" method="POST" onclick="event.stopPropagation();">
+                            @csrf
+                            <button type="submit" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary">
+                                <i class="fa fa-shopping-bag me-2 text-primary"></i> {{ __('Add to cart') }}
+                            </button>
+                        </form>
+                    </div>
                 </div>
+            </div>
+        @empty
+            <div class="text-center text-muted py-4">
+                {{ __('No related products found!') }}
+            </div>
+        @endforelse
+
+    </div>
+</div>
+
+
 
             </div>
         </div>
@@ -621,7 +581,7 @@
             let value = this.getAttribute('data-value');
             document.getElementById('rating-value').value = value;
 
-            // সব স্টারের কালার রিসেট করে ক্লিক করা স্টার পর্যন্ত কালার করার লজিক
+
             document.querySelectorAll('.star-rating .fa-star').forEach(s => {
                 if(s.getAttribute('data-value') <= value) {
                     s.classList.remove('text-muted');

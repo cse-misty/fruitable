@@ -60,7 +60,6 @@
 <script>
 Dropzone.autoDiscover = false;
 
-
 @php
     $sliderImages = is_string($heroSlider->image) ? json_decode($heroSlider->image, true) : $heroSlider->image;
     $existingImages = is_array($sliderImages) ? $sliderImages : ($sliderImages ? [$sliderImages] : []);
@@ -68,7 +67,8 @@ Dropzone.autoDiscover = false;
 
 const myDropzone = new Dropzone("#heroDropzone", {
     url: "{{ route('hero.slider.update', $heroSlider->id) }}",
-    paramName: "image",
+    
+    paramName: "image[]",
     uploadMultiple: true,
     parallelUploads: 10,
     maxFilesize: 2,
@@ -78,10 +78,7 @@ const myDropzone = new Dropzone("#heroDropzone", {
 
     init: function () {
         const dzClosure = this;
-
-
         const existingFiles = @json($existingImages);
-
         const storageUrl = "{{ asset('storage') }}";
 
         if (existingFiles && existingFiles.length > 0) {
@@ -91,10 +88,8 @@ const myDropzone = new Dropzone("#heroDropzone", {
                     let mockFile = { name: fileName, size: 12345, accepted: true };
 
                     dzClosure.emit("addedfile", mockFile);
-
                     dzClosure.emit("thumbnail", mockFile, storageUrl + '/' + imagePath);
                     dzClosure.emit("complete", mockFile);
-
                     dzClosure.files.push(mockFile);
                 }
             });
@@ -112,8 +107,10 @@ const myDropzone = new Dropzone("#heroDropzone", {
             }
         });
 
+
         this.on("sendingmultiple", function (data, xhr, formData) {
             formData.append('_method', 'PUT');
+            formData.append('_token', '{{ csrf_token() }}');
 
             const formInputs = document.querySelectorAll('#heroForm input:not([type="file"])');
             formInputs.forEach(input => {
@@ -123,7 +120,7 @@ const myDropzone = new Dropzone("#heroDropzone", {
 
         this.on("successmultiple", function (files, response) {
             alert("Slider updated successfully!");
-            window.location.href = "{{ route('hero.slider.index') }}";
+            window.location.reload();
         });
 
         this.on("errormultiple", function (files, response) {
@@ -133,9 +130,13 @@ const myDropzone = new Dropzone("#heroDropzone", {
     }
 });
 
+
 function submitFormWithoutNewImages() {
     let form = document.getElementById('heroForm');
     let formData = new FormData(form);
+
+
+    formData.append('_method', 'PUT');
 
     $.ajax({
         url: "{{ route('hero.slider.update', $heroSlider->id) }}",
@@ -143,9 +144,12 @@ function submitFormWithoutNewImages() {
         data: formData,
         contentType: false,
         processData: false,
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
         success: function(response) {
             alert("Slider updated successfully!");
-            window.location.href = "{{ route('hero.slider.index') }}";
+            window.location.reload();
         },
         error: function(xhr) {
             console.error(xhr.responseText);

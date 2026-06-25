@@ -1,8 +1,8 @@
 @extends('frontend.layouts')
 
 @section('content')
-<!-- পেজ হেডার সেকশন -->
-<div class="container-fluid page-header py-5 bg-dark mb-5"> {{-- ব্যাকগ্রাউন্ড কালার বা ইমেজ ক্লাসের জন্য bg-dark দেওয়া হলো --}}
+
+<div class="container-fluid page-header py-5 bg-dark mb-5"> 
     <h1 class="text-center text-white display-6">{{ $page->title }}</h1>
     <ol class="breadcrumb justify-content-center mb-0">
         <li class="breadcrumb-item"><a href="{{ url('/') }}" class="text-white-50">Home</a></li>
@@ -11,7 +11,6 @@
     </ol>
 </div>
 
-<!-- পেজ কনটেন্ট সেকশন -->
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-10">

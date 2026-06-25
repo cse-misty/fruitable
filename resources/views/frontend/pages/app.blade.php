@@ -223,8 +223,8 @@
 
                                             <form action="{{ route('wishlist.add', $product->id) }}" method="POST" class="position-absolute" style="top: 10px; right: 10px; z-index: 12;" onclick="event.stopPropagation();">
                                                 @csrf
-                                                <button type="submit" class="btn btn-white shadow rounded-circle d-flex align-items-center justify-content-center border " style="width: 35px; height: 35px; padding: 0; background: white;">
-                                                    <i class="bi bi-heart text-danger fs-5"></i>
+                                                <button type="submit" class="btn btn-white shadow rounded-circle d-flex align-items-center justify-content-center " style="width: 35px; height: 35px; padding: 0; background: white;">
+                                                    <i class="bi bi-heart text-black fs-5"></i>
                                                 </button>
                                             </form>
 
@@ -289,7 +289,7 @@
                                             <form action="{{ route('wishlist.add', $product->id) }}" method="POST" class="position-absolute" style="top: 10px; right: 10px; z-index: 12;" onclick="event.stopPropagation();">
                                                 @csrf
                                                 <button type="submit" class="btn btn-white shadow rounded-circle d-flex align-items-center justify-content-center border " style="width: 35px; height: 35px; padding: 0; background: white;">
-                                                    <i class="bi bi-heart text-danger fs-5"></i>
+                                                    <i class="bi bi-heart text-black fs-5"></i>
                                                 </button>
                                             </form>
 
@@ -343,11 +343,11 @@
 
 
         <!-- Product Services -->
-        <div class="container-fluid service py-5">
+        {{-- <div class="container-fluid service py-5">
             <div class="container py-5">
                    <div class="d-flex justify-content-between align-items-center mb-4">
 
-                    <h3 class="section-title mb-0">{{ $services->service_title }}</h3>
+                    <h3 class="section-title mb-0">{{ $services?->service_title }}</h3>
 
                     <a href="{{ route('web.shopping') }}" class="view-all-btn">View All</a>
 
@@ -470,7 +470,114 @@
 
                 </div>
             </div>
+        </div> --}}
+
+<div class="container-fluid service py-5">
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="section-title mb-0">{{ $services?->service_title ?? 'Our Services' }}</h3>
+            <a href="{{ route('web.shopping') }}" class="view-all-btn">View All</a>
         </div>
+
+        <div class="row g-4 justify-content-center">
+
+            <!-- Fresh Apple --->
+            @if(($services?->fresh_status ?? 1) == 1)
+                <div class="col-md-6 col-lg-4">
+                    <a href="{{ $services?->fresh_link ?? '#' }}">
+                        <div class="service-item bg-secondary rounded border border-secondary"
+                            style="background-color: {{ $services?->fresh_bg_color ?? '#e67e22' }} !important; border-color: {{ $services?->fresh_bg_color ?? '#e67e22' }} !important;">
+
+                            @if(!empty($services?->fresh_image))
+                                <img src="{{ asset('uploads/services/' . $services?->fresh_image) }}" class="img-fluid rounded-top w-100" alt="Fresh Image">
+                            @else
+                                <img src="{{ asset('frontend/assets/img/featur-1.jpg') }}" class="img-fluid rounded-top w-100" alt="Default Image">
+                            @endif
+
+                            <div class="px-4 rounded-bottom">
+                                <div class="service-content bg-primary text-center p-4 rounded"
+                                    style="background-color: {{ $services?->fresh_content_bg_color ?? '#3498db' }} !important;">
+
+                                    <h5 class="text-white" style="color: {{ $services?->fresh_title_color ?? '#ffffff' }} !important;">
+                                        {{ $services?->fresh_title ?? 'Fresh Apples' }}
+                                    </h5>
+
+                                    <h3 class="mb-0" style="color: {{ $services?->fresh_offer_color ?? '#ffffff' }} !important;">
+                                        {{ $services?->fresh_offer_text ?? '20% OFF' }}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endif
+
+            <!-- Tasty Fruits --->
+            @if(($services?->tasty_status ?? 1) == 1)
+                <div class="col-md-6 col-lg-4">
+                    <a href="{{ $services?->tasty_link ?? '#' }}">
+                        <div class="service-item bg-dark rounded border border-dark"
+                            style="background-color: {{ $services?->tasty_bg_color ?? '#2c3e50' }} !important; border-color: {{ $services?->tasty_bg_color ?? '#2c3e50' }} !important;">
+
+                            @if(!empty($services?->tasty_image))
+                                <img src="{{ asset('uploads/services/' . $services?->tasty_image) }}" class="img-fluid rounded-top w-100" alt="Tasty Image">
+                            @else
+                                <img src="{{ asset('frontend/assets/img/featur-2.jpg') }}" class="img-fluid rounded-top w-100" alt="Default Tasty Image">
+                            @endif
+
+                            <div class="px-4 rounded-bottom">
+                                <div class="service-content bg-light text-center p-4 rounded"
+                                    style="background-color: {{ $services?->tasty_content_bg_color ?? '#ecf0f1' }} !important;">
+
+                                    <h5 class="text-primary" style="color: {{ $services?->tasty_title_color ?? '#2c3e50' }} !important;">
+                                        {{ $services?->tasty_title ?? 'Tasty Fruits' }}
+                                    </h5>
+
+                                    <h3 class="mb-0" style="color: {{ $services?->tasty_offer_color ?? '#e74c3c' }} !important;">
+                                        {{ $services?->tasty_offer_text ?? 'Free delivery' }}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endif
+
+            <!-- Exotic Vegetable --->
+            @if(($services?->exotic_status ?? 1) == 1)
+                <div class="col-md-6 col-lg-4">
+                    <a href="{{ $services?->exotic_link ?? '#' }}">
+                        <div class="service-item bg-primary rounded border border-primary"
+                            style="background-color: {{ $services?->exotic_bg_color ?? '#27ae60' }} !important; border-color: {{ $services?->exotic_bg_color ?? '#27ae60' }} !important;">
+
+                            @if(!empty($services?->exotic_image))
+                                <img src="{{ asset('uploads/services/' . $services?->exotic_image) }}" class="img-fluid rounded-top w-100" alt="Exotic Image">
+                            @else
+                                <img src="{{ asset('frontend/assets/img/featur-3.jpg') }}" class="img-fluid rounded-top w-100" alt="Default Exotic Image">
+                            @endif
+
+                            <div class="px-4 rounded-bottom">
+                                <div class="service-content bg-secondary text-center p-4 rounded"
+                                    style="background-color: {{ $services?->exotic_content_bg_color ?? '#f1c40f' }} !important;">
+
+                                    <h5 class="text-white" style="color: {{ $services?->exotic_title_color ?? '#ffffff' }} !important;">
+                                        {{ $services?->exotic_title ?? 'Exotic Vegetable' }}
+                                    </h5>
+
+                                    <h3 class="mb-0" style="color: {{ $services?->exotic_offer_color ?? '#ffffff' }} !important;">
+                                        {{ $services?->exotic_offer_text ?? 'Discount 30$' }}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endif
+
+        </div>
+    </div>
+</div>
+
         <!-- Product Services -->
 
 
@@ -497,8 +604,8 @@
 
                 <form action="{{ route('wishlist.add', $product->id) }}" method="POST" class="position-absolute" style="top: 10px; right: 10px; z-index: 12;" onclick="event.stopPropagation();">
                     @csrf
-                    <button type="submit" class="btn btn-white shadow rounded-circle d-flex align-items-center justify-content-center border" style="width: 35px; height: 35px; padding: 0; background: white;">
-                        <i class="bi bi-heart text-danger fs-5"></i>
+                    <button type="submit" class="btn btn-white shadow rounded-circle d-flex align-items-center justify-content-center " style="width: 35px; height: 35px; padding: 0; background: white;">
+                        <i class="bi bi-heart text-black fs-5"></i>
                     </button>
                 </form>
 
@@ -664,8 +771,8 @@
 
                         <form action="{{ route('wishlist.add', $product->id) }}" method="POST" class="position-absolute" style="top: 20px; right: 20px; z-index: 12;" onclick="event.stopPropagation();">
                             @csrf
-                            <button type="submit" class="btn btn-white shadow rounded-circle d-flex align-items-center justify-content-center border" style="width: 32px; height: 32px; padding: 0; background: white;">
-                                <i class="bi bi-heart text-danger fs-6"></i>
+                            <button type="submit" class="btn btn-white shadow rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; padding: 0; background: white;">
+                                <i class="bi bi-heart text-black fs-6"></i>
                             </button>
                         </form>
 

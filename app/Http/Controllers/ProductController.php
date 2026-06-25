@@ -8,6 +8,8 @@ use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use App\Repositories\ProductRepository;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Imports\ProductsImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -125,4 +127,26 @@ class ProductController extends Controller
         ->position('top-end');
         return redirect()->route('products.index');
     }
+
+
+    public function showBulkUploadForm()
+{
+    return view('backend.admin.products.bulk-upload');
+}
+
+
+public function bulkUploadStore(Request $request)
+{
+    $request->validate([
+        'excel_file' => 'required|mimes:xlsx,xls,csv|max:2048' 
+    ]);
+
+    try {
+        Excel::import(new ProductsImport, $request->file('excel_file'));
+
+        return redirect()->route('products.index')->with('success', 'Bulk products imported successfully!');
+    } catch (\Exception $e) {
+        return back()->withErrors(['excel_file' => 'Error importing file: ' . $e->getMessage()]);
+    }
+}
 }

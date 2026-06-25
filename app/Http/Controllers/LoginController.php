@@ -28,22 +28,30 @@ public function login(Request $request)
         'password' => 'required',
     ]);
 
+
     if (Auth::attempt($credentials, $request->has('remember'))) {
+
+
         $request->session()->regenerate();
 
-       
-        Alert::success('Success', 'Login successfully!')
-            ->toast()
-            ->position('top-end');
 
-        return redirect()->intended(route('index'));
+        if (class_exists('\RealRashid\SweetAlert\Facades\Alert')) {
+          Alert::success('Success', 'Login successfully!')
+                ->toast()
+                ->position('top-end');
+        }
+
+
+       return back();
     }
 
 
     return back()->withErrors([
-        'email' => 'Invalid credentials',
+        'email' => 'The provided credentials do not match our records.',
     ])->withInput($request->only('email'));
 }
+
+
 
 
 

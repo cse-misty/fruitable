@@ -218,8 +218,8 @@
 
                                             <form action="{{ route('wishlist.add', $product->id) }}" method="POST" class="position-absolute" style="top: 10px; right: 10px; z-index: 12;" onclick="event.stopPropagation();">
                                                 @csrf
-                                                <button type="submit" class="btn btn-white shadow rounded-circle d-flex align-items-center justify-content-center border " style="width: 35px; height: 35px; padding: 0; background: white;">
-                                                    <i class="bi bi-heart text-danger fs-5"></i>
+                                                <button type="submit" class="btn btn-white shadow-sm rounded-circle d-flex align-items-center justify-content-center " style="width: 35px; height: 35px; padding: 0; background: white;">
+                                                    <i class="bi bi-heart text-black fs-5"></i>
                                                 </button>
                                             </form>
 

@@ -1,24 +1,41 @@
 <div class="container-fluid fixed-top">
-    <div class="container topbar bg-primary d-none d-lg-block">
-        <div class="d-flex justify-content-between">
-            <div class="top-info ps-2">
-                <small class="me-3">
-                    <i class="fas fa-map-marker-alt me-2 text-secondary"></i>
-                    <a href="#" class="text-white">123 Street, New York</a>
-                </small>
-                <small class="me-3">
-                    <i class="fas fa-envelope me-2 text-secondary"></i>
-                    <a href="#" class="text-white"> {{ $setting->email_primary ?? '' }}</a>
-                </small>
-            </div>
+<div class="container topbar bg-primary d-none d-lg-block">
+    <div class="d-flex justify-content-between">
+        <div class="top-info ps-2">
+   
+            <small class="me-3">
+                <i class="fas fa-map-marker-alt me-2 text-secondary"></i>
+                <a href="{{ $setting->google_map_url ?? '#' }}" target="_blank" class="text-white">
+                    {{ $setting->address ?? '123 Street, New York' }}
+                </a>
+            </small>
 
-            <div class="top-link pe-2">
-                <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                <a href="#" class="text-white"><small class="text-white mx-2">Terms</small>/</a>
-                <a href="#" class="text-white"><small class="text-white ms-2">Refunds</small></a>
-            </div>
+
+            <small class="me-3">
+                <i class="fas fa-envelope me-2 text-secondary"></i>
+                <a href="mailto:{{ $setting->email_primary ?? 'info@example.com' }}" class="text-white">
+                    {{ $setting->email_primary ?? 'info@example.com' }}
+                </a>
+            </small>
+        </div>
+
+        <div class="top-link pe-2">
+
+            <a href="{{ route('page.show', 'privacy-policy') }}" class="text-white">
+                <small class="text-white mx-2">{{ __('Privacy Policy') }}</small>
+            </a>/
+
+            <a href="{{ route('page.show', 'return-policy') }}" class="text-white">
+                <small class="text-white mx-2">{{ __('Terms') }}</small>
+            </a>/
+
+            <a href="{{ route('page.show', 'terms-conditions') }}" class="text-white">
+                <small class="text-white ms-2">{{ __('Refunds') }}</small>
+            </a>
         </div>
     </div>
+</div>
+
 
     <div class="container px-0">
         <nav class="navbar navbar-light bg-white navbar-expand-xl">
@@ -141,7 +158,7 @@
                             @endif
                         </a>
                     @else
-                   
+
                         <a href="{{ route('login') }}" class="position-relative me-4 my-auto">
                             <i class="bi bi-heart fs-4 text-primary"></i>
                         </a>
@@ -150,6 +167,15 @@
 
 
 
+@if ($errors->any())
+    <div class="alert alert-danger p-2 small m-3">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 
                     @guest
@@ -232,136 +258,115 @@
 </div>
 
 <!-- ================= LOGIN MODAL ================= -->
-
-<div id="loginModal" class="modal fade" tabindex="-1">
-
+<div id="loginModal" class="modal fade" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-
         <div class="modal-content border-0 rounded-4 shadow-lg overflow-hidden">
 
             <!-- HEADER -->
             <div class="modal-header bg-primary text-white border-0 position-relative justify-content-center">
-
                 <div class="text-center w-100">
                     <h5 class="modal-title fw-bold mb-0">Login</h5>
                     <small class="opacity-75">Please login to continue</small>
                 </div>
-
-                <button type="button"
-                        class="btn-close btn-close-white position-absolute end-0 me-3"
-                        onclick="closeLoginModal()">
-                </button>
-
+                <button type="button" class="btn-close btn-close-white position-absolute end-0 me-3" onclick="closeLoginModal()"></button>
             </div>
 
+            <div class="modal-body p-4">
 
+                {{-- ================= LOGIN STEP ================= --}}
+                <div id="step-login" style="{{ session('admin_password_reset_email') ? 'display:none;' : 'display:block;' }}">
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
 
-      <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label for="modal_email" class="form-label fw-semibold">Email Address</label>
+                            <input type="email" name="email" id="modal_email" class="form-control form-control-lg rounded-3" required autocomplete="username">
+                        </div>
 
-    {{-- ================= LOGIN STEP ================= --}}
-    <div id="step-login" @if(session('admin_password_reset_email')) style="display:none" @endif>
+                        <div class="mb-3">
+                            <label for="modal_password" class="form-label fw-semibold">Password</label>
+                            <input type="password" name="password" id="modal_password" class="form-control form-control-lg rounded-3" required autocomplete="current-password">
+                        </div>
 
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
+                        <div class="d-flex justify-content-between mb-3">
+                            <div class="form-check">
+                                <input type="checkbox" name="remember" id="rememberMe" class="form-check-input">
+                                <label class="form-check-label small" for="rememberMe">Remember me</label>
+                            </div>
+                            <a href="javascript:void(0)" onclick="showForgotStep()" class="text-primary small text-decoration-none">
+                                Forgot Password?
+                            </a>
+                        </div>
 
-            <div class="mb-3">
-                <label class="form-label fw-semibold">Email Address</label>
-                <!--id="modal_email"  -->
-                <input type="email" name="email" id="modal_email"
-                       class="form-control form-control-lg rounded-3"
-                       required>
-            </div>
+                        <!-- type="submit" নিশ্চিত করা হয়েছে যেন ফর্ম সাবমিট হয় -->
+                        <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">Login</button>
 
-            <div class="mb-3">
-                <label class="form-label fw-semibold">Password</label>
-                <!--  id="modal_password"  -->
-                <input type="password" name="password" id="modal_password"
-                       class="form-control form-control-lg rounded-3"
-                       required>
-            </div>
+                        <!-- demo credential section -->
+                        <div class="mt-4 border-top pt-3 text-center bg-light p-3 rounded-3">
+                            <small class="text-muted d-block mb-2 fw-bold">Don’t have an account? Sign Up</small>
 
-            <div class="d-flex justify-content-between mb-3">
-                <div class="form-check">
-                    <input type="checkbox" name="remember" class="form-check-input">
-                    <label class="form-check-label small">Remember me</label>
+                            <div class="d-flex justify-content-between align-items-center bg-white p-3 rounded border mx-auto" style="max-width: 350px;">
+                                <div class="text-start small text-dark lh-sm">
+                                    <p class="text-primary mb-1 fw-bold">Demo User Credentials</p>
+                                    <div><strong>Email:</strong> <span id="demoEmailText">{{ env('DEMO_USER_EMAIL', 'user@example.com') }}</span></div>
+                                    <div><strong>Pass:</strong> <span id="demoPasswordText">{{ env('DEMO_USER_PASSWORD', 'password123') }}</span></div>
+                                </div>
+
+                                <button type="button" class="btn btn-outline-primary px-3 py-2 fw-bold" id="copyAllDemoBtn" title="Copy & Fill Credentials">
+                                    <i class="fas fa-copy me-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <a href="javascript:void(0)"
-                   onclick="showForgotStep()"
-                   class="text-primary small text-decoration-none">
-                    Forgot Password?
-                </a>
-            </div>
 
-            <button class="btn btn-primary w-100">Login</button>
-
-            <!-- demo credential section -->
-            <div class="mt-4 border-top pt-3 text-center bg-light p-3 rounded-3">
-                <small class="text-muted d-block mb-2 fw-bold">Don’t have an account? Sign Up</small>
-
-                <div class="d-flex justify-content-between align-items-center bg-white p-3 rounded border mx-auto" style="max-width: 350px;">
-                    <div class="text-start small text-dark lh-sm">
-                        <p class="text-primary">Demo User Credentials</p>
-                        <div><strong>Email:</strong> <span id="demoEmailText">{{ env('DEMO_USER_EMAIL', 'user@example.com') }}</span></div>
-                        <div><strong>Pass:</strong> <span id="demoPasswordText">{{ env('DEMO_USER_PASSWORD', 'password123') }}</span></div>
+                {{-- ================= EMAIL STEP ================= --}}
+                <div id="step-email" style="{{ !session('admin_password_reset_email') ? 'display:none;' : 'display:block;' }}">
+                    <form method="POST" action="{{ route('otp.send') }}">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Enter Email</label>
+                            <input type="email" name="email" class="form-control form-control-lg rounded-3" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">Send OTP</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <a href="javascript:void(0)" onclick="backToLogin()" class="text-decoration-none small">Back to Login</a>
                     </div>
-
-                    <button type="button" class="btn btn-outline-primary px-3 py-2 fw-bold" id="copyAllDemoBtn" title="Copy & Fill Credentials">
-                        <i class="fas fa-copy me-1"></i>
-                    </button>
                 </div>
-            </div>
-        </form>
-    </div>
 
-    {{-- ================= EMAIL STEP ================= --}}
-    <div id="step-email" @if(!session('admin_password_reset_email')) style="display:none" @endif>
-        <form method="POST" action="{{ route('otp.send') }}">
-            @csrf
-            <div class="mb-3">
-                <label class="form-label fw-semibold">Enter Email</label>
-                <input type="email" name="email" class="form-control form-control-lg rounded-3" required>
+                {{-- ================= OTP STEP ================= --}}
+                <div id="step-otp" style="{{ (!session('admin_password_reset_email') || session('admin_password_reset_verified')) ? 'display:none;' : 'display:block;' }}">
+                    <form method="POST" action="{{ route('otp.verify') }}">
+                        @csrf
+                        <input type="hidden" name="email" value="{{ session('admin_password_reset_email') }}">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Enter OTP</label>
+                            <input type="text" name="otp" class="form-control form-control-lg rounded-3" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">Verify OTP</button>
+                    </form>
+                </div>
+
+                {{-- ================= RESET STEP ================= --}}
+                <div id="step-reset" style="{{ !session('admin_password_reset_verified') ? 'display:none;' : 'display:block;' }}">
+                    <form method="POST" action="{{ route('password.reset.submit') }}">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">New Password</label>
+                            <input type="password" name="password" class="form-control form-control-lg rounded-3" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Confirm Password</label>
+                            <input type="password" name="password_confirmation" class="form-control form-control-lg rounded-3" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">Reset Password</button>
+                    </form>
+                </div>
+
             </div>
-            <button class="btn btn-primary w-100">Send OTP</button>
-        </form>
-        <div class="text-center mt-2">
-            <a href="javascript:void(0)" onclick="backToLogin()">Back to Login</a>
         </div>
     </div>
-
-    {{-- ================= OTP STEP ================= --}}
-    <div id="step-otp" @if(!session('admin_password_reset_email') || session('admin_password_reset_verified')) style="display:none" @endif>
-        <form method="POST" action="{{ route('otp.verify') }}">
-            @csrf
-            <input type="hidden" name="email" value="{{ session('admin_password_reset_email') }}">
-            <div class="mb-3">
-                <label class="form-label fw-semibold">Enter OTP</label>
-                <input type="text" name="otp" class="form-control form-control-lg rounded-3" required>
-            </div>
-            <button class="btn btn-primary w-100">Verify OTP</button>
-        </form>
-    </div>
-
-    {{-- ================= RESET STEP ================= --}}
-    <div id="step-reset" @if(!session('admin_password_reset_verified')) style="display:none" @endif>
-        <form method="POST" action="{{ route('password.reset.submit') }}">
-            @csrf
-            <div class="mb-3">
-                <label class="form-label fw-semibold">New Password</label>
-                <input type="password" name="password" class="form-control form-control-lg rounded-3" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label fw-semibold">Confirm Password</label>
-                <input type="password" name="password_confirmation" class="form-control form-control-lg rounded-3" required>
-            </div>
-            <button class="btn btn-primary w-100">Reset Password</button>
-        </form>
-    </div>
-</div>
-
-
-        </div>
-    </div>
-
 </div>
 
 <!-- ================= SEARCH MODAL ================= -->
@@ -389,6 +394,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- ================= JS ================= -->
 <script>
@@ -486,128 +492,7 @@
 </script>
 
 
-{{-- <script>
-    let loginModal = null;
 
-    document.addEventListener('DOMContentLoaded', function () {
-
-        loginModal = new bootstrap.Modal(document.getElementById('loginModal'), {
-            keyboard: false
-        });
-
-
-        @if(session('admin_password_reset_email') || session('admin_password_reset_verified') || session('open_login'))
-            loginModal.show();
-        @endif
-    });
-
-
-    function openLoginModal() {
-        if (loginModal) {
-            loginModal.show();
-        }
-    }
-
-    function closeLoginModal() {
-        if (loginModal) {
-            loginModal.hide();
-        }
-    }
-
-
-    function showForgotStep() {
-        document.getElementById('step-login').style.display = 'none';
-        document.getElementById('step-email').style.display = 'block';
-    }
-
-    function backToLogin() {
-        document.getElementById('step-email').style.display = 'none';
-        document.getElementById('step-login').style.display = 'block';
-    }
-</script> --}}
-
-{{-- @if(session('open_login'))
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-
-        var myModal = new bootstrap.Modal(document.getElementById('loginModal'));
-        myModal.show();
-    });
-
-
-
-    document.addEventListener('DOMContentLoaded', function () {
-
-
-    let demoBtn = document.getElementById('useDemoBtn');
-    if (demoBtn) {
-        demoBtn.addEventListener('click', function() {
-
-            document.getElementById('modal_email').value = "user@example.com";
-            document.getElementById('modal_password').value = "password123";
-
-
-        });
-    }
-
-});
-
-
-</script>
-@endif --}}
-
-{{--
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-
-    let copyAllBtn = document.getElementById('copyAllDemoBtn');
-
-    if (copyAllBtn) {
-        copyAllBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-
-
-            let emailText = document.getElementById('demoEmailText').innerText.trim();
-            let passwordText = document.getElementById('demoPasswordText').innerText.trim();
-
-
-            let emailField = document.getElementById('modal_email');
-            let passwordField = document.getElementById('modal_password');
-
-            if (emailField && passwordField) {
-                emailField.value = emailText;
-                passwordField.value = passwordText;
-            }
-
-
-            let combinedText = "Email: " + emailText + "\nPassword: " + passwordText;
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(combinedText);
-            } else {
-                let textArea = document.createElement("textarea");
-                textArea.value = combinedText;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-            }
-
-
-            let originalIcon = copyAllBtn.innerHTML;
-            copyAllBtn.innerHTML = '<i class="fas fa-check text-white"></i>';
-            copyAllBtn.classList.remove('btn-outline-primary');
-            copyAllBtn.classList.add('btn-success');
-
-            setTimeout(() => {
-                copyAllBtn.innerHTML = originalIcon;
-                copyAllBtn.classList.remove('btn-success');
-                copyAllBtn.classList.add('btn-outline-primary');
-            }, 2000);
-        });
-    }
-
-});
-</script> --}}
 
 
 

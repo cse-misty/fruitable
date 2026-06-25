@@ -45,4 +45,10 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
+    protected function redirectTo(Request $request): ?string
+{
+    return $request->expectsJson() ? null : route('login');
+}
+
 }

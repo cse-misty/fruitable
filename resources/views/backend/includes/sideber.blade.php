@@ -32,12 +32,14 @@
             </li>
 
             <!-- Hero Slider -->
-            <li class="{{ request()->routeIs('hero.slider.*') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('hero.slider.index') }}">
-                    <i data-feather="sliders" style="stroke: #ec6332;"></i>
-                    <span class="ms-2">Hero Slider</span>
-                </a>
-            </li>
+       <li class="{{ request()->routeIs('hero.slider.*') ? 'active' : '' }}">
+    <!-- এখানে আইডি হিসেবে ১ পাস করা নিশ্চিত করা হলো -->
+    <a class="nav-link" href="{{ route('hero.slider.edit', ['id' => 1]) }}">
+        <i data-feather="sliders" style="stroke: #ec6332;"></i>
+        <span class="ms-2">Hero Slider</span>
+    </a>
+</li>
+
 
             <!-- Category Dropdown -->
             <li class="dropdown {{ request()->routeIs('categories.*') || request()->routeIs('sub-category.*') ? 'active' : '' }}">

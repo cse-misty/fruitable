@@ -149,16 +149,38 @@ Route::middleware('auth')->group(function () {
     });
 
 
+    // Route::controller(ProductController::class)->group(function () {
+    //     Route::get('/products', 'index')->name('products.index');
+    //     Route::get('/products/create', 'create')->name('products.create');
+    //     Route::post('/products', 'store')->name('products.store');
+    //     Route::get('/products/{id}', 'show')->name('products.show');
+    //     Route::get('/products/{id}/edit', 'edit')->name('products.edit');
+    //     Route::put('/products/{id}', 'update')->name('products.update');
+    //     Route::delete('/products/{id}', 'destroy')->name('products.destroy');
+    //     Route::patch('/products/{product}/toggle-status', 'toggleStatus')->name('products.toggle-status');
+
+    //     Route::get('/products/bulk-upload',  'showBulkUploadForm')->name('products.bulk-upload');
+    //     Route::post('/products/bulk-upload', 'bulkUploadStore')->name('products.bulk-upload.store');
+
+    // });
+
     Route::controller(ProductController::class)->group(function () {
-        Route::get('/products', 'index')->name('products.index');
-        Route::get('/products/create', 'create')->name('products.create');
-        Route::post('/products', 'store')->name('products.store');
-        Route::get('/products/{id}', 'show')->name('products.show');
-        Route::get('/products/{id}/edit', 'edit')->name('products.edit');
-        Route::put('/products/{id}', 'update')->name('products.update');
-        Route::delete('/products/{id}', 'destroy')->name('products.destroy');
-        Route::patch('/products/{product}/toggle-status', 'toggleStatus')->name('products.toggle-status');
-    });
+    Route::get('/products', 'index')->name('products.index');
+    Route::get('/products/create', 'create')->name('products.create');
+    Route::post('/products', 'store')->name('products.store');
+
+
+    Route::get('/products/bulk-upload',  'showBulkUploadForm')->name('products.bulk-upload');
+    Route::post('/products/bulk-upload', 'bulkUploadStore')->name('products.bulk-upload.store');
+
+
+    Route::get('/products/{id}', 'show')->name('products.show');
+    Route::get('/products/{id}/edit', 'edit')->name('products.edit');
+    Route::put('/products/{id}', 'update')->name('products.update');
+    Route::delete('/products/{id}', 'destroy')->name('products.destroy');
+    Route::patch('/products/{product}/toggle-status', 'toggleStatus')->name('products.toggle-status');
+});
+
 
 
     Route::controller(FaqCatagoryController::class)->group(function () {
@@ -216,13 +238,12 @@ Route::controller(ContactController::class)->group(function(){
     });
 
 
+Route::controller(HeroSliderController::class)->group(function () {
+    Route::get('/admin/hero/slider/edit', 'edit')->name('hero.slider.edit');
 
-    Route::controller(HeroSliderController::class)->group(function () {
+    Route::post('/admin/hero/slider/update', 'update')->name('hero.slider.update');
+});
 
-        Route::get('/admin/hero/slider', 'index')->name('hero.slider.index');
-        Route::get('/admin/hero/slider/edit/{heroSlider}', 'edit')->name('hero.slider.edit');
-        Route::put('/admin/hero/slider/update/{heroSlider}', 'update')->name('hero.slider.update');
-    });
 
 
 

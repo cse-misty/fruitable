@@ -10,21 +10,18 @@ use RealRashid\SweetAlert\Facades\Alert;
 class HeroSliderController extends Controller
 {
 
-    public function index(Request $request)
+    public function edit()
     {
-        $heroSliders = HeroSlider::latest()->get();
-        return view('backend.admin.heroSlider.index', compact('heroSliders'));
-    }
-
-
-    public function edit(HeroSlider $heroSlider)
-    {
+        $heroSlider = HeroSlider::firstOrCreate(['id' => 1]);
         return view('backend.admin.heroSlider.edit', compact('heroSlider'));
     }
 
 
-  public function update(Request $request, HeroSlider $heroSlider)
+public function update(Request $request)
 {
+    dd($request);
+    $heroSlider = HeroSlider::firstOrCreate(['id' => 1]);
+
     $request->validate([
         'sub_title'  => 'nullable|string',
         'main_title' => 'nullable|string',
@@ -35,23 +32,23 @@ class HeroSliderController extends Controller
         'image.*'    => 'image|mimes:jpg,jpeg,png,webp|max:2048',
     ]);
 
-    $imagePaths = $heroSlider->image ?? [];
+
+    $oldImages = $heroSlider->image;
+    if (is_string($oldImages)) {
+        $oldImages = json_decode($oldImages, true);
+    }
+    $imagePaths = is_array($oldImages) ? $oldImages : [];
 
     if ($request->hasFile('image')) {
-
         foreach ($imagePaths as $oldImage) {
             if (Storage::disk('public')->exists($oldImage)) {
                 Storage::disk('public')->delete($oldImage);
             }
         }
-
         $imagePaths = [];
-
         foreach ($request->file('image') as $file) {
             $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-
             $file->storeAs('heroslider', $filename, 'public');
-
             $imagePaths[] = 'heroslider/' . $filename;
         }
     }
@@ -62,11 +59,11 @@ class HeroSliderController extends Controller
         'badge_text' => $request->badge_text,
         'text_one'   => $request->text_one,
         'text_two'   => $request->text_two,
-        'image'      => $imagePaths,
+        'image'      => json_encode($imagePaths),
     ]);
 
-    Alert::success('Success', 'Slider Updated Successfully');
+  Alert::success('Success', 'Reply email has been sent successfully!')->toast()->position('top-end');
 
-    return redirect()->back();
+        return back();
 }
 }

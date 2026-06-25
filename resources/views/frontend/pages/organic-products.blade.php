@@ -66,8 +66,8 @@
 
                                     <form action="{{ route('wishlist.add', $product->id) }}" method="POST" class="position-absolute" style="top: 10px; right: 10px; z-index: 12;" onclick="event.stopPropagation();">
                                         @csrf
-                                        <button type="submit" class="btn btn-white shadow rounded-circle d-flex align-items-center justify-content-center border border-1 " style="width: 35px; height: 35px; padding: 0; background: white;">
-                                            <i class="bi bi-heart text-danger fs-5"></i>
+                                        <button type="submit" class="btn btn-white shadow-sm rounded-circle d-flex align-items-center justify-content-center " style="width: 35px; height: 35px; padding: 0; background: white;">
+                                            <i class="bi bi-heart text-black fs-5"></i>
                                         </button>
                                     </form>
                                     <div class="p-4 border-top-0 rounded-bottom">
@@ -92,7 +92,7 @@
 
                                         <p class="text-muted" style="height: 45px; overflow: hidden;">{{ Str::limit($product->description, 60) }}</p>
 
-                                   
+
                                         <div class="d-flex justify-content-between align-items-center" onclick="event.stopPropagation();">
                                             <p class="text-dark fs-5 fw-bold mb-0">
                                                 {{ format_price($product->price, 2) }}
@@ -130,8 +130,8 @@
 
                                         <form action="{{ route('wishlist.add', $product->id) }}" method="POST" class="position-absolute" style="top: 10px; right: 10px; z-index: 12;" onclick="event.stopPropagation();">
                                             @csrf
-                                            <button type="submit" class="btn btn-white shadow rounded-circle d-flex align-items-center justify-content-center border border-1" style="width: 35px; height: 35px; padding: 0; background: white;">
-                                                <i class="bi bi-heart text-danger fs-5"></i>
+                                            <button type="submit" class="btn btn-white shadow-sm rounded-circle d-flex align-items-center justify-content-center" style="width: 35px; height: 35px; padding: 0; background: white;">
+                                                <i class="bi bi-heart text-black fs-5"></i>
                                             </button>
                                         </form>
 

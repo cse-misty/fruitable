@@ -28,7 +28,14 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="footer-item">
                             <h4 class="text-light mb-3">{{ $setting->meta_keywords ?? '' }}</h4>
-                            <p class="mb-4">{{ $setting->meta_description ?? '' }}.</p>
+                            @if(!empty($setting->meta_description))
+    <!-- CKEditor এর ডাটা রেন্ডার করার সঠিক নিয়ম -->
+    <div class="mb-4">{!! $setting->meta_description !!}</div>
+@else
+    <!-- ডাটাবেজ খালি থাকলে যেন কোনো এরর বা ভাঙা ট্যাগ না আসে -->
+    <p class="mb-4">Welcome to Fruitable. Discover our fresh and organic products directly from the farm to your doorstep.</p>
+@endif
+
                             <a href="" class="btn border-secondary py-2 px-4 rounded-pill text-primary">Read More</a>
                         </div>
                     </div>

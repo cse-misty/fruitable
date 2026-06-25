@@ -12,6 +12,7 @@ use App\Models\HeroSlider;
 use App\Models\Services;
 use App\Models\WebSetting;
 use App\Models\Order;
+use App\Models\Page;
 use App\Models\ProductReview;
 use App\Models\Review;
 
@@ -133,28 +134,29 @@ class PublicController extends Controller
     }
 
     public function privacyPolicy(){
+         $page = Page::where('slug', 'privacy-policy')->first();
         return view('frontend.pages.privacyPolicy');
     }
 
   public function organicProduct(Request $request)
 {
-    // ১. প্রোডাক্টের বেস কুয়েরি শুরু করা হলো
+
     $query = Product::where('status', 1);
 
-    // ২. রেডিও বাটনের 'type' অনুযায়ী কন্ডিশনাল ডাইনামিক কুয়েরি
+
     if ($request->has('type')) {
         $type = $request->type;
 
         if ($type == 'organic') {
-            // ধরি ডেসক্রিপশন বা নামে organic শব্দ আছে অথবা আপনার আলাদা কলাম আছে
+
             $query->where('description', 'like', '%organic%');
         }
         elseif ($type == 'fresh') {
-            // সাম্প্রতিক যুক্ত হওয়া ফ্রেশ আইটেম
+
             $query->latest();
         }
         elseif ($type == 'sales') {
-            // আপনার sold_count ভ্যালিডেশন কলাম অনুযায়ী সর্বোচ্চ বিক্রি হওয়া পণ্য
+
             $query->orderBy('sold_count', 'desc');
         }
         elseif ($type == 'discount') {
